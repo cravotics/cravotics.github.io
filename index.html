@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ===== CSS ===== -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- ===== BOX ICONS ===== -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- ===== DEV ICONS ===== -->
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+  />
+
+  <title>Sai Jagadeesh's Portfolio</title>
+</head>
+<body>
+  <!--===== HEADER =====-->
+  <header class="l-header">
+    <nav class="nav bd-grid">
+      <div>
+        <!-- Replace "your-logo.png" with the actual file name of your logo -->
+        <a href="#" class="nav__logo">
+          <img
+            src="assets/img/your-logo.png"
+            alt="Jagadeesh Logo"
+            class="nav__logo-img"
+          />
+        </a>
+      </div>
+
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a href="#home" class="nav__link active-link">Home</a>
+          </li>
+          <li class="nav__item">
+            <a href="#about" class="nav__link">About</a>
+          </li>
+          <li class="nav__item">
+            <a href="#education" class="nav__link">Education</a>
+          </li>
+          <li class="nav__item">
+            <a href="#experience" class="nav__link">Experience</a>
+          </li>
+          <li class="nav__item">
+            <a href="#projects" class="nav__link">Projects</a>
+          </li>
+          <li class="nav__item">
+            <a href="#skills" class="nav__link">Skills</a>
+          </li>
+          <li class="nav__item">
+            <a href="#publications" class="nav__link">Publications</a>
+          </li>
+          <li class="nav__item">
+            <a href="#contact" class="nav__link">Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav__toggle" id="nav-toggle">
+        <i class="bx bx-menu"></i>
+      </div>
+    </nav>
+  </header>
+
+  <main class="l-main">
+    <!--===== HOME =====-->
+    <section class="home bd-grid" id="home">
+      <div class="home__data">
+        <h1 class="home__title">
+          Hi,<br />
+          I'm <span class="home__title-color">Sai Jagadeesh</span><br />
+          Robotics Engineer
+        </h1>
+
+        <!-- Download CV Button -->
+        <a href="assets/docs/Sai_Jagadeesh_Muralikrishnan_CV.pdf" 
+          class="button cv-button" 
+          id="download-cv" 
+          download>
+          Download CV <span class="emoji">📄✨</span>
+        </a>
+      </div>
+
+      <!--===== SOCIAL MEDIA LINKS =====-->
+      <div class="social-links">
+        <a href="https://linkedin.com/in/sai-jagadeesh-m" class="social-icon" target="_blank" title="LinkedIn">
+            <i class="bx bxl-linkedin"></i>
+        </a>
+        <a href="https://github.com/cravotics" class="social-icon" target="_blank" title="GitHub">
+            <i class="bx bxl-github"></i>
+        </a>
+        <a href="https://x.com/jagadeeshgame" class="social-icon" target="_blank" title="Twitter/X">
+            <i class="bx bxl-twitter"></i>
+        </a>
+        <a href="mailto:saijagadeesh.m@outlook.com" class="social-icon" title="Email">
+            <i class="bx bx-envelope"></i>
+        </a>
+        <a href="https://scholar.google.com/citations?user=7ojEOwMAAAAJ&hl=en" class="social-icon" target="_blank" title="Google Scholar">
+            <i class="bx bxs-graduation"></i>
+        </a>
+      </div>
+
+
+
+      <div class="home__img">
+        <svg
+          class="home__blob"
+          viewBox="0 0 479 467"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <mask id="mask0" mask-type="alpha">
+            <path
+              d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"
+            />
+          </mask>
+          <g mask="url(#mask0)">
+            <path
+              d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"
+            />
+            <!-- Replace "your-photo.png" with your actual profile photo -->
+            <image
+              class="home__blob-img"
+              x="-80"
+              y="50"
+              href="assets/img/your-photo.png"
+            />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!--===== ABOUT (INCLUDING OBJECTIVE) =====-->
+    <section class="about section" id="about">
+      <h2 class="section-title">About</h2>
+
+      <div class="about__container bd-grid">
+        <div class="about__img">
+          <!-- Replace "about.jpg" with any about image you prefer -->
+          <img src="assets/img/about.jpg" alt="About Me" />
+        </div>
+
+        <div>
+          <h2 class="about__subtitle">I'm Sai Jagadeesh</h2>
+          <p class="about__text">
+            I'm currently pursuing a Master of Engineering in Robotics at the
+            University of Maryland, focusing on advanced computer vision,
+            discrete optimization, reinforcement learning, and resource
+            allocation for robotic systems. My main goal is to innovate in the
+            field of autonomous manipulation and planning algorithms, especially
+            for dynamic warehouse environments.<br /><br />
+
+            <strong>Objective:</strong> To secure the Entry-level full-time <em>Robotics</em> (Summer 2025) and apply my academic
+            research experience in software, computer vision, planning, and ML to develop
+            cutting-edge robotic solutions that transform fulfillment processes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!--===== EDUCATION SECTION =====-->
+    <section class="section" id="education">
+      <h2 class="section-title">Education</h2>
+
+      <div class="education__container bd-grid">
+          
+          <!-- UMD (Master's) -->
+          <div class="education__content">
+              <div class="edu-logo">
+                  <img src="assets/img/umd-logo.png" alt="UMD Logo">
+              </div>
+              <div class="edu-text">
+                  <h3 class="education__title">University of Maryland, College Park</h3>
+                  <span class="education__subtitle">Master of Engineering in Robotics</span>
+                  <p class="education__dates">Expected May 2025 | GPA: 3.78</p>
+                  <p class="education__description">
+                      <strong>Relevant Coursework:</strong> Computer Vision, Machine Learning, Reinforcement Learning, Robot Dynamics, Optimization.
+                  </p>
+              </div>
+          </div>
+
+          <!-- REC (Bachelor's) -->
+          <div class="education__content">
+              <div class="edu-logo">
+                  <img src="assets/img/logo_rec.png" alt="Rajalakshmi Engineering College Logo">
+              </div>
+              <div class="edu-text">
+                  <h3 class="education__title">Rajalakshmi Engineering College, Chennai</h3>
+                  <span class="education__subtitle">Bachelor of Engineering in Mechatronics</span>
+                  <p class="education__dates">May 2022 | GPA: 3.76</p>
+                  <p class="education__description">
+                      <strong>Relevant Coursework:</strong> Control Systems, Embedded Systems, Robotics, AI & Machine Learning, Industrial Automation.
+                  </p>
+              </div>
+          </div>
+      </div>
+    </section>
+
+
+    <!--===== EXPERIENCE =====-->
+    <section class="experience section" id="experience">
+      <h2 class="section-title">Professional Experience</h2>
+
+      <div class="experience__container bd-grid">
+        <!-- Research Assistant -->
+        <div class="experience__content">
+          <h3 class="experience__title">Research Assistant</h3>
+          <span class="experience__company"
+            >University of Maryland, College Park</span
+          >
+          <p class="experience__dates">Aug 2024 – Present</p>
+          <p class="experience__description">
+            <ul>
+              <li>
+                Developing and calibrating advanced computer vision algorithms
+                for Blaze Time-of-Flight cameras to enhance depth perception on
+                Boston Dynamics Spot robots.
+              </li>
+              <li>
+                Implemented novel multi-sensor extrinsic calibration strategy
+                between RGB and intensity images, boosting depth accuracy by
+                15%.
+              </li>
+              <li>
+                Integrating Large Language Models (LLMs) to improve real-time
+                sensor data analysis for medical triage (DARPA Triage Challenge).
+              </li>
+            </ul>
+          </p>
+        </div>
+
+        <!-- Perception Engineer Intern -->
+        <div class="experience__content">
+          <h3 class="experience__title">Perception Engineer Intern</h3>
+          <span class="experience__company">KICK Robotics, College Park, MD</span>
+          <p class="experience__dates">May 2024 – Aug 2024</p>
+          <p class="experience__description">
+            <ul>
+              <li>
+                Designed and integrated YOLOv8-based pipelines for real-time
+                object detection in dynamic warehouse/agricultural environments.
+              </li>
+              <li>
+                Optimized ROS2-based navigation algorithms, reducing navigation
+                error by 10%.
+              </li>
+              <li>
+                Collaborated with cross-functional teams to deploy improved
+                perception solutions in production-ready robotic systems.
+              </li>
+            </ul>
+          </p>
+        </div>
+
+        <!-- Graduate Teaching Assistant -->
+        <div class="experience__content">
+          <h3 class="experience__title">Graduate Teaching Assistant</h3>
+          <span class="experience__company"
+            >University of Maryland, College Park</span
+          >
+          <p class="experience__dates">Aug 2024 – Present</p>
+          <p class="experience__description">
+            <ul>
+              <li>
+                Assisted in Robotics course for the Applied Machine Learning
+                program, guiding students through UAV robotics and ML concepts.
+              </li>
+              <li>
+                Provided feedback on student projects, ensuring robust
+                implementations of deep learning pipelines.
+              </li>
+            </ul>
+          </p>
+        </div>
+
+        <!-- Embedded Systems Engineer -->
+        <div class="experience__content">
+          <h3 class="experience__title">Embedded Systems Engineer</h3>
+          <span class="experience__company"
+            >TuTr Hyperloop (IIT-Madras Startup), Chennai</span
+          >
+          <p class="experience__dates">Jul 2022 – Dec 2022</p>
+          <p class="experience__description">
+            <ul>
+              <li>
+                Programmed real-time communication protocols using C++ and CAN
+                for high-speed transport modules, reducing system latency by
+                20%.
+              </li>
+              <li>
+                Deployed embedded software solutions for next-gen Hyperloop
+                prototypes, ensuring reliable and efficient performance.
+              </li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!--===== PROJECTS =====-->
+    <section class="section" id="projects">
+      <h2 class="section-title">Projects</h2>
+
+      <div class="work__container bd-grid">
+          
+          <!-- Multi-Agent Robotic Exploration -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/MCTS.gif" alt="Multi-Agent Exploration Simulation">
+              </div>
+              <h3 class="work__title">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
+              <p class="work__description">
+                  Designed AI-driven search algorithms using Python and C++ for robot path planning. Integrated AWS RoboMaker and optimized path planning speed by 30%.
+              </p>
+          </div>
+
+          <!-- Autonomous Navigation Using DQN -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/work2.gif" alt="Autonomous Navigation Using DQN">
+              </div>
+              <h3 class="work__title">Autonomous Navigation Using Double DQN and Dueling Architecture</h3>
+              <p class="work__description">
+                  Implemented AI-based navigation with Double DQN, increasing path planning efficiency by 75% in simulated multi-obstacle environments.
+              </p>
+          </div>
+
+          <!-- Adaptive Text-to-Command Translation -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/nlp.gif" alt="NLP-Based Robot Navigation">
+              </div>
+              <h3 class="work__title">Adaptive Text-to-Command Translation for Robot Navigation (NLP)</h3>
+              <p class="work__description">
+                  Developed a transformer-based model (T5-Small with LoRA) to convert natural language commands into robot navigation sequences.
+              </p>
+          </div>
+
+          <!-- Versa-BOT V1.0 -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/work1.gif" alt="Versa-BOT Mobile Manipulator">
+              </div>
+              <h3 class="work__title">Versa-BOT V1.0 – A Shop-Floor Mobile Manipulator</h3>
+              <p class="work__description">
+                  Designed a 7-DOF mobile manipulator in ROS 2 with trajectory planning and LIDAR-based obstacle detection.
+              </p>
+          </div>
+
+          <!-- MoveIt Motion Planning -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/move_it.gif" alt="MoveIt Motion Planning">
+              </div>
+              <h3 class="work__title">Implementation of MoveIt Motion Planning on the Panda Robotic Arm</h3>
+              <p class="work__description">
+                  Developed a MoveIt-based pick-and-place operation in ROS 2 Humble with trajectory execution in RViz2.
+              </p>
+          </div>
+
+          <!-- Autonomous Gate Detection -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/droneit.gif" alt="Gate Detection for Drone">
+              </div>
+              <h3 class="work__title">Autonomous Gate Detection for Drone Navigation</h3>
+              <p class="work__description">
+                  Developed a ROS-based gate detection pipeline for real-time navigation of a drone using MAVROS and PX4.
+              </p>
+          </div>
+
+          <!-- Wireless Animatronic Hand -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/animatronic.gif" alt="Wireless Animatronic Hand">
+              </div>
+              <h3 class="work__title">Wireless Animatronic Hand Using Infrared Sensor</h3>
+              <p class="work__description">
+                  Designed a wireless animatronic hand using infrared sensors, published in ICDSMLA 2021, achieving Best Paper (Third Place).
+              </p>
+          </div>
+
+          <!-- Mobile Robot Hardware Challenge -->
+          <div class="work__content">
+              <div class="work__img">
+                  <img src="assets/img/work3.gif" alt="TurtleBot Lane Following">
+              </div>
+              <h3 class="work__title">Mobile Robot Hardware Challenge</h3>
+              <p class="work__description">
+                  Created a perception pipeline using ROS 2 and OpenCV for dynamic obstacle detection and lane-following.
+              </p>
+          </div>
+
+      </div>
+    </section>
+
+
+    <!--===== SKILLS SECTION =====-->
+    <section class="skills section" id="skills">
+      <h2 class="section-title">Skills</h2>
+
+      <div class="skills__container bd-grid">
+
+        <!-- Programming Languages & Tools -->
+        <div class="skills-category">
+          <h3>Programming Languages & Tools</h3>
+          <p>I develop robust applications using a variety of languages and development tools.</p>
+          <div class="skills-logos">
+            <div class="logo-item"><img src="assets/img/python.png" alt="Python Logo" /><span>Python</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-matlab-48.png" alt="MATLAB Logo" /><span>MATLAB</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-c-programming-48.png" alt="C Logo" /><span>C</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-c-48.png" alt="C++ Logo" /><span>C++</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-bash-48.png" alt="Bash Logo" /><span>Bash</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-nvidia-48.png" alt="NVIDIA CUDA Logo" /><span>CUDA</span></div>
+          </div>
+        </div>
+
+        <!-- Software & Systems -->
+        <div class="skills-category">
+          <h3>Software & Systems</h3>
+          <p>I build scalable solutions using modern DevOps practices, cloud services, and containerization.</p>
+          <div class="skills-logos">
+            <div class="logo-item"><img src="assets/img/icons8-aws-48.png" alt="AWS Logo" /><span>AWS</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-docker-48.png" alt="Docker Logo" /><span>Docker</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-git-48.png" alt="Git Logo" /><span>Git</span></div>
+          </div>
+        </div>
+
+        <!-- Robotics & Machine Learning -->
+        <div class="skills-category">
+          <h3>Robotics & Machine Learning</h3>
+          <p>I integrate advanced robotics frameworks and machine learning libraries to deliver intelligent solutions.</p>
+          <div class="skills-logos">
+            <div class="logo-item"><img src="assets/img/ros.png" alt="ROS Logo" /><span>ROS</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-pytorch-48.png" alt="PyTorch Logo" /><span>PyTorch</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-tensorflow-48.png" alt="TensorFlow Logo" /><span>TensorFlow</span></div>
+            <div class="logo-item"><img src="assets/img/icons8-opencv-48.png" alt="OpenCV Logo" /><span>OpenCV</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!--===== PUBLICATIONS & AWARDS =====-->
+    <!--===== PUBLICATIONS & AWARDS =====-->
+    <!--===== PUBLICATIONS & AWARDS =====-->
+    <section class="section" id="publications">
+      <h2 class="section-title">Publications &amp; Awards</h2>
+      <div class="bd-grid">
+
+        <!-- Publication 1 -->
+        <div class="publication__content">
+          <h3 class="publication__title">
+            Wireless Animatronic Hand Using Infrared Sensor (2023)
+          </h3>
+          <p class="publication__description">
+            <em>ICDSMLA 2021: 3rd International Conference on Data Science,
+            Machine Learning and Applications</em><br />
+            <strong>Authors:</strong> M Balakarthikeyan, D Rajesh,
+            <strong>M Sai Jagadeesh</strong>, G Santhosh Kumar<br />
+            <strong>Abstract:</strong> Designed a wireless animatronic hand
+            using an infrared sensor for data transmission, enabling pick-and-
+            place operations and reducing human risk. Published by Springer
+            Nature Singapore.
+          </p>
+          <!-- Embedded Springer Link -->
+          <p class="publication__link">
+            📄 <a href="https://link.springer.com/chapter/10.1007/978-981-19-5936-3_40" target="_blank">
+              Read on Springer 📖
+            </a>
+          </p>
+
+        </div>
+
+        <!-- Best Paper Award -->
+        <div class="publication__content">
+          <h3 class="publication__title">Best Paper Award (Third Place)</h3>
+          <p class="publication__description">
+            2021 | International Conference on Data Science, Machine Learning & Applications
+          </p>
+          <!-- Award Certificate Image -->
+          <div class="award__certificate">
+            <img id="certificateImage" src="assets/img/award.png" alt="Best Paper Award Certificate">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox for Fullscreen Certificate -->
+    <div class="lightbox" id="lightbox">
+      <img id="lightboxImage" src="assets/img/certificate.png" alt="Best Paper Award Certificate">
+    </div>
+
+
+    <!--===== CONTACT =====-->
+    <!--===== CONTACT SECTION =====-->
+    <section class="contact section" id="contact">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="contact-subtitle">I'd love to hear from you! Fill out the form below and I'll get back to you soon.</p>
+    
+        <div class="contact__container">
+            <form id="form" class="contact__form">
+                <div class="form-group">
+                    <label for="from_name">Full Name</label>
+                    <input type="text" id="from_name" name="from_name" placeholder="Your Full Name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="reply_to">Email Address</label>
+                    <input type="email" id="reply_to" name="reply_to" placeholder="Your Email Address" required>
+                </div>
+    
+    
+                <div class="form-group full-width">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+                </div>
+    
+                <div class="form-group full-width">
+                    <button type="submit" id="button" class="contact__button">Send Message 🚀</button>
+                </div>
+            </form>
+        </div>
+    </section>
+  
+  
+
+
+  </main>
+
+  
+
+  <!--===== FOOTER =====-->
+  <footer class="footer">
+    <div class="foot__logo-img-container">
+      <img
+        src="assets/img/your-logo.png"
+        alt="foot"
+        class="foot__logo-img"
+      />
+    </div>
+
+    <p class="copyright">© 2024 Sai Jagadeesh Muralikrishnan. All rights reserved.</p>
+  </footer>
+
+  <!--===== SCROLL REVEAL (Optional) =====-->
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <!-- EmailJS Library -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Initialize EmailJS -->
+  <script type="text/javascript">
+    emailjs.init("BNIGQSJiCAS8wDwFi"); // Replace with your actual public key
+  </script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="assets/js/main.js"></script>
+
+
+  <!--===== MAIN JS =====-->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
