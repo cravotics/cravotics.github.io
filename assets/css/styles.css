@@ -533,7 +533,7 @@ img {
 /*===== SOCIAL MEDIA LINKS =====*/
 .social-links {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   gap: 15px;
   margin-top: 15px;
 }
