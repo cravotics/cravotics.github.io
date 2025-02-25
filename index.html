@@ -66,6 +66,9 @@
           <li class="nav__item">
             <a href="#contact" class="nav__link">Contact</a>
           </li>
+          <!-- Within your header navigation (nav__menu), insert a new item: -->
+        
+
         </ul>
       </div>
 
@@ -82,7 +85,7 @@
         <h1 class="home__title">
           Hi,<br />
           I'm <span class="home__title-color">Sai Jagadeesh</span><br />
-          | Robotics Engineer |
+          Robotics Engineer
         </h1>
 
         <!-- Download CV Button -->
@@ -309,6 +312,41 @@
         </div>
       </div>
     </section>
+
+    <!-- Place this in <main> somewhere above your #projects section -->
+    <!--===== FEATURED PROJECT: MULTI⦿VIZ =====-->
+    <section class="featured-project section" id="featured-project">
+      <h2 class="section-title">Featured Project</h2>
+      
+      <div class="featured-container">
+        <div class="featured-img-container">
+          <img src="assets/img/multiviz.gif" alt="MULTI⦿VIZ GUI" class="featured-img floating">
+        </div>
+
+        <div class="featured-content">
+          <h3 class="featured-title">MULTI⦿VIZ: Advanced Multi-Robot GUI</h3>
+          <p class="featured-description">
+            A <strong>ROS2-based, user-friendly GUI</strong> designed for seamless **multi-robot monitoring, control, and experimentation**. 
+            This powerful tool integrates real-time **visualization, teleoperation, voice commands, and custom experimentation displays**, making it a superior alternative to traditional RViz solutions.
+          </p>
+          <ul class="featured-list">
+            <li>📡 <strong>Real-time odometry, LiDAR, and camera feeds</strong></li>
+            <li>🎮 <strong>Teleoperation & Waypoint Navigation (x, y, yaw)</strong></li>
+            <li>🗣️ <strong>Voice Command Interface with TTS Feedback</strong></li>
+            <li>🛠️ <strong>Custom Experimentation Display (Depth maps, Heat maps, etc.)</strong></li>
+            <li>🚨 <strong>Emergency Kill Switch for instant shutdown</strong></li>
+            <li>🔋 <strong>Battery monitoring for real-world applications</strong></li>
+          </ul>
+          
+          <div class="featured-buttons">
+            <a href="https://github.com/cravotics/HRI?tab=readme-ov-file" class="button" target="_blank">🔗 GitHub Repo</a>
+            <a href="https://drive.google.com/file/d/1j6JT9HDtINcb3gtojFghZ0qUcL4dRSyY/view" class="button" target="_blank">🎥 Watch Demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
 
     <!--===== PROJECTS =====-->
     <section class="section" id="projects">
@@ -574,7 +612,7 @@
   <script src="https://unpkg.com/scrollreveal"></script>
   <!-- EmailJS Library -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <!-- Initialize EmailJS -->
   <script type="text/javascript">
     emailjs.init("BNIGQSJiCAS8wDwFi"); // Replace with your actual public key
@@ -582,6 +620,8 @@
 
   <!-- Contact Form JavaScript -->
   <script src="assets/js/main.js"></script>
+
+  
 
 
   <!--===== MAIN JS =====-->
