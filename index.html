@@ -6,6 +6,7 @@
     <title>Sai Jagadeesh Muralikrishnan | Robotics Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -187,9 +188,164 @@
         .project-card:hover::before {
             opacity: 1;
         }
+        
+        /* 3D Background */
+        .three-d-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .three-d-element {
+            position: absolute;
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transform-style: preserve-3d;
+            animation: float3d 15s infinite linear;
+        }
+        
+        @keyframes float3d {
+            0% { transform: rotateX(0deg) rotateY(0deg) translateZ(0); }
+            50% { transform: rotateX(180deg) rotateY(180deg) translateZ(100px); }
+            100% { transform: rotateX(360deg) rotateY(360deg) translateZ(0); }
+        }
+        
+        /* Featured Project */
+        .featured-project {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.1);
+            overflow: hidden;
+        }
+        
+        .featured-img {
+            border-radius: 10px;
+            border: 2px solid rgba(0, 240, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .featured-img:hover {
+            transform: scale(1.02);
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Skills Logos */
+        .skills-logos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
+        }
+        
+        .logo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .logo-item img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 2px solid #64ffda;
+            border-radius: 5px;
+        }
+        
+        /* Contact Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccd6f6;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(10, 25, 47, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 5px;
+            color: #ccd6f6;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .contact__button {
+            background: #64ffda;
+            color: #0a192f;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .contact__button:hover {
+            background: #52d1b2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        /* Active Link */
+        .active-link {
+            color: #64ffda !important;
+        }
+        
+        .active-link::after {
+            width: 100% !important;
+        }
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- 3D Background Elements -->
+    <div class="three-d-bg">
+        <div class="three-d-element" style="width: 100px; height: 100px; top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="three-d-element" style="width: 150px; height: 150px; top: 60%; left: 70%; animation-delay: 2s;"></div>
+        <div class="three-d-element" style="width: 200px; height: 200px; top: 30%; left: 50%; animation-delay: 4s;"></div>
+        <div class="three-d-element" style="width: 120px; height: 120px; top: 70%; left: 20%; animation-delay: 6s;"></div>
+    </div>
+
     <!-- Moving background elements -->
     <div class="moving-bg">
         <div class="bg-element bg-primary w-64 h-64 top-1/4 left-1/4 animate-float"></div>
@@ -208,10 +364,13 @@
                     <a href="#" class="ml-4 text-xl font-bold gradient-text">Sai_Jagadeesh</a>
                 </div>
                 <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-light hover:text-accent transition-colors active-link">Home</a>
                     <a href="#about" class="nav-link text-light hover:text-accent transition-colors">About</a>
+                    <a href="#education" class="nav-link text-light hover:text-accent transition-colors">Education</a>
                     <a href="#experience" class="nav-link text-light hover:text-accent transition-colors">Experience</a>
                     <a href="#projects" class="nav-link text-light hover:text-accent transition-colors">Projects</a>
                     <a href="#skills" class="nav-link text-light hover:text-accent transition-colors">Skills</a>
+                    <a href="#publications" class="nav-link text-light hover:text-accent transition-colors">Publications</a>
                     <a href="#contact" class="nav-link text-light hover:text-accent transition-colors">Contact</a>
                 </div>
                 <div class="md:hidden">
@@ -224,17 +383,20 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-dark bg-opacity-95 px-6 py-4">
             <div class="flex flex-col space-y-4">
+                <a href="#home" class="nav-link text-light hover:text-accent transition-colors active-link">Home</a>
                 <a href="#about" class="nav-link text-light hover:text-accent transition-colors">About</a>
+                <a href="#education" class="nav-link text-light hover:text-accent transition-colors">Education</a>
                 <a href="#experience" class="nav-link text-light hover:text-accent transition-colors">Experience</a>
                 <a href="#projects" class="nav-link text-light hover:text-accent transition-colors">Projects</a>
                 <a href="#skills" class="nav-link text-light hover:text-accent transition-colors">Skills</a>
+                <a href="#publications" class="nav-link text-light hover:text-accent transition-colors">Publications</a>
                 <a href="#contact" class="nav-link text-light hover:text-accent transition-colors">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex items-center pt-20">
+    <section id="home" class="min-h-screen flex items-center pt-20">
         <div class="max-w-7xl mx-auto px-6 py-20 md:py-32">
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-12 md:mb-0">
@@ -260,7 +422,7 @@
                 <div class="md:w-1/2 flex justify-center">
                     <div class="relative">
                         <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-accent shadow-lg glow-text">
-                            <img src="assets/img/about.jpg" alt="Sai Jagadeesh" class="w-full h-full object-cover">
+                            <img src="assets/your_phot.png" alt="Sai Jagadeesh" class="w-full h-full object-cover">
                         </div>
                         <div class="absolute -bottom-5 -right-5 bg-dark p-4 rounded-lg border border-primary shadow-lg">
                             <div class="flex items-center">
@@ -352,6 +514,72 @@ console.log(sai);</code></pre>
         </div>
     </section>
 
+    <!-- Education Section -->
+    <section id="education" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Education</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- University of Maryland -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-university text-accent"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-light">University of Maryland</h3>
+                            <p class="text-accent">College Park, MD</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="text-light font-medium">Master of Engineering in Robotics</p>
+                        <p class="text-light opacity-80">Expected Graduation: May 2025</p>
+                        <p class="text-light opacity-80">GPA: 3.78/4.0</p>
+                    </div>
+                    <div>
+                        <h4 class="text-light font-medium mb-2">Relevant Coursework:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Control Systems</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Machine Learning</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Computer Vision</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Perception</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Planning</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Rajalakshmi Engineering College -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-university text-accent"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-light">Rajalakshmi Engineering College</h3>
+                            <p class="text-accent">Chennai, India</p>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <p class="text-light font-medium">Bachelor of Engineering in Mechatronics</p>
+                        <p class="text-light opacity-80">Graduated: July 2022</p>
+                        <p class="text-light opacity-80">CGPA: 8.7/10.0</p>
+                    </div>
+                    <div>
+                        <h4 class="text-light font-medium mb-2">Relevant Coursework:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Embedded systems</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Controls</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Power electronics</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Computer Vision</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Experience Section -->
     <section id="experience" class="py-20">
         <div class="max-w-7xl mx-auto px-6">
@@ -429,192 +657,305 @@ console.log(sai);</code></pre>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
+    <!-- Featured Project Section -->
+    <section id="featured-project" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                <span class="gradient-text">Featured Projects</span>
+                <span class="gradient-text">Featured Project</span>
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                            <i class="fas fa-robot text-accent"></i>
+            <div class="featured-project p-8">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-1/2">
+                        <div class="featured-img-container">
+                            <img src="assets/img/multiviz.gif" alt="MULTI⦿VIZ GUI" class="featured-img floating w-full rounded-lg">
                         </div>
-                        <h3 class="text-xl font-bold text-light">Multi-Agent Robotic Exploration</h3>
                     </div>
-                    <p class="text-light mb-4">Developed a multi-robot fleet management system using ROS 2 and Python, enabling collaborative exploration and real-time decision-making for mobile robots.</p>
-                    <ul class="list-disc list-inside text-light text-sm mb-6 space-y-1">
-                        <li>Integrated AWS RoboMaker to simulate robot behavior in cloud environments</li>
-                        <li>Leveraged sensor fusion (camera and LiDAR)</li>
-                        <li>Achieved 30% faster path planning</li>
-                    </ul>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">ROS 2</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Python</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">AWS RoboMaker</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Sensor Fusion</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs text-light opacity-70">Robotics and Autonomy Laboratory, UMD | Nov 2023 – Dec 2023</span>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                            <i class="fas fa-brain text-accent"></i>
+                    <div class="lg:w-1/2">
+                        <h3 class="featured-title text-2xl font-bold text-light mb-4">MULTI⦿VIZ: Advanced Multi-Robot GUI</h3>
+                        <p class="featured-description text-light mb-6">
+                            A <strong class="text-accent">ROS2-based, user-friendly GUI</strong> designed for seamless multi-robot monitoring, control, and experimentation. 
+                            This powerful tool integrates real-time visualization, teleoperation, voice commands, and custom experimentation displays, making it a superior alternative to traditional RViz solutions.
+                        </p>
+                        <ul class="featured-list text-light space-y-3 mb-6">
+                            <li class="flex items-start">
+                                <span class="text-accent mr-2">📡</span>
+                                <span><strong>Real-time odometry, LiDAR, and camera feeds</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-2">🎮</span>
+                                <span><strong>Teleoperation & Waypoint Navigation (x, y, yaw)</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-2">🗣️</span>
+                                <span><strong>Voice Command Interface with TTS Feedback</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-2">🛠️</span>
+                                <span><strong>Custom Experimentation Display (Depth maps, Heat maps, etc.)</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-2">🚨</span>
+                                <span><strong>Emergency Kill Switch for instant shutdown</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-accent mr-2">🔋</span>
+                                <span><strong>Battery monitoring for real-world applications</strong></span>
+                            </li>
+                        </ul>
+                        <div class="featured-buttons flex space-x-4">
+                            <a href="https://github.com/cravotics/HRI?tab=readme-ov-file" class="px-4 py-2 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all" target="_blank">
+                                🔗 GitHub Repo
+                            </a>
+                            <a href="https://drive.google.com/file/d/1j6JT9HDtINcb3gtojFghZ0qUcL4dRSyY/view" class="px-4 py-2 bg-transparent border-2 border-accent text-accent rounded hover:bg-accent hover:bg-opacity-10 transition-all" target="_blank">
+                                🎥 Watch Demo
+                            </a>
                         </div>
-                        <h3 class="text-xl font-bold text-light">Autonomous Navigation using Double DQN</h3>
-                    </div>
-                    <p class="text-light mb-4">Improved path planning using Double DQN and Dueling DQN, increasing success rates by 75% in simulated multi-obstacle arenas.</p>
-                    <ul class="list-disc list-inside text-light text-sm mb-6 space-y-1">
-                        <li>Designed AI-driven search algorithms using Python, C++, and RL</li>
-                        <li>Optimized path planning speed by 30%</li>
-                        <li>Fused sensor inputs (camera, LiDAR) into real-time decision-making</li>
-                    </ul>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Reinforcement Learning</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">C++</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Python</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">DQN</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs text-light opacity-70">Maryland Applied Graduate Engineering, UMD | Mar 2024 – May 2024</span>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                            <i class="fas fa-language text-accent"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-light">Text-to-Command Translation</h3>
-                    </div>
-                    <p class="text-light mb-4">Architected a transformer-based model (T5-Small + LoRA) achieving 98.5% accuracy for natural language command translation in robotic navigation.</p>
-                    <ul class="list-disc list-inside text-light text-sm mb-6 space-y-1">
-                        <li>Deployed within ROS 2 and Gazebo</li>
-                        <li>Integrated real-time sensor fusion (camera + LiDAR)</li>
-                        <li>Utilized AWS SageMaker to reduce inference latency by 20%</li>
-                    </ul>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">NLP</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Transformers</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">ROS 2</span>
-                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">AWS SageMaker</span>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-xs text-light opacity-70">Maryland Applied Graduate Engineering, UMD | Nov 2024 – Dec 2024</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Projects</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Multi-Agent Robotic Exploration -->
+                <a href="https://github.com/varunlakshmanan11/Multi-Robot-Naviagtion-Using-Centralized-and-Decentralized-Monte-Carlo-Tree-Search" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/MCTS.gif" alt="Multi-Agent Exploration Simulation" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
+                    <p class="work__description text-light text-sm">
+                        Designed AI-driven search algorithms using Python and C++ for robot path planning. Integrated AWS RoboMaker and optimized path planning speed by 30%.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Robotics and Autonomy Laboratory, UMD | Nov 2023 – Dec 2023</span>
+                    </div>
+                </a>
+                
+                <!-- Autonomous Navigation Using DQN -->
+                <a href="https://github.com/cravotics/Intelligent-Robotic-Navigation" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/work2.gif" alt="Autonomous Navigation Using DQN" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Autonomous Navigation Using Double DQN and Dueling Architecture</h3>
+                    <p class="work__description text-light text-sm">
+                        Implemented AI-based navigation with Double DQN, increasing path planning efficiency by 75% in simulated multi-obstacle environments.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Maryland Applied Graduate Engineering, UMD | Mar 2024 – May 2024</span>
+                    </div>
+                </a>
+                
+                <!-- Adaptive Text-to-Command Translation -->
+                <a href="https://github.com/suhasnagaraj99/Adaptive-Text-to-Command-Translation-for-Robot-Navigation" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/nlp.gif" alt="NLP-Based Robot Navigation" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Adaptive Text-to-Command Translation for Robot Navigation (NLP)</h3>
+                    <p class="work__description text-light text-sm">
+                        Developed a transformer-based model (T5-Small with LoRA) to convert natural language commands into robot navigation sequences.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Maryland Applied Graduate Engineering, UMD | Nov 2024 – Dec 2024</span>
+                    </div>
+                </a>
+                
+                <!-- Versa-BOT V1.0 -->
+                <a href="https://github.com/cravotics/Mobile-Manipulator" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/work1.gif" alt="Versa-BOT Mobile Manipulator" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Versa-BOT V1.0 – A Shop-Floor Mobile Manipulator</h3>
+                    <p class="work__description text-light text-sm">
+                        Designed a 7-DOF mobile manipulator in ROS 2 with trajectory planning and LIDAR-based obstacle detection.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Personal Project | 2023</span>
+                    </div>
+                </a>
+                
+                <!-- MoveIt Motion Planning -->
+                <a href="https://github.com/cravotics/Moveit/tree/main" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/move_it.gif" alt="MoveIt Motion Planning" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Implementation of MoveIt Motion Planning on the Panda Robotic Arm</h3>
+                    <p class="work__description text-light text-sm">
+                        Developed a MoveIt-based pick-and-place operation in ROS 2 Humble with trajectory execution in RViz2.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Personal Project | 2023</span>
+                    </div>
+                </a>
+                
+                <!-- Autonomous Gate Detection -->
+                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/droneit.gif" alt="Gate Detection for Drone" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Autonomous Gate Detection for Drone Navigation</h3>
+                    <p class="work__description text-light text-sm">
+                        Developed a ROS-based gate detection pipeline for real-time navigation of a drone using MAVROS and PX4.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Academic Project | 2022</span>
+                    </div>
+                </div>
+                
+                <!-- Wireless Animatronic Hand -->
+                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/animatronic.gif" alt="Wireless Animatronic Hand" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Wireless Animatronic Hand Using Infrared Sensor</h3>
+                    <p class="work__description text-light text-sm">
+                        Designed a wireless animatronic hand using infrared sensors, published in ICDSMLA 2021, achieving Best Paper (Third Place).
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Undergraduate Project | 2021</span>
+                    </div>
+                </div>
+                
+                <!-- Mobile Robot Hardware Challenge -->
+                <a href="https://github.com/cravotics/Turtlebot-Challenge" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/challenge.gif" alt="TurtleBot Lane Following" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">Mobile Robot Hardware Challenge</h3>
+                    <p class="work__description text-light text-sm">
+                        Created a perception pipeline using ROS 2 and OpenCV for dynamic obstacle detection and lane-following.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">Academic Competition | 2023</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Skills Section -->
-    <section id="skills" class="py-20">
+    <section id="skills" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
                 <span class="gradient-text">Technical Skills</span>
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Programming Languages -->
+                <!-- Programming Languages & Tools -->
                 <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
                             <i class="fas fa-code text-accent text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-light">Programming Languages</h3>
+                        <h3 class="text-xl font-bold text-light">Programming Languages & Tools</h3>
                     </div>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-light">Python</span>
-                                <span class="text-accent">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 95%"></div>
-                            </div>
+                    <p class="text-light mb-6">I develop robust applications using a variety of languages and development tools.</p>
+                    <div class="skills-logos">
+                        <div class="logo-item">
+                            <img src="assets/img/python.png" alt="Python Logo">
+                            <span class="text-light">Python</span>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-light">C++</span>
-                                <span class="text-accent">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
-                            </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-matlab-48.png" alt="MATLAB Logo">
+                            <span class="text-light">MATLAB</span>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-light">CUDA</span>
-                                <span class="text-accent">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 80%"></div>
-                            </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-c-programming-48.png" alt="C Logo">
+                            <span class="text-light">C</span>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-light">Bash (Linux)</span>
-                                <span class="text-accent">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-c-48.png" alt="C++ Logo">
+                            <span class="text-light">C++</span>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-light">MATLAB</span>
-                                <span class="text-accent">75%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 75%"></div>
-                            </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-bash-48.png" alt="Bash Logo">
+                            <span class="text-light">Bash</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-nvidia-48.png" alt="NVIDIA CUDA Logo">
+                            <span class="text-light">CUDA</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Robotics & AI -->
+                <!-- Software & Systems -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-server text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Software & Systems</h3>
+                    </div>
+                    <p class="text-light mb-6">I build scalable solutions using modern DevOps practices, cloud services, and containerization.</p>
+                    <div class="skills-logos">
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-aws-48.png" alt="AWS Logo">
+                            <span class="text-light">AWS</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-docker-48.png" alt="Docker Logo">
+                            <span class="text-light">Docker</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-git-48.png" alt="Git Logo">
+                            <span class="text-light">Git</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-jira-48.png" alt="JIRA Logo">
+                            <span class="text-light">JIRA</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-linux-48.png" alt="Linux Logo">
+                            <span class="text-light">Linux</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-windows-10-48.png" alt="Windows Logo">
+                            <span class="text-light">Windows</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Robotics & Machine Learning -->
                 <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
                     <div class="flex items-center mb-6">
                         <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
                             <i class="fas fa-robot text-accent text-xl"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-light">Robotics & AI</h3>
+                        <h3 class="text-xl font-bold text-light">Robotics & Machine Learning</h3>
                     </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">ROS 2</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">SLAM</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Reinforcement Learning</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Motion Planning</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">AMCL</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Sensor Fusion</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Mujoco</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Isaac Lab</span>
-                    </div>
-                </div>
-                
-                <!-- Deep Learning -->
-                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
-                    <div class="flex items-center mb-6">
-                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
-                            <i class="fas fa-microchip text-accent text-xl"></i>
+                    <p class="text-light mb-6">I integrate advanced robotics frameworks and machine learning libraries to deliver intelligent solutions.</p>
+                    <div class="skills-logos">
+                        <div class="logo-item">
+                            <img src="assets/img/ros.png" alt="ROS Logo">
+                            <span class="text-light">ROS</span>
                         </div>
-                        <h3 class="text-xl font-bold text-light">Deep Learning</h3>
-                    </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">PyTorch</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">TensorFlow</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Keras</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Transformers</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">LoRA</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">LLMs</span>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-pytorch-48.png" alt="PyTorch Logo">
+                            <span class="text-light">PyTorch</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-tensorflow-48.png" alt="TensorFlow Logo">
+                            <span class="text-light">TensorFlow</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-opencv-48.png" alt="OpenCV Logo">
+                            <span class="text-light">OpenCV</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-keras-48.png" alt="Keras Logo">
+                            <span class="text-light">Keras</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-scikit-learn-48.png" alt="Scikit-learn Logo">
+                            <span class="text-light">Scikit-learn</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -626,13 +967,32 @@ console.log(sai);</code></pre>
                         </div>
                         <h3 class="text-xl font-bold text-light">Simulation & Control</h3>
                     </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Gazebo</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Isaac Sim</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Isaac Gym</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">pyBullet</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Distributed Control</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">CAD (SolidWorks)</span>
+                    <p class="text-light mb-6">I create realistic simulations and control systems for robotic applications.</p>
+                    <div class="skills-logos">
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-gazebo-48.png" alt="Gazebo Logo">
+                            <span class="text-light">Gazebo</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-isaac-48.png" alt="Isaac Sim Logo">
+                            <span class="text-light">Isaac Sim</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-isaac-gym-48.png" alt="Isaac Gym Logo">
+                            <span class="text-light">Isaac Gym</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-pybullet-48.png" alt="pyBullet Logo">
+                            <span class="text-light">pyBullet</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-mujoco-48.png" alt="Mujoco Logo">
+                            <span class="text-light">Mujoco</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-moveit-48.png" alt="MoveIt Logo">
+                            <span class="text-light">MoveIt</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -644,14 +1004,32 @@ console.log(sai);</code></pre>
                         </div>
                         <h3 class="text-xl font-bold text-light">Computer Vision</h3>
                     </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">OpenCV</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">LiDAR Processing</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">RGB Processing</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Image Registration</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">YOLOv8</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">PCL</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Open3D</span>
+                    <p class="text-light mb-6">I develop advanced computer vision solutions for perception tasks.</p>
+                    <div class="skills-logos">
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-opencv-48.png" alt="OpenCV Logo">
+                            <span class="text-light">OpenCV</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-yolo-48.png" alt="YOLO Logo">
+                            <span class="text-light">YOLOv8</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-point-cloud-48.png" alt="PCL Logo">
+                            <span class="text-light">PCL</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-open3d-48.png" alt="Open3D Logo">
+                            <span class="text-light">Open3D</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-depth-sensor-48.png" alt="Depth Sensor Logo">
+                            <span class="text-light">Depth Sensing</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-stereo-camera-48.png" alt="Stereo Camera Logo">
+                            <span class="text-light">Stereo Vision</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -663,33 +1041,103 @@ console.log(sai);</code></pre>
                         </div>
                         <h3 class="text-xl font-bold text-light">Networking & Embedded</h3>
                     </div>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Socket Programming</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Arduino</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Raspberry Pi</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">STM32</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">ESP32</span>
-                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">CAN</span>
+                    <p class="text-light mb-6">I work with embedded systems and networking protocols for robotic applications.</p>
+                    <div class="skills-logos">
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-socket-48.png" alt="Socket Logo">
+                            <span class="text-light">Socket Prog.</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-arduino-48.png" alt="Arduino Logo">
+                            <span class="text-light">Arduino</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-raspberry-pi-48.png" alt="Raspberry Pi Logo">
+                            <span class="text-light">Raspberry Pi</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-stm32-48.png" alt="STM32 Logo">
+                            <span class="text-light">STM32</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-esp32-48.png" alt="ESP32 Logo">
+                            <span class="text-light">ESP32</span>
+                        </div>
+                        <div class="logo-item">
+                            <img src="assets/img/icons8-can-bus-48.png" alt="CAN Bus Logo">
+                            <span class="text-light">CAN Bus</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Publications Section -->
+    <section id="publications" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Publications & Awards</span>
+            </h2>
+            
+            <div class="space-y-8">
+                <!-- Publication 1 -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <h3 class="text-xl font-bold text-light mb-3">
+                        Wireless Animatronic Hand Using Infrared Sensor (2023)
+                    </h3>
+                    <p class="text-light mb-4">
+                        <em>ICDSMLA 2021: 3rd International Conference on Data Science, 
+                        Machine Learning and Applications</em><br />
+                        <strong>Authors:</strong> M Balakarthikeyan, D Rajesh, 
+                        <strong>M Sai Jagadeesh</strong>, G Santhosh Kumar<br />
+                        <strong>Abstract:</strong> Designed a wireless animatronic hand 
+                        using an infrared sensor for data transmission, enabling pick-and-
+                        place operations and reducing human risk. Published by Springer 
+                        Nature Singapore.
+                    </p>
+                    <div class="flex items-center">
+                        <i class="fas fa-link text-accent mr-2"></i>
+                        <a href="https://link.springer.com/chapter/10.1007/978-981-19-5936-3_40" target="_blank" class="text-primary hover:underline">
+                            Read on Springer
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Best Paper Award -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <h3 class="text-xl font-bold text-light mb-3">Best Paper Award (Third Place)</h3>
+                    <p class="text-light mb-4">
+                        2021 | International Conference on Data Science, Machine Learning & Applications
+                    </p>
+                    <!-- Award Certificate Image -->
+                    <div class="award__certificate mt-4 cursor-pointer" onclick="openLightbox('assets/img/award.png')">
+                        <img src="assets/img/award.png" alt="Best Paper Award Certificate" class="w-full max-w-md rounded-lg border border-accent">
+                        <p class="text-light text-sm mt-2 text-center">Click to view full size</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox for Fullscreen Certificate -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightboxImage" src="" alt="Best Paper Award Certificate" class="max-w-full max-h-full">
+    </div>
+
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                <span class="gradient-text">Get In Touch</span>
+                <span class="gradient-text">Get in Touch</span>
             </h2>
+            <p class="text-light mb-8 text-center max-w-2xl mx-auto">
+                I'd love to hear from you! Fill out the form below and I'll get back to you soon.
+            </p>
             
-            <div class="flex flex-col md:flex-row">
-                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-8">
-                    <h3 class="text-2xl font-bold mb-6 text-light">Let's Connect</h3>
-                    <p class="text-light mb-8">
-                        I'm currently looking for new opportunities in robotics, perception, or autonomous systems. Whether you have a question or just want to say hi, I'll try my best to get back to you!
-                    </p>
-                    
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-bold mb-6 text-light">Contact Information</h3>
                     <div class="space-y-6">
                         <div class="flex items-start">
                             <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4 mt-1">
@@ -720,10 +1168,20 @@ console.log(sai);</code></pre>
                                 <p class="text-light">College Park, MD</p>
                             </div>
                         </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-globe text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-light mb-1">Website</h4>
+                                <a href="https://saijagadeesh.com" target="_blank" class="text-primary hover:underline">saijagadeesh.com</a>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="mt-10">
-                        <h4 class="text-lg font-bold text-light mb-4">Find me on</h4>
+                        <h4 class="text-lg font-bold text-light mb-4">Connect with me</h4>
                         <div class="flex space-x-4">
                             <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
                                 <i class="fab fa-linkedin-in text-xl"></i>
@@ -731,38 +1189,40 @@ console.log(sai);</code></pre>
                             <a href="https://github.com/" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
                                 <i class="fab fa-github text-xl"></i>
                             </a>
-                            <a href="https://saijagadeesh.com" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
-                                <i class="fas fa-globe text-xl"></i>
+                            <a href="https://twitter.com/" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
+                                <i class="fab fa-twitter text-xl"></i>
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="md:w-1/2">
-                    <form class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-light mb-2">Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500">
+                <div class="lg:w-1/2">
+                    <form id="form" class="contact__form">
+                        <div class="form-group">
+                            <label for="from_name">Full Name</label>
+                            <input type="text" id="from_name" name="from_name" placeholder="Your Full Name" required>
                         </div>
                         
-                        <div>
-                            <label for="email" class="block text-light mb-2">Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500">
+                        <div class="form-group">
+                            <label for="reply_to">Email Address</label>
+                            <input type="email" id="reply_to" name="reply_to" placeholder="Your Email Address" required>
                         </div>
                         
-                        <div>
-                            <label for="subject" class="block text-light mb-2">Subject</label>
-                            <input type="text" id="subject" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500">
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subject of your message" required>
                         </div>
                         
-                        <div>
-                            <label for="message" class="block text-light mb-2">Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500"></textarea>
+                        <div class="form-group full-width">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
                         </div>
                         
-                        <button type="submit" class="px-6 py-3 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all w-full">
-                            Send Message
-                        </button>
+                        <div class="form-group full-width">
+                            <button type="submit" id="button" class="contact__button">
+                                Send Message 🚀
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -774,21 +1234,24 @@ console.log(sai);</code></pre>
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-light text-sm">
+                    <div class="foot__logo-img-container flex justify-center">
+                        <img src="assets/img/your-logo.png" alt="Logo" class="foot__logo-img h-12">
+                    </div>
+                    <p class="text-light text-sm mt-2 text-center md:text-left">
                         &copy; <span id="year"></span> Sai Jagadeesh Muralikrishnan. All rights reserved.
                     </p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-light hover:text-accent transition-colors">
+                    <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" target="_blank" class="text-light hover:text-accent transition-colors">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" class="text-light hover:text-accent transition-colors">
+                    <a href="https://github.com/" target="_blank" class="text-light hover:text-accent transition-colors">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="#" class="text-light hover:text-accent transition-colors">
+                    <a href="https://twitter.com/" target="_blank" class="text-light hover:text-accent transition-colors">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="text-light hover:text-accent transition-colors">
+                    <a href="mailto:saijagadeesh.muralikrishnan@gmail.com" class="text-light hover:text-accent transition-colors">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
@@ -797,6 +1260,9 @@ console.log(sai);</code></pre>
     </footer>
 
     <script>
+        // Initialize EmailJS
+        emailjs.init("BNIGQSJiCAS8wDwFi"); // Replace with your actual public key
+
         // Mobile menu toggle
         document.getElementById('menu-toggle').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
@@ -822,6 +1288,12 @@ console.log(sai);</code></pre>
                     if (!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
                     }
+                    
+                    // Update active link
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active-link');
+                    });
+                    this.classList.add('active-link');
                 }
             });
         });
@@ -845,6 +1317,75 @@ console.log(sai);</code></pre>
 
         document.querySelectorAll('.timeline-item, .project-card, .code-block').forEach(element => {
             observer.observe(element);
+        });
+
+        // Lightbox functions
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.src = imageSrc;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Contact form submission
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("form");
+            const button = document.getElementById("button");
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevents default form submission
+
+                button.innerText = "Sending..."; // Change button text while sending
+                button.disabled = true; // Disable button during submission
+
+                const serviceID = "service_4him7fb"; // Your EmailJS Service ID
+                const templateID = "template_blal98i"; // Your EmailJS Template ID
+
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        button.innerText = "Send Message 🚀";
+                        button.disabled = false;
+                        alert("Message sent successfully! ✅");
+                        form.reset(); // Reset form after submission
+                    })
+                    .catch((err) => {
+                        button.innerText = "Send Message 🚀";
+                        button.disabled = false;
+                        alert("Oops! Something went wrong. Please try again.");
+                        console.error("EmailJS Error:", err);
+                    });
+            });
+        });
+
+        // Update active link based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active-link');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active-link');
+                }
+            });
         });
     </script>
 </body>
