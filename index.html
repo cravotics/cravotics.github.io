@@ -450,43 +450,41 @@
                             <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
                             <div class="w-3 h-3 rounded-full bg-green-500"></div>
                         </div>
-                        <pre class="text-light overflow-x-auto"><code class="text-sm"># sai_jagadeesh_profile.py
+                        <pre class="text-light overflow-x-auto"><code class="text-sm"># sai_jagadeesh_mk1.py
 
-class RoboticsEngineer:
+import warnings
+
+class SaiJagadeeshMuralikrishnan:
+    """Robotics & Perception Engineer | v2025_grad | Status: Caffeinated + Compiling"""
+
     def __init__(self):
-        self.name = "Sai Jagadeesh Muralikrishnan"
-        self.identity = "Robotics & Perception Engineer"
-        self.core_loop = "Exploring systems that perceive, learn, and act autonomously."
+        self.mode = "Self-Calibrating"
+        self.energy = ["Python", "C++", "ROS 2", "coffee", "panic"]
+        self.stack = ["Reinforcement Learning", "SLAM", "Debugging reality"]
+        self.calibration_accuracy = 0.85  # rest = duct tape
+        self.dependencies = ["gazebo.launch.py", "low light", "hope"]
+        self.mission = "Make robots independent. Until then, I supervise their tantrums."
+        self.task = "Running: ros2 launch life bring_meaning.launch.py"
 
-        self.education = [
-            {
-                "institution": "University of Maryland",
-                "degree": "M.Eng in Robotics",
-                "gpa": 3.78,
-                "year": "2025 (Expected)"
-            },
-            {
-                "institution": "Rajalakshmi Engineering College",
-                "degree": "B.E in Mechatronics",
-                "gpa": 8.7,
-                "year": "2022"
-            }
+    def report_status(self):
+        print(f"[BOOT] Mode: {self.mode}")
+        if "SLAM" in self.stack:
+            print("[INFO] SLAM active with minor weekend drift.")
+        if self.calibration_accuracy < 0.9:
+            warnings.warn("Extrinsics may be slightly... extra.")
+        print("[TASK] " + self.task)
+
+    def future_goals(self):
+        return [
+            "Train drones that don’t crash (often).",
+            "Design robots that work *and* pass code review.",
+            "Survive ROS 2 Foxy... gracefully."
         ]
 
-        self.skills = {
-            "frameworks": ["ROS 2", "OpenCV", "PyTorch"],
-            "languages": ["Python", "C++"],
-            "domains": ["Reinforcement Learning", "SLAM", "Computer Vision", "Embedded Systems"]
-        }
+sai = SaiJagadeeshMuralikrishnan()
+sai.report_status()
 
-        self.current_state = "Seeking opportunities to build intelligent robotic systems"
-        self.objective = "Merge control, perception, and decision-making into deployable autonomy"
-
-        self.version = "v2025_newgrad"
-        self.status = "Ready for deployment"
-
-# This script isn't meant to run.
-# It's meant to be *read* — like the blueprint of a robotics mind in motion.
+# ⚠️ This file has fewer launch errors than my actual robots.
 </code></pre>
                     </div>
                 </div>
