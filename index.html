@@ -114,94 +114,6 @@
             0% { filter: blur(2px); opacity: 0.7; }
             100% { filter: blur(4px); opacity: 1; }
         }
-
-        /* Projects Section Styles */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .project-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.5rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 0.5rem 0.5rem 0 0;
-        }
-        
-        .project-content {
-            padding: 1.5rem;
-            background: rgba(30, 30, 50, 0.8);
-        }
-        
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 255, 204, 0.1);
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            border-radius: 0.25rem;
-            color: #00ffcc;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .project-link:hover {
-            background: rgba(0, 255, 204, 0.2);
-            border-color: rgba(0, 255, 204, 0.5);
-        }
-        
-        .featured-project-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .featured-image {
-            width: 100%;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .featured-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .featured-list li {
-            position: relative;
-            padding-left: 2rem;
-            margin-bottom: 0.75rem;
-        }
-        
-        .featured-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.4rem;
-            width: 1rem;
-            height: 1rem;
-            background-color: #00ffcc;
-            border-radius: 50%;
-        }
     </style>
 </head>
 <body>
@@ -350,111 +262,6 @@
                                 <li>Deployed the model within ROS 2 and Gazebo, integrating real-time sensor fusion (camera + LiDAR) for command execution.</li>
                                 <li>Utilized AWS SageMaker to reduce inference latency by 20%, enabling near real-time command translation.</li>
                             </ul>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Featured Projects -->
-                <section class="card p-6 neon-border">
-                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                        <i class="fas fa-star mr-3"></i> FEATURED PROJECTS
-                    </h2>
-
-                    <!-- MULTI⦿VIZ -->
-                    <div class="featured-project-container mb-8">
-                        <div>
-                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=MULTI⦿VIZ+GUI" alt="MULTI⦿VIZ GUI" class="featured-image">
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-cyan-400 mb-2">MULTI⦿VIZ: Advanced Multi-Robot GUI</h3>
-                            <p class="text-gray-300 mb-4">
-                                A <strong>ROS2-based, user-friendly GUI</strong> designed for seamless multi-robot monitoring, control, and experimentation. 
-                                This powerful tool integrates real-time visualization, teleoperation, voice commands, and custom experimentation displays, 
-                                making it a superior alternative to traditional RViz solutions.
-                            </p>
-                            <ul class="featured-list text-gray-300">
-                                <li><strong>Real-time odometry, LiDAR, and camera feeds</strong></li>
-                                <li><strong>Teleoperation & Waypoint Navigation (x, y, yaw)</strong></li>
-                                <li><strong>Voice Command Interface with TTS Feedback</strong></li>
-                                <li><strong>Custom Experimentation Display (Depth maps, Heat maps, etc.)</strong></li>
-                                <li><strong>Emergency Kill Switch for instant shutdown</strong></li>
-                                <li><strong>Battery monitoring for real-world applications</strong></li>
-                            </ul>
-                            <div class="project-links mt-4">
-                                <a href="https://github.com/cravotics/HRI?tab=readme-ov-file" class="project-link" target="_blank">
-                                    <i class="fas fa-code mr-2"></i> GitHub Repo
-                                </a>
-                                <a href="https://drive.google.com/file/d/1j6JT9HDtINcb3gtojFghZ0qUcL4dRSyY/view" class="project-link" target="_blank">
-                                    <i class="fas fa-video mr-2"></i> Watch Demo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Other Projects Grid -->
-                    <div class="project-grid">
-                        <!-- Multi-Agent Robotic Exploration -->
-                        <div class="project-card card">
-                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=Multi-Agent+Exploration" alt="Multi-Agent Exploration Simulation" class="project-image">
-                            <div class="project-content">
-                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
-                                <p class="text-gray-300 text-sm">
-                                    Designed AI-driven search algorithms using Python and C++ for robot path planning. Integrated AWS RoboMaker and optimized path planning speed by 30%.
-                                </p>
-                                <div class="project-links">
-                                    <a href="https://github.com/varunlakshmanan11/Multi-Robot-Naviagtion-Using-Centralized-and-Decentralized-Monte-Carlo-Tree-Search" class="project-link" target="_blank">
-                                        <i class="fas fa-code mr-1"></i> Code
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Autonomous Navigation Using DQN -->
-                        <div class="project-card card">
-                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=Autonomous+Navigation" alt="Autonomous Navigation Using DQN" class="project-image">
-                            <div class="project-content">
-                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Autonomous Navigation Using Double DQN and Dueling Architecture</h3>
-                                <p class="text-gray-300 text-sm">
-                                    Implemented AI-based navigation with Double DQN, increasing path planning efficiency by 75% in simulated multi-obstacle environments.
-                                </p>
-                                <div class="project-links">
-                                    <a href="https://github.com/cravotics/Intelligent-Robotic-Navigation" class="project-link" target="_blank">
-                                        <i class="fas fa-code mr-1"></i> Code
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Adaptive Text-to-Command Translation -->
-                        <div class="project-card card">
-                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=NLP+Robot" alt="NLP-Based Robot Navigation" class="project-image">
-                            <div class="project-content">
-                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Adaptive Text-to-Command Translation for Robot Navigation (NLP)</h3>
-                                <p class="text-gray-300 text-sm">
-                                    Developed a transformer-based model (T5-Small with LoRA) to convert natural language commands into robot navigation sequences.
-                                </p>
-                                <div class="project-links">
-                                    <a href="https://github.com/suhasnagaraj99/Adaptive-Text-to-Command-Translation-for-Robot-Navigation" class="project-link" target="_blank">
-                                        <i class="fas fa-code mr-1"></i> Code
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Versa-BOT V1.0 -->
-                        <div class="project-card card">
-                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=Versa-BOT" alt="Versa-BOT Mobile Manipulator" class="project-image">
-                            <div class="project-content">
-                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Versa-BOT V1.0 – A Shop-Floor Mobile Manipulator</h3>
-                                <p class="text-gray-300 text-sm">
-                                    Designed a 7-DOF mobile manipulator in ROS 2 with trajectory planning and LIDAR-based obstacle detection.
-                                </p>
-                                <div class="project-links">
-                                    <a href="https://github.com/cravotics/Mobile-Manipulator" class="project-link" target="_blank">
-                                        <i class="fas fa-code mr-1"></i> Code
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -752,7 +559,7 @@
                 });
                 
                 controls.update();
-                renderer.render(sc scene, camera);
+                renderer.render(scene, camera);
             };
             
             // Handle window resize
