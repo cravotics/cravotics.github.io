@@ -1,618 +1,847 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Jagadeesh Muralikrishnan - Robotics Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap');
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #0a0a1a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffcc;
+        }
+        
+        .glow {
+            text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+        }
+        
+        .card {
+            background: rgba(20, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.2);
+            border-color: rgba(0, 255, 204, 0.5);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #00ffcc, transparent);
+        }
+        
+        .skill-bar {
+            background: rgba(0, 255, 204, 0.1);
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .skill-progress {
+            background: linear-gradient(90deg, #00ffcc, #00ccaa);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        #robotCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .hexagon {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffcc, #0099ff, #00ffcc);
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .neon-border:hover::after {
+            opacity: 1;
+            animation: borderGlow 1.5s infinite alternate;
+        }
+        
+        @keyframes borderGlow {
+            0% { filter: blur(2px); opacity: 0.7; }
+            100% { filter: blur(4px); opacity: 1; }
+        }
 
-  <!-- ===== CSS ===== -->
-  <link rel="stylesheet" href="assets/css/styles.css" />
-
-  <!-- ===== BOX ICONS ===== -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"
-    rel="stylesheet"
-  />
-  <link rel="icon" type="image/png" href="assets/img/your-logo.png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
-  <!-- ===== DEV ICONS ===== -->
-  <link
-    rel="stylesheet"
-    type="text/css"
-    href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
-  />
-
-  <title>Sai Jagadeesh's Portfolio</title>
-
+        /* Projects Section Styles */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+            background: rgba(30, 30, 50, 0.8);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 0.25rem;
+            color: #00ffcc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            background: rgba(0, 255, 204, 0.2);
+            border-color: rgba(0, 255, 204, 0.5);
+        }
+        
+        .featured-project-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .featured-image {
+            width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .featured-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .featured-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .featured-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            width: 1rem;
+            height: 1rem;
+            background-color: #00ffcc;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-  <!--===== HEADER =====-->
-  <header class="l-header">
-    <nav class="nav bd-grid">
-      <div>
-        <!-- Replace "your-logo.png" with the actual file name of your logo -->
-        <a href="#" class="nav__logo">
-          <img
-            src="assets/img/your-logo.png"
-            alt="Jagadeesh Logo"
-            class="nav__logo-img"
-          />
-        </a>
-      </div>
-
-      <div class="nav__menu" id="nav-menu">
-        <ul class="nav__list">
-          <li class="nav__item">
-            <a href="#home" class="nav__link active-link">Home</a>
-          </li>
-          <li class="nav__item">
-            <a href="#about" class="nav__link">About</a>
-          </li>
-          <li class="nav__item">
-            <a href="#education" class="nav__link">Education</a>
-          </li>
-          <li class="nav__item">
-            <a href="#experience" class="nav__link">Experience</a>
-          </li>
-          <li class="nav__item">
-            <a href="#projects" class="nav__link">Projects</a>
-          </li>
-          <li class="nav__item">
-            <a href="#skills" class="nav__link">Skills</a>
-          </li>
-          <li class="nav__item">
-            <a href="#publications" class="nav__link">Publications</a>
-          </li>
-          <li class="nav__item">
-            <a href="#contact" class="nav__link">Contact</a>
-          </li>
-          <!-- Within your header navigation (nav__menu), insert a new item: -->
+    <canvas id="robotCanvas"></canvas>
+    
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div class="text-center md:text-left mb-6 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-2 glow">SAI JAGADEESH MURALIKRISHNAN</h1>
+                <h2 class="text-xl md:text-2xl text-cyan-400">Robotics & Perception Engineer</h2>
+            </div>
+            
+            <div class="flex flex-col space-y-2">
+                <div class="flex items-center">
+                    <i class="fas fa-map-marker-alt text-cyan-400 mr-2"></i>
+                    <span>College Park, MD</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-globe text-cyan-400 mr-2"></i>
+                    <a href="https://saijagadeesh.com" class="hover:text-cyan-400">saijagadeesh.com</a>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-envelope text-cyan-400 mr-2"></i>
+                    <a href="mailto:saijagadeesh.muralikrishnan@gmail.com" class="hover:text-cyan-400">saijagadeesh.muralikrishnan@gmail.com</a>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-phone text-cyan-400 mr-2"></i>
+                    <span>+1 571-325-9990</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fab fa-linkedin text-cyan-400 mr-2"></i>
+                    <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" class="hover:text-cyan-400">linkedin.com/in/sai-jagadeesh-m/</a>
+                </div>
+            </div>
+        </header>
         
+        <!-- Summary -->
+        <section class="card p-6 mb-8 neon-border">
+            <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                <i class="fas fa-robot mr-3"></i> SUMMARY
+            </h2>
+            <p class="text-gray-300">
+                Robotics & Perception Engineer with 1.5+ years of hands-on experience in autonomous systems, multi-robot coordination, and embedded platforms. Developed and deployed reinforcement learning pipelines, SLAM, and real-time object detection systems using ROS 2, C++, and Python. Strong background in hardware-software integration, calibration, and simulation frameworks including Gazebo and Isaac Gym. Adept at writing production-level code, optimizing latency, and validating perception systems. Seeking robotics-focused roles involving control, learning, or perception in field-ready or simulation-intensive environments.
+            </p>
+        </section>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Experience -->
+                <section class="card p-6 neon-border">
+                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                        <i class="fas fa-briefcase mr-3"></i> PROFESSIONAL EXPERIENCE
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <!-- KICK Robotics -->
+                        <div class="timeline-item relative pl-6">
+                            <div class="flex justify-between items-start flex-wrap">
+                                <h3 class="text-xl font-bold text-cyan-400">Robotics Engineering Intern</h3>
+                                <span class="text-gray-400">May 2024 – Aug 2024</span>
+                            </div>
+                            <h4 class="text-lg mb-2">KICK Robotics, College Park, MD</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Created modular test scripts in Python/C++ to automate robot fleet validation, cutting test time by 20%.</li>
+                                <li>Optimized robotic control pipelines (C++/Python) for real-time operations, achieving a 15% decrease in system latency.</li>
+                                <li>Integrated stereo & depth calibration (Open3D, CUDA, PyTorch) to boost embedded camera accuracy.</li>
+                                <li>Collaborated on hardware-software integration efforts, ensuring seamless controller and actuator communication with ROS 2.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- TuTr Hyperloop -->
+                        <div class="timeline-item relative pl-6">
+                            <div class="flex justify-between items-start flex-wrap">
+                                <h3 class="text-xl font-bold text-cyan-400">Embedded Systems Engineer</h3>
+                                <span class="text-gray-400">Oct 2022 – Jul 2023</span>
+                            </div>
+                            <h4 class="text-lg mb-2">TuTr Hyperloop, Chennai, India</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Engineered multi-threaded C++ sensor fusion pipelines (LiDAR, IMU, camera) over CAN, reducing latency by 25%.</li>
+                                <li>Deployed control systems integrating PLCs and Vehicle Control Units (VCUs), applying automotive Ethernet for data transfer.</li>
+                                <li>Developed automated CI/CD test workflows using Git and JIRA for VCU software traceability.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Research -->
+                <section class="card p-6 neon-border">
+                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                        <i class="fas fa-flask mr-3"></i> RESEARCH EXPERIENCE
+                    </h2>
+                    
+                    <div class="timeline-item relative pl-6">
+                        <div class="flex justify-between items-start flex-wrap">
+                            <h3 class="text-xl font-bold text-cyan-400">Graduate Research Assistant</h3>
+                            <span class="text-gray-400">Sep 2024 – Present</span>
+                        </div>
+                        <h4 class="text-lg mb-2">Maryland Robotics Center, College Park, MD</h4>
+                        <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                            <li>Benchmarked SLAM Toolbox, RTAB-Map, Cartographer for RGB-D & LiDAR SLAM in ROS 2.</li>
+                            <li>Wrote automated test scripts in Python to measure calibration accuracy and reduce manual verification overhead by 40%.</li>
+                            <li>Deployed and tested advanced image registration methods to enhance sensor fusion reliability in varying operational domains.</li>
+                            <li>Conducting research on aerial object detection and multi-object tracking using YOLOv8, with dataset remapping (VisDrone, RoboScout) and augmentation for UAVs.</li>
+                            <li>Training and optimizing detection models in PyTorch to improve recall and precision for real-world UAV perception tasks.</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- Projects -->
+                <section class="card p-6 neon-border">
+                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                        <i class="fas fa-project-diagram mr-3"></i> PROJECT EXPERIENCE
+                    </h2>
+                    
+                    <div class="space-y-6">
+                        <!-- Multi-Agent -->
+                        <div class="timeline-item relative pl-6">
+                            <h3 class="text-xl font-bold text-cyan-400">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
+                            <h4 class="text-lg mb-2">Robotics and Autonomy Laboratory, UMD | Nov 2023 – Dec 2023</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Developed a multi-robot fleet management system using ROS 2 and Python, enabling collaborative exploration and real-time decision-making for mobile robots.</li>
+                                <li>Integrated AWS RoboMaker to simulate robot behavior in cloud environments, leveraging sensor fusion (camera and LiDAR).</li>
+                                <li>Enhanced computation and storage in a distributed environment, achieving 30% faster path planning.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Autonomous Navigation -->
+                        <div class="timeline-item relative pl-6">
+                            <h3 class="text-xl font-bold text-cyan-400">Autonomous Navigation using Double DQN and Dueling Architecture</h3>
+                            <h4 class="text-lg mb-2">Maryland Applied Graduate Engineering, UMD | Mar 2024 – May 2024</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Improved path planning using Double DQN and Dueling DQN, increasing success rates by 75% in simulated multi-obstacle arenas.</li>
+                                <li>Designed AI-driven search algorithms using Python, C++, and reinforcement learning, optimizing path planning speed by 30%.</li>
+                                <li>Collaborated with data acquisition and robotics planning teams to fuse sensor inputs (camera, LiDAR) into a robust, real-time decision-making system.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- NLP -->
+                        <div class="timeline-item relative pl-6">
+                            <h3 class="text-xl font-bold text-cyan-400">Adaptive Text-to-Command Translation for Robot Navigation</h3>
+                            <h4 class="text-lg mb-2">Maryland Applied Graduate Engineering, UMD | Nov 2024 – Dec 2024</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Architected a transformer-based model (T5-Small + LoRA) achieving 98.5% accuracy for natural language command translation in robotic navigation.</li>
+                                <li>Deployed the model within ROS 2 and Gazebo, integrating real-time sensor fusion (camera + LiDAR) for command execution.</li>
+                                <li>Utilized AWS SageMaker to reduce inference latency by 20%, enabling near real-time command translation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
 
-        </ul>
-      </div>
+                <!-- Featured Projects -->
+                <section class="card p-6 neon-border">
+                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                        <i class="fas fa-star mr-3"></i> FEATURED PROJECTS
+                    </h2>
 
-      <div class="nav__toggle" id="nav-toggle">
-        <i class="bx bx-menu"></i>
-      </div>
-    </nav>
-  </header>
+                    <!-- MULTI⦿VIZ -->
+                    <div class="featured-project-container mb-8">
+                        <div>
+                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=MULTI⦿VIZ+GUI" alt="MULTI⦿VIZ GUI" class="featured-image">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-cyan-400 mb-2">MULTI⦿VIZ: Advanced Multi-Robot GUI</h3>
+                            <p class="text-gray-300 mb-4">
+                                A <strong>ROS2-based, user-friendly GUI</strong> designed for seamless multi-robot monitoring, control, and experimentation. 
+                                This powerful tool integrates real-time visualization, teleoperation, voice commands, and custom experimentation displays, 
+                                making it a superior alternative to traditional RViz solutions.
+                            </p>
+                            <ul class="featured-list text-gray-300">
+                                <li><strong>Real-time odometry, LiDAR, and camera feeds</strong></li>
+                                <li><strong>Teleoperation & Waypoint Navigation (x, y, yaw)</strong></li>
+                                <li><strong>Voice Command Interface with TTS Feedback</strong></li>
+                                <li><strong>Custom Experimentation Display (Depth maps, Heat maps, etc.)</strong></li>
+                                <li><strong>Emergency Kill Switch for instant shutdown</strong></li>
+                                <li><strong>Battery monitoring for real-world applications</strong></li>
+                            </ul>
+                            <div class="project-links mt-4">
+                                <a href="https://github.com/cravotics/HRI?tab=readme-ov-file" class="project-link" target="_blank">
+                                    <i class="fas fa-code mr-2"></i> GitHub Repo
+                                </a>
+                                <a href="https://drive.google.com/file/d/1j6JT9HDtINcb3gtojFghZ0qUcL4dRSyY/view" class="project-link" target="_blank">
+                                    <i class="fas fa-video mr-2"></i> Watch Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-  <main class="l-main">
-    <!--===== HOME =====-->
-    <section class="home bd-grid" id="home">
-      <div class="home__data">
-        <h1 class="home__title">
-          Hi,<br />
-          I'm <span class="home__title-color">Sai Jagadeesh</span><br />
-          Robotics Engineer
-        </h1>
+                    <!-- Other Projects Grid -->
+                    <div class="project-grid">
+                        <!-- Multi-Agent Robotic Exploration -->
+                        <div class="project-card card">
+                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=Multi-Agent+Exploration" alt="Multi-Agent Exploration Simulation" class="project-image">
+                            <div class="project-content">
+                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Designed AI-driven search algorithms using Python and C++ for robot path planning. Integrated AWS RoboMaker and optimized path planning speed by 30%.
+                                </p>
+                                <div class="project-links">
+                                    <a href="https://github.com/varunlakshmanan11/Multi-Robot-Naviagtion-Using-Centralized-and-Decentralized-Monte-Carlo-Tree-Search" class="project-link" target="_blank">
+                                        <i class="fas fa-code mr-1"></i> Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-      </div>
+                        <!-- Autonomous Navigation Using DQN -->
+                        <div class="project-card card">
+                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=Autonomous+Navigation" alt="Autonomous Navigation Using DQN" class="project-image">
+                            <div class="project-content">
+                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Autonomous Navigation Using Double DQN and Dueling Architecture</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Implemented AI-based navigation with Double DQN, increasing path planning efficiency by 75% in simulated multi-obstacle environments.
+                                </p>
+                                <div class="project-links">
+                                    <a href="https://github.com/cravotics/Intelligent-Robotic-Navigation" class="project-link" target="_blank">
+                                        <i class="fas fa-code mr-1"></i> Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-      <!--===== SOCIAL MEDIA LINKS =====-->
-      <div class="social-links">
-        <a href="https://linkedin.com/in/sai-jagadeesh-m" class="social-icon" target="_blank" title="LinkedIn">
-            <i class="bx bxl-linkedin"></i>
-        </a>
-        <a href="https://github.com/cravotics" class="social-icon" target="_blank" title="GitHub">
-            <i class="bx bxl-github"></i>
-        </a>
-        <a href="https://x.com/jagadeeshgame" class="social-icon" target="_blank" title="Twitter/X">
-            <i class="bi bi-twitter-x"></i>
-        </a>
-        <a href="mailto:saijagadeesh.m@outlook.com" class="social-icon" title="Email">
-            <i class="bx bx-envelope"></i>
-        </a>
-        <a href="https://scholar.google.com/citations?user=7ojEOwMAAAAJ&hl=en" class="social-icon" target="_blank" title="Google Scholar">
-            <i class="bx bxs-graduation"></i>
-        </a>
-      </div>
+                        <!-- Adaptive Text-to-Command Translation -->
+                        <div class="project-card card">
+                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=NLP+Robot" alt="NLP-Based Robot Navigation" class="project-image">
+                            <div class="project-content">
+                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Adaptive Text-to-Command Translation for Robot Navigation (NLP)</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Developed a transformer-based model (T5-Small with LoRA) to convert natural language commands into robot navigation sequences.
+                                </p>
+                                <div class="project-links">
+                                    <a href="https://github.com/suhasnagaraj99/Adaptive-Text-to-Command-Translation-for-Robot-Navigation" class="project-link" target="_blank">
+                                        <i class="fas fa-code mr-1"></i> Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-
-
-      <div class="home__img">
-        <svg
-          class="home__blob"
-          viewBox="0 0 479 467"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
-        >
-          <mask id="mask0" mask-type="alpha">
-            <path
-              d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"
-            />
-          </mask>
-          <g mask="url(#mask0)">
-            <path
-              d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"
-            />
-            <!-- Replace "your-photo.png" with your actual profile photo -->
-            <image
-              class="home__blob-img"
-              x="-80"
-              y="50"
-              href="assets/img/your-photo.png"
-            />
-          </g>
-        </svg>
-      </div>
-    </section>
-
-    <!--===== ABOUT (INCLUDING OBJECTIVE) =====-->
-    <section class="about section" id="about">
-      <h2 class="section-title">About</h2>
-
-      <div class="about__container bd-grid">
-        <div class="about__img">
-          <!-- Replace "about.jpg" with any about image you prefer -->
-          <img src="assets/img/about.jpg" alt="About Me" />
+                        <!-- Versa-BOT V1.0 -->
+                        <div class="project-card card">
+                            <img src="https://via.placeholder.com/600x400/0a0a1a/00ffcc?text=Versa-BOT" alt="Versa-BOT Mobile Manipulator" class="project-image">
+                            <div class="project-content">
+                                <h3 class="text-lg font-bold text-cyan-400 mb-2">Versa-BOT V1.0 – A Shop-Floor Mobile Manipulator</h3>
+                                <p class="text-gray-300 text-sm">
+                                    Designed a 7-DOF mobile manipulator in ROS 2 with trajectory planning and LIDAR-based obstacle detection.
+                                </p>
+                                <div class="project-links">
+                                    <a href="https://github.com/cravotics/Mobile-Manipulator" class="project-link" target="_blank">
+                                        <i class="fas fa-code mr-1"></i> Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="space-y-8">
+                <!-- Education -->
+                <section class="card p-6 neon-border">
+                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                        <i class="fas fa-graduation-cap mr-3"></i> EDUCATION
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400">University of Maryland</h3>
+                            <p class="text-gray-300">College Park, MD</p>
+                            <p class="text-gray-400">Expected Graduation: May 2025</p>
+                            <p class="text-gray-300">Master of Engineering in Robotics | GPA: 3.78/4.0</p>
+                            <p class="text-sm text-gray-400 mt-1">Relevant Coursework: Control Systems, Machine Learning, Computer Vision, Perception, Planning</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400">Rajalakshmi Engineering College</h3>
+                            <p class="text-gray-300">Chennai, India</p>
+                            <p class="text-gray-400">Graduated: Jul 2022</p>
+                            <p class="text-gray-300">Bachelor of Engineering in Mechatronics | CGPA: 8.7/10.0</p>
+                            <p class="text-sm text-gray-400 mt-1">Relevant Coursework: Embedded systems, Controls, Power electronics, Computer Vision</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Skills -->
+                <section class="card p-6 neon-border">
+                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
+                        <i class="fas fa-code mr-3"></i> SKILLS
+                    </h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Programming Languages</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Python</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">C++</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CUDA</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Bash (Linux)</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">MATLAB</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Robotics & AI</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">ROS 2</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">SLAM</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Reinforcement Learning</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Motion Planning</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">AMCL</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Sensor Fusion</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Mujoco</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Isaac Lab</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Deep Learning</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">PyTorch</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">TensorFlow</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Keras</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Transformers</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">LoRA</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">LLMs</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Simulation & Control</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Gazebo</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Isaac Sim</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Isaac Gym</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">pyBullet</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Distributed Control</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CAD</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Computer Vision</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">OpenCV</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">LiDAR Processing</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">RGB Processing</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Image Registration</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">YOLOv8</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">PCL</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Open3D</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Networking & Embedded</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Socket Programming</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Arduino</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Raspberry Pi</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">STM32</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">ESP32</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CAN</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">DevOps & Cloud</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CI/CD</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Docker</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">AWS</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Azure</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">GCP</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Git</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">GitHub</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Soft Skills</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Technical Documentation</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Cross-functional Collaboration</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Communication</span>
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Project Management</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 3D Robot Visual -->
+                <div class="card p-6 h-64 flex items-center justify-center neon-border">
+                    <div id="robotContainer" class="w-full h-full"></div>
+                </div>
+            </div>
         </div>
-
-        <div>
-          <h2 class="about__subtitle">I'm Sai Jagadeesh</h2>
-          <p class="about__text">
-            Graduate Robotics Engineer with experience in autonomous systems, multi-robot coordination, and deep learning-driven perception. Skilled in ROS 2, SLAM, and scalable software solutions for real-world deployment. Worked across robotics, software, and ML teams to integrate perception pipelines in real-world robotic applications. I am currently working on middleware experiments for improving real-time communication in autonomous perception systems, focusing on ROS 2, DDS, and inter-process communication to enhance reliability and performance.<br /><br />
-
-            <strong>Objective:</strong> To secure the Entry-level full-time <em>Robotics</em> (Summer 2025) and apply my academic
-            research experience in software, computer vision, planning, and ML to develop
-            cutting-edge robotic solutions that transform fulfillment processes.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!--===== EDUCATION SECTION =====-->
-    <section class="section" id="education">
-      <h2 class="section-title">Education</h2>
-
-      <div class="education__container bd-grid">
-          
-          <!-- UMD (Master's) -->
-          <div class="education__content">
-              <div class="edu-logo">
-                  <img src="assets/img/R.png" alt="UMD Logo">
-              </div>
-              <div class="edu-text">
-                  <h3 class="education__title">University of Maryland, College Park</h3>
-                  <span class="education__subtitle">Master of Engineering in Robotics</span>
-                  <p class="education__dates">Expected May 2025 | CGPA: 3.78/4.00</p>
-                  <p class="education__description">
-                      <strong>Relevant Coursework:</strong> Computer Vision, Machine Learning, Reinforcement Learning, Robot Dynamics, Optimization.
-                  </p>
-              </div>
-          </div>
-
-          <!-- REC (Bachelor's) -->
-          <div class="education__content">
-              <div class="edu-logo">
-                  <img src="assets/img/logo_rec.png" alt="Rajalakshmi Engineering College Logo">
-              </div>
-              <div class="edu-text">
-                  <h3 class="education__title">Rajalakshmi Engineering College, Chennai</h3>
-                  <span class="education__subtitle">Bachelor of Engineering in Mechatronics</span>
-                  <p class="education__dates">May 2022 | CGPA: 8.7/10.0</p>
-                  <p class="education__description">
-                      <strong>Relevant Coursework:</strong> Control Systems, Embedded Systems, Robotics, AI & Machine Learning, Industrial Automation.
-                  </p>
-              </div>
-          </div>
-      </div>
-    </section>
-
-
-    <!--===== EXPERIENCE =====-->
-    <section class="experience section" id="experience">
-      <h2 class="section-title">Professional Experience</h2>
-
-      <div class="experience__container bd-grid">
-        <!-- Research Assistant -->
-        <div class="experience__content">
-          <h3 class="experience__title">Research Assistant</h3>
-          <span class="experience__company"
-            >University of Maryland, College Park</span
-          >
-          <p class="experience__dates">Aug 2024 – Present</p>
-          <p class="experience__description">
-            <ul>
-              <li>
-                Developing and calibrating advanced computer vision algorithms
-                for Blaze Time-of-Flight cameras to enhance depth perception on
-                Boston Dynamics Spot robots.
-              </li>
-              <li>
-                Implemented novel multi-sensor extrinsic calibration strategy
-                between RGB and intensity images, boosting depth accuracy by
-                15%.
-              </li>
-              <li>
-                Integrating Large Language Models (LLMs) to improve real-time
-                sensor data analysis for medical triage (DARPA Triage Challenge).
-              </li>
-            </ul>
-          </p>
-        </div>
-
-        <!-- Perception Engineer Intern -->
-        <div class="experience__content">
-          <h3 class="experience__title">Perception Engineer Intern</h3>
-          <span class="experience__company">KICK Robotics, College Park, MD</span>
-          <p class="experience__dates">May 2024 – Aug 2024</p>
-          <p class="experience__description">
-            <ul>
-              <li>
-                Designed and integrated YOLOv8-based pipelines for real-time
-                object detection in dynamic warehouse/agricultural environments.
-              </li>
-              <li>
-                Optimized ROS2-based navigation algorithms, reducing navigation
-                error by 10%.
-              </li>
-              <li>
-                Collaborated with cross-functional teams to deploy improved
-                perception solutions in production-ready robotic systems.
-              </li>
-            </ul>
-          </p>
-        </div>
-
-        <!-- Graduate Teaching Assistant -->
-        <div class="experience__content">
-          <h3 class="experience__title">Graduate Teaching Assistant</h3>
-          <span class="experience__company"
-            >University of Maryland, College Park</span
-          >
-          <p class="experience__dates">Aug 2024 – Present</p>
-          <p class="experience__description">
-            <ul>
-              <li>
-                Assisted in Robotics course for the Applied Machine Learning
-                program, guiding students through UAV robotics and ML concepts.
-              </li>
-              <li>
-                Provided feedback on student projects, ensuring robust
-                implementations of deep learning pipelines.
-              </li>
-            </ul>
-          </p>
-        </div>
-
-        <!-- Embedded Systems Engineer -->
-        <div class="experience__content">
-          <h3 class="experience__title">Embedded Systems Engineer</h3>
-          <span class="experience__company"
-            >TuTr Hyperloop (IIT-Madras Startup), Chennai</span
-          >
-          <p class="experience__dates">Jul 2022 – Dec 2022</p>
-          <p class="experience__description">
-            <ul>
-              <li>
-                Programmed real-time communication protocols using C++ and CAN
-                for high-speed transport modules, reducing system latency by
-                20%.
-              </li>
-              <li>
-                Deployed embedded software solutions for next-gen Hyperloop
-                prototypes, ensuring reliable and efficient performance.
-              </li>
-            </ul>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Place this in <main> somewhere above your #projects section -->
-    <!--===== FEATURED PROJECT: MULTI⦿VIZ =====-->
-    <section class="featured-project section" id="featured-project">
-      <h2 class="section-title">Featured Project</h2>
-      
-      <div class="featured-container">
-        <div class="featured-img-container">
-          <img src="assets/img/multiviz.gif" alt="MULTI⦿VIZ GUI" class="featured-img floating">
-        </div>
-
-        <div class="featured-content">
-          <h3 class="featured-title">MULTI⦿VIZ: Advanced Multi-Robot GUI</h3>
-          <p class="featured-description">
-            A <strong>ROS2-based, user-friendly GUI</strong> designed for seamless **multi-robot monitoring, control, and experimentation**. 
-            This powerful tool integrates real-time **visualization, teleoperation, voice commands, and custom experimentation displays**, making it a superior alternative to traditional RViz solutions.
-          </p>
-          <ul class="featured-list">
-            <li>📡 <strong>Real-time odometry, LiDAR, and camera feeds</strong></li>
-            <li>🎮 <strong>Teleoperation & Waypoint Navigation (x, y, yaw)</strong></li>
-            <li>🗣️ <strong>Voice Command Interface with TTS Feedback</strong></li>
-            <li>🛠️ <strong>Custom Experimentation Display (Depth maps, Heat maps, etc.)</strong></li>
-            <li>🚨 <strong>Emergency Kill Switch for instant shutdown</strong></li>
-            <li>🔋 <strong>Battery monitoring for real-world applications</strong></li>
-          </ul>
-          
-          <div class="featured-buttons">
-            <a href="https://github.com/cravotics/HRI?tab=readme-ov-file" class="button" target="_blank">🔗 GitHub Repo</a>
-            <a href="https://drive.google.com/file/d/1j6JT9HDtINcb3gtojFghZ0qUcL4dRSyY/view" class="button" target="_blank">🎥 Watch Demo</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-    <!--===== PROJECTS =====-->
-    <section class="section" id="projects">
-      <h2 class="section-title">Projects</h2>
-
-      <div class="work__container bd-grid">
-          
-          <!-- Multi-Agent Robotic Exploration -->
-          <a href="https://github.com/varunlakshmanan11/Multi-Robot-Naviagtion-Using-Centralized-and-Decentralized-Monte-Carlo-Tree-Search" target="_blank" class="work__content-link">
-
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/MCTS.gif" alt="Multi-Agent Exploration Simulation">
-              </div>
-              <h3 class="work__title">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
-              <p class="work__description">
-                  Designed AI-driven search algorithms using Python and C++ for robot path planning. Integrated AWS RoboMaker and optimized path planning speed by 30%.
-              </p>
-          </div>
-          </a>
-
-          <!-- Autonomous Navigation Using DQN -->
-          <a href="https://github.com/cravotics/Intelligent-Robotic-Navigation" target="_blank" class="work__content-link">
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/work2.gif" alt="Autonomous Navigation Using DQN">
-              </div>
-              <h3 class="work__title">Autonomous Navigation Using Double DQN and Dueling Architecture</h3>
-              <p class="work__description">
-                  Implemented AI-based navigation with Double DQN, increasing path planning efficiency by 75% in simulated multi-obstacle environments.
-              </p>
-          </div>
-          </a>
-
-          <!-- Adaptive Text-to-Command Translation -->
-          <a href="https://github.com/suhasnagaraj99/Adaptive-Text-to-Command-Translation-for-Robot-Navigation" target="_blank" class="work__content-link">
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/nlp.gif" alt="NLP-Based Robot Navigation">
-              </div>
-              <h3 class="work__title">Adaptive Text-to-Command Translation for Robot Navigation (NLP)</h3>
-              <p class="work__description">
-                  Developed a transformer-based model (T5-Small with LoRA) to convert natural language commands into robot navigation sequences.
-              </p>
-          </div>
-          </a>
-
-          <!-- Versa-BOT V1.0 -->
-          <a href="https://github.com/cravotics/Mobile-Manipulator" target="_blank" class="work__content-link">
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/work1.gif" alt="Versa-BOT Mobile Manipulator">
-              </div>
-              <h3 class="work__title">Versa-BOT V1.0 – A Shop-Floor Mobile Manipulator</h3>
-              <p class="work__description">
-                  Designed a 7-DOF mobile manipulator in ROS 2 with trajectory planning and LIDAR-based obstacle detection.
-              </p>
-          </div>
-          </a>
-
-          <!-- MoveIt Motion Planning -->
-          <a href="https://github.com/cravotics/Moveit/tree/main" target="_blank" class="work__content-link">
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/move_it.gif" alt="MoveIt Motion Planning">
-              </div>
-              <h3 class="work__title">Implementation of MoveIt Motion Planning on the Panda Robotic Arm</h3>
-              <p class="work__description">
-                  Developed a MoveIt-based pick-and-place operation in ROS 2 Humble with trajectory execution in RViz2.
-              </p>
-          </div>
-          </a>
-
-          <!-- Autonomous Gate Detection -->
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/droneit.gif" alt="Gate Detection for Drone">
-              </div>
-              <h3 class="work__title">Autonomous Gate Detection for Drone Navigation</h3>
-              <p class="work__description">
-                  Developed a ROS-based gate detection pipeline for real-time navigation of a drone using MAVROS and PX4.
-              </p>
-          </div>
-
-          <!-- Wireless Animatronic Hand -->
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/animatronic.gif" alt="Wireless Animatronic Hand">
-              </div>
-              <h3 class="work__title">Wireless Animatronic Hand Using Infrared Sensor</h3>
-              <p class="work__description">
-                  Designed a wireless animatronic hand using infrared sensors, published in ICDSMLA 2021, achieving Best Paper (Third Place).
-              </p>
-          </div>
-
-          <!-- Mobile Robot Hardware Challenge -->
-          <a href="https://github.com/cravotics/Turtlebot-Challenge" target="_blank" class="work__content-link"> 
-          <div class="work__content">
-              <div class="work__img">
-                  <img src="assets/img/challenge.gif" alt="TurtleBot Lane Following">
-              </div>
-              <h3 class="work__title">Mobile Robot Hardware Challenge</h3>
-              <p class="work__description">
-                  Created a perception pipeline using ROS 2 and OpenCV for dynamic obstacle detection and lane-following.
-              </p>
-          </div>
-          </a>
-
-      </div>
-    </section>
-
-
-    <!--===== SKILLS SECTION =====-->
-    <section class="skills section" id="skills">
-      <h2 class="section-title">Skills</h2>
-
-      <div class="skills__container bd-grid">
-
-        <!-- Programming Languages & Tools -->
-        <div class="skills-category">
-          <h3>Programming Languages & Tools</h3>
-          <p>I develop robust applications using a variety of languages and development tools.</p>
-          <div class="skills-logos">
-            <div class="logo-item"><img src="assets/img/python.png" alt="Python Logo" /><span>Python</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-matlab-48.png" alt="MATLAB Logo" /><span>MATLAB</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-c-programming-48.png" alt="C Logo" /><span>C</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-c-48.png" alt="C++ Logo" /><span>C++</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-bash-48.png" alt="Bash Logo" /><span>Bash</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-nvidia-48.png" alt="NVIDIA CUDA Logo" /><span>CUDA</span></div>
-          </div>
-        </div>
-
-        <!-- Software & Systems -->
-        <div class="skills-category">
-          <h3>Software & Systems</h3>
-          <p>I build scalable solutions using modern DevOps practices, cloud services, and containerization.</p>
-          <div class="skills-logos">
-            <div class="logo-item"><img src="assets/img/icons8-aws-48.png" alt="AWS Logo" /><span>AWS</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-docker-48.png" alt="Docker Logo" /><span>Docker</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-git-48.png" alt="Git Logo" /><span>Git</span></div>
-          </div>
-        </div>
-
-        <!-- Robotics & Machine Learning -->
-        <div class="skills-category">
-          <h3>Robotics & Machine Learning</h3>
-          <p>I integrate advanced robotics frameworks and machine learning libraries to deliver intelligent solutions.</p>
-          <div class="skills-logos">
-            <div class="logo-item"><img src="assets/img/ros.png" alt="ROS Logo" /><span>ROS</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-pytorch-48.png" alt="PyTorch Logo" /><span>PyTorch</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-tensorflow-48.png" alt="TensorFlow Logo" /><span>TensorFlow</span></div>
-            <div class="logo-item"><img src="assets/img/icons8-opencv-48.png" alt="OpenCV Logo" /><span>OpenCV</span></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!--===== PUBLICATIONS & AWARDS =====-->
-    <!--===== PUBLICATIONS & AWARDS =====-->
-    <!--===== PUBLICATIONS & AWARDS =====-->
-    <section class="section" id="publications">
-      <h2 class="section-title">Publications &amp; Awards</h2>
-      <div class="bd-grid">
-
-        <!-- Publication 1 -->
-        <div class="publication__content">
-          <h3 class="publication__title">
-            Wireless Animatronic Hand Using Infrared Sensor (2023)
-          </h3>
-          <p class="publication__description">
-            <em>ICDSMLA 2021: 3rd International Conference on Data Science,
-            Machine Learning and Applications</em><br />
-            <strong>Authors:</strong> M Balakarthikeyan, D Rajesh,
-            <strong>M Sai Jagadeesh</strong>, G Santhosh Kumar<br />
-            <strong>Abstract:</strong> Designed a wireless animatronic hand
-            using an infrared sensor for data transmission, enabling pick-and-
-            place operations and reducing human risk. Published by Springer
-            Nature Singapore.
-          </p>
-          <!-- Embedded Springer Link -->
-          <p class="publication__link">
-            📄 <a href="https://link.springer.com/chapter/10.1007/978-981-19-5936-3_40" target="_blank">
-              Read on Springer 📖
-            </a>
-          </p>
-
-        </div>
-
-        <!-- Best Paper Award -->
-        <div class="publication__content">
-          <h3 class="publication__title">Best Paper Award (Third Place)</h3>
-          <p class="publication__description">
-            2021 | International Conference on Data Science, Machine Learning & Applications
-          </p>
-          <!-- Award Certificate Image -->
-          <div class="award__certificate">
-            <img id="certificateImage" src="assets/img/award.png" alt="Best Paper Award Certificate">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Lightbox for Fullscreen Certificate -->
-    <div class="lightbox" id="lightbox">
-      <img id="lightboxImage" src="assets/img/award.png" alt="Best Paper Award Certificate">
     </div>
-
-
-    <!--===== CONTACT =====-->
-    <!--===== CONTACT SECTION =====-->
-    <section class="contact section" id="contact">
-        <h2 class="section-title">Get in Touch</h2>
-        <p class="contact-subtitle">I'd love to hear from you! Fill out the form below and I'll get back to you soon.</p>
     
-        <div class="contact__container">
-            <form id="form" class="contact__form">
-                <div class="form-group">
-                    <label for="from_name">Full Name</label>
-                    <input type="text" id="from_name" name="from_name" placeholder="Your Full Name" required>
-                </div>
-    
-                <div class="form-group">
-                    <label for="reply_to">Email Address</label>
-                    <input type="email" id="reply_to" name="reply_to" placeholder="Your Email Address" required>
-                </div>
-    
-    
-                <div class="form-group full-width">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
-                </div>
-    
-                <div class="form-group full-width">
-                    <button type="submit" id="button" class="contact__button">Send Message 🚀</button>
-                </div>
-            </form>
-        </div>
-    </section>
-  
-  
-
-
-  </main>
-
-  
-
-  <!--===== FOOTER =====-->
-  <footer class="footer">
-    <div class="foot__logo-img-container">
-      <img
-        src="assets/img/your-logo.png"
-        alt="foot"
-        class="foot__logo-img"
-      />
-    </div>
-
-    <p class="copyright">© 2024 Sai Jagadeesh Muralikrishnan. All rights reserved.</p>
-  </footer>
-
-  <!--===== SCROLL REVEAL (Optional) =====-->
-  <script src="https://unpkg.com/scrollreveal"></script>
-  <!-- EmailJS Library -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-  <!-- Initialize EmailJS -->
-  <script type="text/javascript">
-    emailjs.init("BNIGQSJiCAS8wDwFi"); // Replace with your actual public key
-  </script>
-
-  <!-- Contact Form JavaScript -->
-  <script src="assets/js/main.js"></script>
-
-  
-
-
-  <!--===== MAIN JS =====-->
-  <script src="assets/js/main.js"></script>
+    <script>
+        // 3D Robot Visualization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set up the scene
+            const container = document.getElementById('robotContainer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x00ffcc, 0.3);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0x00ccff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            const pointLight = new THREE.PointLight(0xff00cc, 0.5, 10);
+            pointLight.position.set(0, 0, 3);
+            scene.add(pointLight);
+            
+            // Create a robot-like structure
+            const createRobot = () => {
+                const group = new THREE.Group();
+                
+                // Base
+                const baseGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 32);
+                const baseMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x333333,
+                    emissive: 0x111111,
+                    specular: 0x00ffcc,
+                    shininess: 30
+                });
+                const base = new THREE.Mesh(baseGeometry, baseMaterial);
+                base.rotation.x = Math.PI / 2;
+                group.add(base);
+                
+                // Body
+                const bodyGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.4);
+                const bodyMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x444444,
+                    emissive: 0x222222,
+                    specular: 0x0099ff,
+                    shininess: 50
+                });
+                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+                body.position.y = 0.6;
+                group.add(body);
+                
+                // Head
+                const headGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+                const headMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0x555555,
+                    emissive: 0x333333,
+                    specular: 0xcc00ff,
+                    shininess: 100
+                });
+                const head = new THREE.Mesh(headGeometry, headMaterial);
+                head.position.y = 1.1;
+                group.add(head);
+                
+                // Eyes
+                const eyeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
+                const eyeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ffcc, emissive: 0x00aa88 });
+                
+                const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+                leftEye.position.set(-0.15, 1.15, 0.25);
+                group.add(leftEye);
+                
+                const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
+                rightEye.position.set(0.15, 1.15, 0.25);
+                group.add(rightEye);
+                
+                // Arms
+                const armGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.6, 16);
+                const armMaterial = new THREE.MeshPhongMaterial({ color: 0x666666 });
+                
+                const leftArm = new THREE.Mesh(armGeometry, armMaterial);
+                leftArm.position.set(-0.5, 0.6, 0);
+                leftArm.rotation.z = Math.PI / 4;
+                group.add(leftArm);
+                
+                const rightArm = new THREE.Mesh(armGeometry, armMaterial);
+                rightArm.position.set(0.5, 0.6, 0);
+                rightArm.rotation.z = -Math.PI / 4;
+                group.add(rightArm);
+                
+                // Wheels
+                const wheelGeometry = new THREE.TorusGeometry(0.2, 0.05, 16, 32);
+                const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 });
+                
+                const leftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+                leftWheel.position.set(-0.3, 0, 0);
+                leftWheel.rotation.x = Math.PI / 2;
+                group.add(leftWheel);
+                
+                const rightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+                rightWheel.position.set(0.3, 0, 0);
+                rightWheel.rotation.x = Math.PI / 2;
+                group.add(rightWheel);
+                
+                // Antenna
+                const antennaGeometry = new THREE.CylinderGeometry(0.02, 0.02, 0.4, 8);
+                const antennaMaterial = new THREE.MeshPhongMaterial({ color: 0x00ffcc });
+                const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+                antenna.position.set(0, 1.3, 0);
+                group.add(antenna);
+                
+                const antennaBallGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+                const antennaBallMaterial = new THREE.MeshPhongMaterial({ 
+                    color: 0xff00cc,
+                    emissive: 0x880044,
+                    emissiveIntensity: 0.5
+                });
+                const antennaBall = new THREE.Mesh(antennaBallGeometry, antennaBallMaterial);
+                antennaBall.position.set(0, 1.5, 0);
+                group.add(antennaBall);
+                
+                return group;
+            };
+            
+            const robot = createRobot();
+            scene.add(robot);
+            
+            // Position camera
+            camera.position.z = 3;
+            
+            // Add controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = false;
+            controls.enablePan = false;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 1;
+            
+            // Animation loop
+            const animate = function() {
+                requestAnimationFrame(animate);
+                
+                // Rotate wheels
+                robot.children.forEach(child => {
+                    if (child.geometry && child.geometry.type === 'TorusGeometry') {
+                        child.rotation.z += 0.02;
+                    }
+                });
+                
+                controls.update();
+                renderer.render(sc scene, camera);
+            };
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+            
+            animate();
+        });
+        
+        // Background 3D effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('robotCanvas');
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Create floating tech elements
+            const elements = [];
+            const colors = [0x00ffcc, 0x0099ff, 0xff00cc, 0xffff00];
+            
+            for (let i = 0; i < 50; i++) {
+                const geometry = Math.random() > 0.5 ? 
+                    new THREE.BoxGeometry(0.1, 0.1, 0.1) : 
+                    new THREE.SphereGeometry(0.05, 16, 16);
+                
+                const material = new THREE.MeshBasicMaterial({
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                const element = new THREE.Mesh(geometry, material);
+                
+                element.position.x = (Math.random() - 0.5) * 20;
+                element.position.y = (Math.random() - 0.5) * 20;
+                element.position.z = (Math.random() - 0.5) * 20;
+                
+                element.velocity = new THREE.Vector3(
+                    (Math.random() - 0.5) * 0.01,
+                    (Math.random() - 0.5) * 0.01,
+                    (Math.random() - 0.5) * 0.01
+                );
+                
+                scene.add(element);
+                elements.push(element);
+            }
+            
+            // Animation loop
+            const animate = function() {
+                requestAnimationFrame(animate);
+                
+                elements.forEach(element => {
+                    element.position.add(element.velocity);
+                    
+                    // Bounce off imaginary walls
+                    if (Math.abs(element.position.x) > 10) element.velocity.x *= -1;
+                    if (Math.abs(element.position.y) > 10) element.velocity.y *= -1;
+                    if (Math.abs(element.position.z) > 10) element.velocity.z *= -1;
+                    
+                    element.rotation.x += 0.01;
+                    element.rotation.y += 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+        });
+        
+        // Interactive elements
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 20px rgba(0, 255, 204, 0.3)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+    </script>
 </body>
 </html>
