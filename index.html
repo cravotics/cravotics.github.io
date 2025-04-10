@@ -3,41 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sai Jagadeesh Muralikrishnan - Robotics Engineer</title>
+    <title>Sai Jagadeesh Muralikrishnan | Robotics Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00f0ff',
+                        secondary: '#0072ff',
+                        dark: '#0a192f',
+                        light: '#ccd6f6',
+                        accent: '#64ffda'
+                    },
+                    fontFamily: {
+                        'sans': ['"Roboto Mono"', 'monospace'],
+                        'display': ['"Rajdhani"', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 8s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Roboto+Mono:wght@300;400;500;700&display=swap');
         
         body {
+            background-color: #0a192f;
+            color: #ccd6f6;
             font-family: 'Roboto Mono', monospace;
-            background-color: #0a0a1a;
-            color: #e0e0e0;
             overflow-x: hidden;
         }
         
-        h1, h2, h3, h4 {
-            font-family: 'Orbitron', sans-serif;
-            color: #00ffcc;
+        .code-block {
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 5px;
+            position: relative;
         }
         
-        .glow {
-            text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00f0ff, #64ffda);
         }
         
-        .card {
-            background: rgba(20, 20, 40, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 204, 0.2);
-            transition: all 0.3s ease;
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
         }
         
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 204, 0.2);
-            border-color: rgba(0, 255, 204, 0.5);
+        .gradient-text {
+            background: linear-gradient(90deg, #00f0ff, #0072ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #64ffda;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .moving-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(40px);
         }
         
         .timeline-item::before {
@@ -47,607 +121,730 @@
             top: 0;
             width: 2px;
             height: 100%;
-            background: linear-gradient(to bottom, #00ffcc, transparent);
+            background: linear-gradient(to bottom, #00f0ff, #0072ff);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #64ffda;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.7);
         }
         
         .skill-bar {
-            background: rgba(0, 255, 204, 0.1);
-            height: 8px;
-            border-radius: 4px;
+            height: 6px;
+            background: rgba(100, 255, 218, 0.2);
+            border-radius: 3px;
         }
         
         .skill-progress {
-            background: linear-gradient(90deg, #00ffcc, #00ccaa);
             height: 100%;
-            border-radius: 4px;
-            transition: width 1s ease;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #00f0ff, #64ffda);
         }
         
-        #robotCanvas {
-            position: fixed;
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #64ffda }
+        }
+        
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid #64ffda;
+            white-space: nowrap;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -10px rgba(0, 240, 255, 0.2);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(0, 114, 255, 0.1) 100%);
             z-index: -1;
-            opacity: 0.3;
-        }
-        
-        .hexagon {
-            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
-        }
-        
-        .neon-border {
-            position: relative;
-        }
-        
-        .neon-border::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00ffcc, #0099ff, #00ffcc);
-            z-index: -1;
-            border-radius: inherit;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
         }
         
-        .neon-border:hover::after {
+        .project-card:hover::before {
             opacity: 1;
-            animation: borderGlow 1.5s infinite alternate;
-        }
-        
-        @keyframes borderGlow {
-            0% { filter: blur(2px); opacity: 0.7; }
-            100% { filter: blur(4px); opacity: 1; }
         }
     </style>
 </head>
-<body>
-    <canvas id="robotCanvas"></canvas>
-    
-    <div class="container mx-auto px-4 py-12 max-w-6xl">
-        <!-- Header -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12">
-            <div class="text-center md:text-left mb-6 md:mb-0">
-                <h1 class="text-4xl md:text-5xl font-bold mb-2 glow">SAI JAGADEESH MURALIKRISHNAN</h1>
-                <h2 class="text-xl md:text-2xl text-cyan-400">Robotics & Perception Engineer</h2>
-            </div>
-            
-            <div class="flex flex-col space-y-2">
-                <div class="flex items-center">
-                    <i class="fas fa-map-marker-alt text-cyan-400 mr-2"></i>
-                    <span>College Park, MD</span>
+<body class="min-h-screen">
+    <!-- Moving background elements -->
+    <div class="moving-bg">
+        <div class="bg-element bg-primary w-64 h-64 top-1/4 left-1/4 animate-float"></div>
+        <div class="bg-element bg-secondary w-80 h-80 top-1/3 right-1/4 animate-float-reverse"></div>
+        <div class="bg-element bg-accent w-96 h-96 bottom-1/4 left-1/3 animate-pulse-slow"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-dark bg-opacity-90 backdrop-blur-sm z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <a href="#" class="ml-4 text-xl font-bold gradient-text">Sai_Jagadeesh</a>
                 </div>
-                <div class="flex items-center">
-                    <i class="fas fa-globe text-cyan-400 mr-2"></i>
-                    <a href="https://saijagadeesh.com" class="hover:text-cyan-400">saijagadeesh.com</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="nav-link text-light hover:text-accent transition-colors">About</a>
+                    <a href="#experience" class="nav-link text-light hover:text-accent transition-colors">Experience</a>
+                    <a href="#projects" class="nav-link text-light hover:text-accent transition-colors">Projects</a>
+                    <a href="#skills" class="nav-link text-light hover:text-accent transition-colors">Skills</a>
+                    <a href="#contact" class="nav-link text-light hover:text-accent transition-colors">Contact</a>
                 </div>
-                <div class="flex items-center">
-                    <i class="fas fa-envelope text-cyan-400 mr-2"></i>
-                    <a href="mailto:saijagadeesh.muralikrishnan@gmail.com" class="hover:text-cyan-400">saijagadeesh.muralikrishnan@gmail.com</a>
-                </div>
-                <div class="flex items-center">
-                    <i class="fas fa-phone text-cyan-400 mr-2"></i>
-                    <span>+1 571-325-9990</span>
-                </div>
-                <div class="flex items-center">
-                    <i class="fab fa-linkedin text-cyan-400 mr-2"></i>
-                    <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" class="hover:text-cyan-400">linkedin.com/in/sai-jagadeesh-m/</a>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-light hover:text-accent focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
-        </header>
-        
-        <!-- Summary -->
-        <section class="card p-6 mb-8 neon-border">
-            <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                <i class="fas fa-robot mr-3"></i> SUMMARY
-            </h2>
-            <p class="text-gray-300">
-                Robotics & Perception Engineer with 1.5+ years of hands-on experience in autonomous systems, multi-robot coordination, and embedded platforms. Developed and deployed reinforcement learning pipelines, SLAM, and real-time object detection systems using ROS 2, C++, and Python. Strong background in hardware-software integration, calibration, and simulation frameworks including Gazebo and Isaac Gym. Adept at writing production-level code, optimizing latency, and validating perception systems. Seeking robotics-focused roles involving control, learning, or perception in field-ready or simulation-intensive environments.
-            </p>
-        </section>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Column -->
-            <div class="lg:col-span-2 space-y-8">
-                <!-- Experience -->
-                <section class="card p-6 neon-border">
-                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                        <i class="fas fa-briefcase mr-3"></i> PROFESSIONAL EXPERIENCE
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark bg-opacity-95 px-6 py-4">
+            <div class="flex flex-col space-y-4">
+                <a href="#about" class="nav-link text-light hover:text-accent transition-colors">About</a>
+                <a href="#experience" class="nav-link text-light hover:text-accent transition-colors">Experience</a>
+                <a href="#projects" class="nav-link text-light hover:text-accent transition-colors">Projects</a>
+                <a href="#skills" class="nav-link text-light hover:text-accent transition-colors">Skills</a>
+                <a href="#contact" class="nav-link text-light hover:text-accent transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center pt-20">
+        <div class="max-w-7xl mx-auto px-6 py-20 md:py-32">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        <span class="text-light">Hi, I'm</span>
+                        <span class="gradient-text"> Sai Jagadeesh</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-4xl font-bold mb-6 text-light">
+                        <span class="typing-animation">Robotics & Perception Engineer</span>
                     </h2>
-                    
-                    <div class="space-y-6">
-                        <!-- KICK Robotics -->
-                        <div class="timeline-item relative pl-6">
-                            <div class="flex justify-between items-start flex-wrap">
-                                <h3 class="text-xl font-bold text-cyan-400">Robotics Engineering Intern</h3>
-                                <span class="text-gray-400">May 2024 – Aug 2024</span>
+                    <p class="text-lg text-light mb-8 max-w-lg">
+                        Developing autonomous systems, multi-robot coordination, and embedded platforms with expertise in ROS 2, C++, and Python.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="px-6 py-3 bg-transparent border-2 border-accent text-accent rounded hover:bg-accent hover:bg-opacity-10 transition-all">
+                            Contact Me
+                        </a>
+                        <a href="#projects" class="px-6 py-3 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all">
+                            View Projects
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-accent shadow-lg glow-text">
+                            <img src="assets/your_phot.png" alt="Sai Jagadeesh" class="w-full h-full object-cover">
+                        </div>
+                        <div class="absolute -bottom-5 -right-5 bg-dark p-4 rounded-lg border border-primary shadow-lg">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-green-500 mr-2 animate-pulse"></div>
+                                <span class="text-sm text-light">Available for work</span>
                             </div>
-                            <h4 class="text-lg mb-2">KICK Robotics, College Park, MD</h4>
-                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">About Me</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <div class="code-block p-6 mb-8">
+                        <div class="flex mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <pre class="text-light overflow-x-auto"><code class="text-sm">// Sai_Jagadeesh_Profile.js
+
+const sai = {
+    name: "Sai Jagadeesh Muralikrishnan",
+    title: "Robotics & Perception Engineer",
+    education: [
+        {
+            institution: "University of Maryland",
+            degree: "Master of Engineering in Robotics",
+            year: "2025 (Expected)",
+            gpa: "3.78/4.0"
+        },
+        {
+            institution: "Rajalakshmi Engineering College",
+            degree: "Bachelor of Engineering in Mechatronics",
+            year: "2022",
+            gpa: "8.7/10.0"
+        }
+    ],
+    skills: [
+        "ROS 2", "C++", "Python", "Reinforcement Learning",
+        "SLAM", "Computer Vision", "Embedded Systems"
+    ],
+    currently: "Seeking robotics-focused roles involving control, 
+                learning, or perception"
+};
+
+console.log(sai);</code></pre>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-bold mb-4 text-light">Who Am I?</h3>
+                    <p class="text-light mb-6">
+                        I'm a Robotics & Perception Engineer with 1.5+ years of hands-on experience in autonomous systems, multi-robot coordination, and embedded platforms. I specialize in developing and deploying reinforcement learning pipelines, SLAM, and real-time object detection systems.
+                    </p>
+                    <p class="text-light mb-6">
+                        My expertise lies in hardware-software integration, calibration, and simulation frameworks including Gazebo and Isaac Gym. I'm passionate about writing production-level code, optimizing latency, and validating perception systems.
+                    </p>
+                    <p class="text-light mb-8">
+                        Currently pursuing my Master's in Robotics at the University of Maryland, I'm constantly expanding my knowledge in control systems, machine learning, computer vision, and perception.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-accent mr-2"></i>
+                            <span class="text-light">College Park, MD</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-accent mr-2"></i>
+                            <span class="text-light">saijagadeesh.muralikrishnan@gmail.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-accent mr-2"></i>
+                            <span class="text-light">+1 571-325-9990</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-globe text-accent mr-2"></i>
+                            <span class="text-light">saijagadeesh.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Professional Journey</span>
+            </h2>
+            
+            <div class="relative">
+                <!-- Timeline -->
+                <div class="space-y-12 pl-8">
+                    <!-- KICK Robotics -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                                <h3 class="text-xl font-bold text-light">Robotics Engineering Intern</h3>
+                                <span class="text-accent">May 2024 – Aug 2024</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-building text-accent mr-2"></i>
+                                <span class="text-light">KICK Robotics, College Park, MD</span>
+                            </div>
+                            <ul class="list-disc list-inside text-light space-y-2">
                                 <li>Created modular test scripts in Python/C++ to automate robot fleet validation, cutting test time by 20%.</li>
                                 <li>Optimized robotic control pipelines (C++/Python) for real-time operations, achieving a 15% decrease in system latency.</li>
                                 <li>Integrated stereo & depth calibration (Open3D, CUDA, PyTorch) to boost embedded camera accuracy.</li>
                                 <li>Collaborated on hardware-software integration efforts, ensuring seamless controller and actuator communication with ROS 2.</li>
                             </ul>
                         </div>
-                        
-                        <!-- TuTr Hyperloop -->
-                        <div class="timeline-item relative pl-6">
-                            <div class="flex justify-between items-start flex-wrap">
-                                <h3 class="text-xl font-bold text-cyan-400">Embedded Systems Engineer</h3>
-                                <span class="text-gray-400">Oct 2022 – Jul 2023</span>
+                    </div>
+                    
+                    <!-- TuTr Hyperloop -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                                <h3 class="text-xl font-bold text-light">Embedded Systems Engineer</h3>
+                                <span class="text-accent">Oct 2022 – Jul 2023</span>
                             </div>
-                            <h4 class="text-lg mb-2">TuTr Hyperloop, Chennai, India</h4>
-                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-building text-accent mr-2"></i>
+                                <span class="text-light">TuTr Hyperloop, Chennai, India</span>
+                            </div>
+                            <ul class="list-disc list-inside text-light space-y-2">
                                 <li>Engineered multi-threaded C++ sensor fusion pipelines (LiDAR, IMU, camera) over CAN, reducing latency by 25%.</li>
                                 <li>Deployed control systems integrating PLCs and Vehicle Control Units (VCUs), applying automotive Ethernet for data transfer.</li>
                                 <li>Developed automated CI/CD test workflows using Git and JIRA for VCU software traceability.</li>
                             </ul>
                         </div>
                     </div>
-                </section>
-                
-                <!-- Research -->
-                <section class="card p-6 neon-border">
-                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                        <i class="fas fa-flask mr-3"></i> RESEARCH EXPERIENCE
-                    </h2>
                     
-                    <div class="timeline-item relative pl-6">
-                        <div class="flex justify-between items-start flex-wrap">
-                            <h3 class="text-xl font-bold text-cyan-400">Graduate Research Assistant</h3>
-                            <span class="text-gray-400">Sep 2024 – Present</span>
-                        </div>
-                        <h4 class="text-lg mb-2">Maryland Robotics Center, College Park, MD</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-gray-300">
-                            <li>Benchmarked SLAM Toolbox, RTAB-Map, Cartographer for RGB-D & LiDAR SLAM in ROS 2.</li>
-                            <li>Wrote automated test scripts in Python to measure calibration accuracy and reduce manual verification overhead by 40%.</li>
-                            <li>Deployed and tested advanced image registration methods to enhance sensor fusion reliability in varying operational domains.</li>
-                            <li>Conducting research on aerial object detection and multi-object tracking using YOLOv8, with dataset remapping (VisDrone, RoboScout) and augmentation for UAVs.</li>
-                            <li>Training and optimizing detection models in PyTorch to improve recall and precision for real-world UAV perception tasks.</li>
-                        </ul>
-                    </div>
-                </section>
-                
-                <!-- Projects -->
-                <section class="card p-6 neon-border">
-                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                        <i class="fas fa-project-diagram mr-3"></i> PROJECT EXPERIENCE
-                    </h2>
-                    
-                    <div class="space-y-6">
-                        <!-- Multi-Agent -->
-                        <div class="timeline-item relative pl-6">
-                            <h3 class="text-xl font-bold text-cyan-400">Multi-Agent Robotic Exploration Using Monte Carlo Tree Search</h3>
-                            <h4 class="text-lg mb-2">Robotics and Autonomy Laboratory, UMD | Nov 2023 – Dec 2023</h4>
-                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
-                                <li>Developed a multi-robot fleet management system using ROS 2 and Python, enabling collaborative exploration and real-time decision-making for mobile robots.</li>
-                                <li>Integrated AWS RoboMaker to simulate robot behavior in cloud environments, leveraging sensor fusion (camera and LiDAR).</li>
-                                <li>Enhanced computation and storage in a distributed environment, achieving 30% faster path planning.</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Autonomous Navigation -->
-                        <div class="timeline-item relative pl-6">
-                            <h3 class="text-xl font-bold text-cyan-400">Autonomous Navigation using Double DQN and Dueling Architecture</h3>
-                            <h4 class="text-lg mb-2">Maryland Applied Graduate Engineering, UMD | Mar 2024 – May 2024</h4>
-                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
-                                <li>Improved path planning using Double DQN and Dueling DQN, increasing success rates by 75% in simulated multi-obstacle arenas.</li>
-                                <li>Designed AI-driven search algorithms using Python, C++, and reinforcement learning, optimizing path planning speed by 30%.</li>
-                                <li>Collaborated with data acquisition and robotics planning teams to fuse sensor inputs (camera, LiDAR) into a robust, real-time decision-making system.</li>
-                            </ul>
-                        </div>
-                        
-                        <!-- NLP -->
-                        <div class="timeline-item relative pl-6">
-                            <h3 class="text-xl font-bold text-cyan-400">Adaptive Text-to-Command Translation for Robot Navigation</h3>
-                            <h4 class="text-lg mb-2">Maryland Applied Graduate Engineering, UMD | Nov 2024 – Dec 2024</h4>
-                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
-                                <li>Architected a transformer-based model (T5-Small + LoRA) achieving 98.5% accuracy for natural language command translation in robotic navigation.</li>
-                                <li>Deployed the model within ROS 2 and Gazebo, integrating real-time sensor fusion (camera + LiDAR) for command execution.</li>
-                                <li>Utilized AWS SageMaker to reduce inference latency by 20%, enabling near real-time command translation.</li>
+                    <!-- Research Experience -->
+                    <div class="relative timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
+                                <h3 class="text-xl font-bold text-light">Graduate Research Assistant</h3>
+                                <span class="text-accent">Sep 2024 – Present</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-flask text-accent mr-2"></i>
+                                <span class="text-light">Maryland Robotics Center, College Park, MD</span>
+                            </div>
+                            <ul class="list-disc list-inside text-light space-y-2">
+                                <li>Benchmarked SLAM Toolbox, RTAB-Map, Cartographer for RGB-D & LiDAR SLAM in ROS 2.</li>
+                                <li>Wrote automated test scripts in Python to measure calibration accuracy and reduce manual verification overhead by 40%.</li>
+                                <li>Deployed and tested advanced image registration methods to enhance sensor fusion reliability in varying operational domains.</li>
+                                <li>Conducting research on aerial object detection and multi-object tracking using YOLOv8, with dataset remapping (VisDrone, RoboScout) and augmentation for UAVs.</li>
+                                <li>Training and optimizing detection models in PyTorch to improve recall and precision for real-world UAV perception tasks.</li>
                             </ul>
                         </div>
                     </div>
-                </section>
-            </div>
-            
-            <!-- Right Column -->
-            <div class="space-y-8">
-                <!-- Education -->
-                <section class="card p-6 neon-border">
-                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                        <i class="fas fa-graduation-cap mr-3"></i> EDUCATION
-                    </h2>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400">University of Maryland</h3>
-                            <p class="text-gray-300">College Park, MD</p>
-                            <p class="text-gray-400">Expected Graduation: May 2025</p>
-                            <p class="text-gray-300">Master of Engineering in Robotics | GPA: 3.78/4.0</p>
-                            <p class="text-sm text-gray-400 mt-1">Relevant Coursework: Control Systems, Machine Learning, Computer Vision, Perception, Planning</p>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400">Rajalakshmi Engineering College</h3>
-                            <p class="text-gray-300">Chennai, India</p>
-                            <p class="text-gray-400">Graduated: Jul 2022</p>
-                            <p class="text-gray-300">Bachelor of Engineering in Mechatronics | CGPA: 8.7/10.0</p>
-                            <p class="text-sm text-gray-400 mt-1">Relevant Coursework: Embedded systems, Controls, Power electronics, Computer Vision</p>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Skills -->
-                <section class="card p-6 neon-border">
-                    <h2 class="text-2xl font-bold mb-4 glow flex items-center">
-                        <i class="fas fa-code mr-3"></i> SKILLS
-                    </h2>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Programming Languages</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Python</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">C++</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CUDA</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Bash (Linux)</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">MATLAB</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Robotics & AI</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">ROS 2</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">SLAM</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Reinforcement Learning</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Motion Planning</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">AMCL</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Sensor Fusion</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Mujoco</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Isaac Lab</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Deep Learning</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">PyTorch</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">TensorFlow</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Keras</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Transformers</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">LoRA</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">LLMs</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Simulation & Control</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Gazebo</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Isaac Sim</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Isaac Gym</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">pyBullet</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Distributed Control</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CAD</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Computer Vision</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">OpenCV</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">LiDAR Processing</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">RGB Processing</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Image Registration</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">YOLOv8</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">PCL</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Open3D</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Networking & Embedded</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Socket Programming</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Arduino</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Raspberry Pi</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">STM32</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">ESP32</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CAN</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">DevOps & Cloud</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">CI/CD</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Docker</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">AWS</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Azure</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">GCP</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Git</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">GitHub</span>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 class="text-lg font-bold text-cyan-400 mb-2">Soft Skills</h3>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Technical Documentation</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Cross-functional Collaboration</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Communication</span>
-                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">Project Management</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- 3D Robot Visual -->
-                <div class="card p-6 h-64 flex items-center justify-center neon-border">
-                    <div id="robotContainer" class="w-full h-full"></div>
                 </div>
             </div>
         </div>
-    </div>
-    
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Featured Projects</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-robot text-accent"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Multi-Agent Robotic Exploration</h3>
+                    </div>
+                    <p class="text-light mb-4">Developed a multi-robot fleet management system using ROS 2 and Python, enabling collaborative exploration and real-time decision-making for mobile robots.</p>
+                    <ul class="list-disc list-inside text-light text-sm mb-6 space-y-1">
+                        <li>Integrated AWS RoboMaker to simulate robot behavior in cloud environments</li>
+                        <li>Leveraged sensor fusion (camera and LiDAR)</li>
+                        <li>Achieved 30% faster path planning</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">ROS 2</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Python</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">AWS RoboMaker</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Sensor Fusion</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-light opacity-70">Robotics and Autonomy Laboratory, UMD | Nov 2023 – Dec 2023</span>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-brain text-accent"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Autonomous Navigation using Double DQN</h3>
+                    </div>
+                    <p class="text-light mb-4">Improved path planning using Double DQN and Dueling DQN, increasing success rates by 75% in simulated multi-obstacle arenas.</p>
+                    <ul class="list-disc list-inside text-light text-sm mb-6 space-y-1">
+                        <li>Designed AI-driven search algorithms using Python, C++, and RL</li>
+                        <li>Optimized path planning speed by 30%</li>
+                        <li>Fused sensor inputs (camera, LiDAR) into real-time decision-making</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Reinforcement Learning</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">C++</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Python</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">DQN</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-light opacity-70">Maryland Applied Graduate Engineering, UMD | Mar 2024 – May 2024</span>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-language text-accent"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Text-to-Command Translation</h3>
+                    </div>
+                    <p class="text-light mb-4">Architected a transformer-based model (T5-Small + LoRA) achieving 98.5% accuracy for natural language command translation in robotic navigation.</p>
+                    <ul class="list-disc list-inside text-light text-sm mb-6 space-y-1">
+                        <li>Deployed within ROS 2 and Gazebo</li>
+                        <li>Integrated real-time sensor fusion (camera + LiDAR)</li>
+                        <li>Utilized AWS SageMaker to reduce inference latency by 20%</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">NLP</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">Transformers</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">ROS 2</span>
+                        <span class="px-2 py-1 bg-primary bg-opacity-10 text-primary text-xs rounded">AWS SageMaker</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-xs text-light opacity-70">Maryland Applied Graduate Engineering, UMD | Nov 2024 – Dec 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Technical Skills</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Programming Languages -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-code text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Programming Languages</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-light">Python</span>
+                                <span class="text-accent">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-light">C++</span>
+                                <span class="text-accent">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-light">CUDA</span>
+                                <span class="text-accent">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-light">Bash (Linux)</span>
+                                <span class="text-accent">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-light">MATLAB</span>
+                                <span class="text-accent">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Robotics & AI -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-robot text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Robotics & AI</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">ROS 2</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">SLAM</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Reinforcement Learning</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Motion Planning</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">AMCL</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Sensor Fusion</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Mujoco</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Isaac Lab</span>
+                    </div>
+                </div>
+                
+                <!-- Deep Learning -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-microchip text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Deep Learning</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">PyTorch</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">TensorFlow</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Keras</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Transformers</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">LoRA</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">LLMs</span>
+                    </div>
+                </div>
+                
+                <!-- Simulation & Control -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-cogs text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Simulation & Control</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Gazebo</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Isaac Sim</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Isaac Gym</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">pyBullet</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Distributed Control</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">CAD (SolidWorks)</span>
+                    </div>
+                </div>
+                
+                <!-- Computer Vision -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-eye text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Computer Vision</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">OpenCV</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">LiDAR Processing</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">RGB Processing</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Image Registration</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">YOLOv8</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">PCL</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Open3D</span>
+                    </div>
+                </div>
+                
+                <!-- Networking & Embedded -->
+                <div class="bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <i class="fas fa-network-wired text-accent text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-light">Networking & Embedded</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Socket Programming</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Arduino</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Raspberry Pi</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">STM32</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">ESP32</span>
+                        <span class="px-3 py-2 bg-primary bg-opacity-10 text-primary text-sm rounded-full">CAN</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Get In Touch</span>
+            </h2>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-8">
+                    <h3 class="text-2xl font-bold mb-6 text-light">Let's Connect</h3>
+                    <p class="text-light mb-8">
+                        I'm currently looking for new opportunities in robotics, perception, or autonomous systems. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-envelope text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-light mb-1">Email</h4>
+                                <a href="mailto:saijagadeesh.muralikrishnan@gmail.com" class="text-primary hover:underline">saijagadeesh.muralikrishnan@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-phone text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-light mb-1">Phone</h4>
+                                <a href="tel:+15713259990" class="text-primary hover:underline">+1 571-325-9990</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4 mt-1">
+                                <i class="fas fa-map-marker-alt text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-light mb-1">Location</h4>
+                                <p class="text-light">College Park, MD</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <h4 class="text-lg font-bold text-light mb-4">Find me on</h4>
+                        <div class="flex space-x-4">
+                            <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                            <a href="https://github.com/" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https://saijagadeesh.com" target="_blank" class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-light hover:bg-opacity-30 hover:text-accent transition-all">
+                                <i class="fas fa-globe text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-light mb-2">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-light mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-light mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-light mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-dark bg-opacity-50 border border-primary border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-light placeholder-gray-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="px-6 py-3 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-primary border-opacity-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-light text-sm">
+                        &copy; <span id="year"></span> Sai Jagadeesh Muralikrishnan. All rights reserved.
+                    </p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-light hover:text-accent transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="text-light hover:text-accent transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="text-light hover:text-accent transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-light hover:text-accent transition-colors">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // 3D Robot Visualization
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set up the scene
-            const container = document.getElementById('robotContainer');
-            const width = container.clientWidth;
-            const height = container.clientHeight;
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(width, height);
-            container.appendChild(renderer.domElement);
-            
-            // Add lights
-            const ambientLight = new THREE.AmbientLight(0x00ffcc, 0.3);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0x00ccff, 0.8);
-            directionalLight.position.set(1, 1, 1);
-            scene.add(directionalLight);
-            
-            const pointLight = new THREE.PointLight(0xff00cc, 0.5, 10);
-            pointLight.position.set(0, 0, 3);
-            scene.add(pointLight);
-            
-            // Create a robot-like structure
-            const createRobot = () => {
-                const group = new THREE.Group();
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
                 
-                // Base
-                const baseGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 32);
-                const baseMaterial = new THREE.MeshPhongMaterial({ 
-                    color: 0x333333,
-                    emissive: 0x111111,
-                    specular: 0x00ffcc,
-                    shininess: 30
-                });
-                const base = new THREE.Mesh(baseGeometry, baseMaterial);
-                base.rotation.x = Math.PI / 2;
-                group.add(base);
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
                 
-                // Body
-                const bodyGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.4);
-                const bodyMaterial = new THREE.MeshPhongMaterial({ 
-                    color: 0x444444,
-                    emissive: 0x222222,
-                    specular: 0x0099ff,
-                    shininess: 50
-                });
-                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-                body.position.y = 0.6;
-                group.add(body);
-                
-                // Head
-                const headGeometry = new THREE.SphereGeometry(0.3, 32, 32);
-                const headMaterial = new THREE.MeshPhongMaterial({ 
-                    color: 0x555555,
-                    emissive: 0x333333,
-                    specular: 0xcc00ff,
-                    shininess: 100
-                });
-                const head = new THREE.Mesh(headGeometry, headMaterial);
-                head.position.y = 1.1;
-                group.add(head);
-                
-                // Eyes
-                const eyeGeometry = new THREE.SphereGeometry(0.08, 16, 16);
-                const eyeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ffcc, emissive: 0x00aa88 });
-                
-                const leftEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-                leftEye.position.set(-0.15, 1.15, 0.25);
-                group.add(leftEye);
-                
-                const rightEye = new THREE.Mesh(eyeGeometry, eyeMaterial);
-                rightEye.position.set(0.15, 1.15, 0.25);
-                group.add(rightEye);
-                
-                // Arms
-                const armGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.6, 16);
-                const armMaterial = new THREE.MeshPhongMaterial({ color: 0x666666 });
-                
-                const leftArm = new THREE.Mesh(armGeometry, armMaterial);
-                leftArm.position.set(-0.5, 0.6, 0);
-                leftArm.rotation.z = Math.PI / 4;
-                group.add(leftArm);
-                
-                const rightArm = new THREE.Mesh(armGeometry, armMaterial);
-                rightArm.position.set(0.5, 0.6, 0);
-                rightArm.rotation.z = -Math.PI / 4;
-                group.add(rightArm);
-                
-                // Wheels
-                const wheelGeometry = new THREE.TorusGeometry(0.2, 0.05, 16, 32);
-                const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x777777 });
-                
-                const leftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-                leftWheel.position.set(-0.3, 0, 0);
-                leftWheel.rotation.x = Math.PI / 2;
-                group.add(leftWheel);
-                
-                const rightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-                rightWheel.position.set(0.3, 0, 0);
-                rightWheel.rotation.x = Math.PI / 2;
-                group.add(rightWheel);
-                
-                // Antenna
-                const antennaGeometry = new THREE.CylinderGeometry(0.02, 0.02, 0.4, 8);
-                const antennaMaterial = new THREE.MeshPhongMaterial({ color: 0x00ffcc });
-                const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
-                antenna.position.set(0, 1.3, 0);
-                group.add(antenna);
-                
-                const antennaBallGeometry = new THREE.SphereGeometry(0.05, 16, 16);
-                const antennaBallMaterial = new THREE.MeshPhongMaterial({ 
-                    color: 0xff00cc,
-                    emissive: 0x880044,
-                    emissiveIntensity: 0.5
-                });
-                const antennaBall = new THREE.Mesh(antennaBallGeometry, antennaBallMaterial);
-                antennaBall.position.set(0, 1.5, 0);
-                group.add(antennaBall);
-                
-                return group;
-            };
-            
-            const robot = createRobot();
-            scene.add(robot);
-            
-            // Position camera
-            camera.position.z = 3;
-            
-            // Add controls
-            const controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableZoom = false;
-            controls.enablePan = false;
-            controls.autoRotate = true;
-            controls.autoRotateSpeed = 1;
-            
-            // Animation loop
-            const animate = function() {
-                requestAnimationFrame(animate);
-                
-                // Rotate wheels
-                robot.children.forEach(child => {
-                    if (child.geometry && child.geometry.type === 'TorusGeometry') {
-                        child.rotation.z += 0.02;
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
                     }
-                });
-                
-                controls.update();
-                renderer.render(scene, camera);
-            };
-            
-            // Handle window resize
-            window.addEventListener('resize', function() {
-                const width = container.clientWidth;
-                const height = container.clientHeight;
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-                renderer.setSize(width, height);
+                }
             });
-            
-            animate();
         });
-        
-        // Background 3D effect
-        document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('robotCanvas');
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
-            
-            // Create floating tech elements
-            const elements = [];
-            const colors = [0x00ffcc, 0x0099ff, 0xff00cc, 0xffff00];
-            
-            for (let i = 0; i < 50; i++) {
-                const geometry = Math.random() > 0.5 ? 
-                    new THREE.BoxGeometry(0.1, 0.1, 0.1) : 
-                    new THREE.SphereGeometry(0.05, 16, 16);
-                
-                const material = new THREE.MeshBasicMaterial({
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    transparent: true,
-                    opacity: 0.5
-                });
-                
-                const element = new THREE.Mesh(geometry, material);
-                
-                element.position.x = (Math.random() - 0.5) * 20;
-                element.position.y = (Math.random() - 0.5) * 20;
-                element.position.z = (Math.random() - 0.5) * 20;
-                
-                element.velocity = new THREE.Vector3(
-                    (Math.random() - 0.5) * 0.01,
-                    (Math.random() - 0.5) * 0.01,
-                    (Math.random() - 0.5) * 0.01
-                );
-                
-                scene.add(element);
-                elements.push(element);
-            }
-            
-            // Animation loop
-            const animate = function() {
-                requestAnimationFrame(animate);
-                
-                elements.forEach(element => {
-                    element.position.add(element.velocity);
-                    
-                    // Bounce off imaginary walls
-                    if (Math.abs(element.position.x) > 10) element.velocity.x *= -1;
-                    if (Math.abs(element.position.y) > 10) element.velocity.y *= -1;
-                    if (Math.abs(element.position.z) > 10) element.velocity.z *= -1;
-                    
-                    element.rotation.x += 0.01;
-                    element.rotation.y += 0.01;
-                });
-                
-                renderer.render(scene, camera);
-            };
-            
-            animate();
-        });
-        
-        // Interactive elements
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-                this.style.boxShadow = '0 10px 20px rgba(0, 255, 204, 0.3)';
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Add animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                    observer.unobserve(entry.target);
+                }
             });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = '';
-                this.style.boxShadow = '';
-            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item, .project-card, .code-block').forEach(element => {
+            observer.observe(element);
         });
     </script>
 </body>
