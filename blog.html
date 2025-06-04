@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sai Jagadeesh | ROS2 Robotics Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            overflow-x: hidden;
+            color: #e2e8f0;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .code-block {
+            background-color: #2d3748;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: #4a5568;
+            color: white;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2d3748;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .terminal {
+            background-color: #1a202c;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Roboto Mono', monospace;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #4a5568;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .terminal-dot-red {
+            background-color: #f56565;
+        }
+        
+        .terminal-dot-yellow {
+            background-color: #ecc94b;
+        }
+        
+        .terminal-dot-green {
+            background-color: #48bb78;
+        }
+        
+        .terminal-title {
+            color: #a0aec0;
+            font-size: 0.75rem;
+            margin-left: 1rem;
+        }
+        
+        .section-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(26, 32, 44, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(74, 85, 104, 0.2);
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 8px rgba(66, 153, 225, 0.6);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 min-h-screen">
+    <!-- 3D Background Canvas -->
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-full z-0"></div>
+    
+    <!-- Main Content -->
+    <div class="relative z-10 container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12">
+            <div class="flex items-center mb-6 md:mb-0">
+                <img src="assets\img\about.jpg" alt="Profile" class="w-16 h-16 rounded-full border-2 border-blue-400 mr-4 hover:border-blue-500 transition-all duration-300">
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white glow-text">Sai Jagadeesh Muralikrishnan</h1>
+                    <p class="text-blue-300">Robotics Engineer | ROS2 Specialist | AI Enthusiast</p>
+                </div>
+            </div>
+            <div class="flex space-x-4">
+                <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" class="text-blue-300 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+                <a href="https://github.com/saijagadeesh" class="text-blue-300 hover:text-blue-400 transition-colors">
+                    <i class="fab fa-github text-2xl"></i>
+                </a>
+                <a href="mailto:saijagadeesh.muralikrishnan@gmail.com" class="text-blue-300 hover:text-blue-400 transition-colors">
+                    <i class="fas fa-envelope text-2xl"></i>
+                </a>
+            </div>
+        </header>
+        
+        <!-- Navigation -->
+        <nav class="mb-12">
+            <ul class="flex flex-wrap justify-center gap-4">
+                <li><a href="index.html" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">Portfolio</a></li>
+                <li><a href="#about" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">About</a></li>
+                <li><a href="#ros2-tips" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">ROS2 Tips</a></li>
+                <li><a href="#projects" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">Projects</a></li>
+                <li><a href="#tutorials" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">Tutorials</a></li>
+                <li><a href="#scripts" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">Scripts</a></li>
+                <li><a href="#contact" class="px-4 py-2 bg-blue-900 bg-opacity-50 rounded-full hover:bg-blue-700 hover:bg-opacity-50 transition-all">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <!-- About Section -->
+        <section id="about" class="mb-16 section-card rounded-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-blue-700 pb-2 glow-text">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <p class="mb-4">Masters in Robotics graduate with extensive experience in ROS2, computer vision, and autonomous systems. Passionate about developing robust robotics solutions and sharing knowledge with the community.</p>
+                    <p class="mb-4">Currently working on cutting-edge robotics projects involving ROS2, sensor fusion, and machine learning for autonomous navigation and manipulation.</p>
+                    <div class="mt-6">
+                        <h3 class="text-xl font-semibold mb-3 text-blue-300">Technical Skills</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">ROS2</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">Python</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">C++</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">OpenCV</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">PyTorch</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">Gazebo</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">SLAM</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">Docker</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">Bash</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">Computer Vision</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">Embedded Systems</span>
+                            <span class="px-3 py-1 bg-blue-900 bg-opacity-50 rounded-full text-sm">PX4 Autopilot</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-dot terminal-dot-red"></div>
+                            <div class="terminal-dot terminal-dot-yellow"></div>
+                            <div class="terminal-dot terminal-dot-green"></div>
+                            <div class="terminal-title">bash ~/profile</div>
+                        </div>
+                        <pre class="text-green-400 overflow-x-auto">
+#!/bin/bash
+
+# Name: Sai Jagadeesh Muralikrishnan
+# Location: College Park, MD
+# Education:
+#   - M.Eng in Robotics @ University of Maryland (2023-2025)
+#   - B.Eng in Mechatronics @ REC Chennai (2018-2022)
+
+# Experience:
+#   - Robotics Intern @ Kick Robotics
+#   - Embedded Engineer @ TuTr Hyperloop
+#   - Research Assistant @ Maryland Robotics Center
+
+# Skills:
+#   - Robotics: ROS2, SLAM, Sensor Fusion
+#   - Programming: Python, C++, CUDA
+#   - ML/CV: PyTorch, OpenCV, YOLOv8
+#   - Simulation: Gazebo, Isaac Sim
+
+# Contact:
+#   - Email: saijagadeesh.muralikrishnan@gmail.com
+#   - LinkedIn: linkedin.com/in/sai-jagadeesh-m
+#   - Website: saijagadeesh.com
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ROS2 Tips Section -->
+        <section id="ros2-tips" class="mb-16 section-card rounded-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-blue-700 pb-2 glow-text">ROS2 Tips & Tricks</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- TurtleBot Setup -->
+                <div class="bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                        <i class="fas fa-robot mr-2"></i> TurtleBot3 ROS2 Easy Setup
+                    </h3>
+                    <p class="mb-4">Quick setup guide for TurtleBot3 with ROS2 Humble on Ubuntu 22.04:</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre># Install TurtleBot3 packages
+sudo apt install ros-humble-turtlebot3-*
+
+# Set TurtleBot3 model (burger, waffle, waffle_pi)
+echo "export TURTLEBOT3_MODEL=waffle_pi" >> ~/.bashrc
+source ~/.bashrc
+
+# Launch simulation
+ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py
+
+# Launch teleop
+ros2 run turtlebot3_teleop teleop_keyboard</pre>
+                    </div>
+                </div>
+                
+                <!-- Python 3.10 Virtual Environment -->
+                <div class="bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                        <i class="fas fa-code mr-2"></i> Python 3.10 Virtual Environment
+                    </h3>
+                    <p class="mb-4">Create and activate a Python 3.10 virtual environment for ROS2 development:</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre># Install Python 3.10 if not present
+sudo apt install python3.10 python3.10-venv
+
+# Create virtual environment
+python3.10 -m venv ~/ros2_venv
+
+# Activate environment
+source ~/ros2_venv/bin/activate
+
+# Install ROS2 packages (after sourcing ROS2)
+pip install -U colcon-common-extensions
+
+# Install other dependencies
+pip install numpy opencv-python pyyaml</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Multi-Terminal Setup -->
+            <div class="mt-8 bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-terminal mr-2"></i> Automated Terminator with 4 Panes
+                </h3>
+                <p class="mb-4">Add this to your <code>~/.bashrc</code> to open Terminator with 4 panes automatically:</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre># Function to launch terminator with 4 panes
+quadterminator() {
+    terminator --layout ros2quad &
+    sleep 0.5
+    xdotool key Super+Up
+}
+
+# Create the layout file if it doesn't exist
+if [ ! -f ~/.config/terminator/config ]; then
+    mkdir -p ~/.config/terminator
+    cat > ~/.config/terminator/config << 'EOL'
+[global_config]
+  title_transmit_fg_color = "#2e3436"
+  title_transmit_bg_color = "#3465a4"
+  title_inactive_fg_color = "#ffffff"
+  title_inactive_bg_color = "#555753"
+[keybindings]
+[profiles]
+  [[default]]
+    cursor_color = "#aaa"
+    foreground_color = "#ffffff"
+    background_color = "#000000"
+    palette = "#2e3436:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
+[layouts]
+  [[ros2quad]]
+    [[[child0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = HPaned
+      parent = child0
+    [[[child2]]]
+      type = VPaned
+      parent = child1
+    [[[child3]]]
+      type = VPaned
+      parent = child1
+      position = 50
+    [[[terminal4]]]
+      type = Terminal
+      parent = child2
+      profile = default
+      command = "echo 'TOP LEFT - ROS COMMANDS'"
+    [[[terminal5]]]
+      type = Terminal
+      parent = child2
+      profile = default
+      command = "echo 'BOTTOM LEFT - BUILD/LOGS'"
+    [[[terminal6]]]
+      type = Terminal
+      parent = child3
+      profile = default
+      command = "echo 'TOP RIGHT - EDITOR'"
+    [[[terminal7]]]
+      type = Terminal
+      parent = child3
+      profile = default
+      command = "echo 'BOTTOM RIGHT - MONITORING'"
+[plugins]
+EOL
+fi</pre>
+                </div>
+                <p class="mt-2 text-sm text-gray-400">Run <code>quadterminator</code> in your terminal to launch the pre-configured layout.</p>
+            </div>
+            
+            <!-- VOXL2 ROS2 Setup -->
+            <div class="mt-8 bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-drone-alt mr-2"></i> VOXL2 + ROS2 Setup with PX4
+                </h3>
+                <p class="mb-4">Setup script for integrating VOXL2 with ROS2 and PX4 Autopilot:</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>#!/bin/bash
+
+# Install required dependencies
+sudo apt-get update
+sudo apt-get install -y ros-humble-mavros ros-humble-mavros-extras \
+    ros-humble-mavros-msgs ros-humble-geographic-msgs \
+    ros-humble-tf2-eigen ros-humble-tf2-ros
+
+# Download PX4 messages
+git clone https://github.com/PX4/px4_msgs.git ~/px4_ros2/src/px4_msgs
+
+# Build the workspace
+cd ~/px4_ros2
+colcon build --symlink-install
+
+# Configure VOXL2 for ROS2
+sudo echo "export MAVLINK_DIALECT=common" >> /etc/profile.d/voxl.sh
+sudo echo "export ROS_DOMAIN_ID=42" >> /etc/profile.d/voxl.sh
+sudo echo "source /opt/ros/humble/setup.bash" >> /etc/profile.d/voxl.sh
+sudo echo "source ~/px4_ros2/install/setup.bash" >> /etc/profile.d/voxl.sh
+
+# Setup PX4 communication
+cat > ~/px4_ros2/src/run_px4.sh << 'EOL'
+#!/bin/bash
+micrortps_agent -t UDP -n voxl2 &
+ros2 run px4_ros_com mavlink_router -e px4_sender -t UDP -d 14550 -r 14540 &
+EOL
+chmod +x ~/px4_ros2/src/run_px4.sh
+
+echo "VOXL2 ROS2 setup complete. Reboot to apply changes."</pre>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="mb-16 section-card rounded-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-blue-700 pb-2 glow-text">ROS2 Projects</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- ROS2 Validation Pipelines -->
+                <div class="bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                        <i class="fas fa-tasks mr-2"></i> ROS2 Validation Pipelines
+                    </h3>
+                    <p class="mb-4">Built ROS2 validation pipelines in Python/C++ using PyTest and GoogleTest covering motion, sensor integrity, and firmware stability tests.</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre># Example test for motion validation
+import pytest
+import rclpy
+from std_msgs.msg import Float32
+
+class TestMotionNodes:
+    @classmethod
+    def setup_class(cls):
+        rclpy.init()
+        cls.node = rclpy.create_node('test_motion')
+
+    @classmethod
+    def teardown_class(cls):
+        cls.node.destroy_node()
+        rclpy.shutdown()
+
+    def test_velocity_publisher(self):
+        from example_interfaces.msg import Float32MultiArray
+        pub = self.node.create_publisher(Float32MultiArray, '/cmd_vel', 10)
+        
+        # Test publishing
+        msg = Float32MultiArray(data=[0.1, 0.0])  # Linear x, angular z
+        pub.publish(msg)
+        
+        # Give some time for message to be processed
+        rclpy.spin_once(self.node, timeout_sec=0.1)
+        
+        # Add your assertions here
+        assert True  # Replace with actual assertions</pre>
+                    </div>
+                </div>
+                
+                <!-- Image Registration -->
+                <div class="bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                        <i class="fas fa-camera mr-2"></i> Image Registration in ROS2
+                    </h3>
+                    <p class="mb-4">Implemented multi-view image registration in ROS2 using OpenCV with feature matching and homography estimation.</p>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        <pre>import cv2
+import numpy as np
+import rclpy
+from cv_bridge import CvBridge
+from sensor_msgs.msg import Image
+
+class ImageRegistrationNode:
+    def __init__(self):
+        self.node = rclpy.create_node('image_registration')
+        self.bridge = CvBridge()
+        
+        # Subscribers
+        self.image1_sub = self.node.create_subscription(
+            Image, '/camera1/image_raw', self.image1_callback, 10)
+        self.image2_sub = self.node.create_subscription(
+            Image, '/camera2/image_raw', self.image2_callback, 10)
+            
+        # Feature detector
+        self.orb = cv2.ORB_create()
+        self.bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        
+        self.last_image1 = None
+        self.last_image2 = None
+        
+    def image1_callback(self, msg):
+        self.last_image1 = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+        self.process_images()
+        
+    def image2_callback(self, msg):
+        self.last_image2 = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+        self.process_images()
+        
+    def process_images(self):
+        if self.last_image1 is None or self.last_image2 is None:
+            return
+            
+        # Find keypoints and descriptors
+        kp1, des1 = self.orb.detectAndCompute(self.last_image1, None)
+        kp2, des2 = self.orb.detectAndCompute(self.last_image2, None)
+        
+        if des1 is None or des2 is None:
+            return
+            
+        # Match features
+        matches = self.bf.match(des1, des2)
+        matches = sorted(matches, key=lambda x: x.distance)
+        
+        # Extract matched points
+        src_pts = np.float32([kp1[m.queryIdx].pt for m in matches]).reshape(-1,1,2)
+        dst_pts = np.float32([kp2[m.trainIdx].pt for m in matches]).reshape(-1,1,2)
+        
+        # Find homography
+        h_matrix, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+        
+        # You can now use h_matrix to transform images or points between views</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tutorials Section -->
+        <section id="tutorials" class="mb-16 section-card rounded-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-blue-700 pb-2 glow-text">Tutorials</h2>
+            
+            <!-- Camera Calibration -->
+            <div class="mb-8 bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-sliders-h mr-2"></i> ROS2 Camera Calibration with OpenCV
+                </h3>
+                <p class="mb-4">Step-by-step guide to calibrating cameras in ROS2 using OpenCV's checkerboard method.</p>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">1. Create a new ROS2 package</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_python camera_calibration
+cd camera_calibration</pre>
+                </div>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">2. Install dependencies</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>sudo apt install ros-${ROS_DISTRO}-cv-bridge ros-${ROS_DISTRO}-image-transport
+pip install opencv-python numpy</pre>
+                </div>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">3. Create calibration node</h4>
+                <p class="mb-2 text-sm text-gray-400">Create a file <code>camera_calibration/calibration_node.py</code>:</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>#!/usr/bin/env python3
+
+import rclpy
+from rclpy.node import Node
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+import cv2
+import numpy as np
+import os
+from datetime import datetime
+
+class CameraCalibrationNode(Node):
+    def __init__(self):
+        super().__init__('camera_calibration_node')
+        
+        # Parameters
+        self.declare_parameter('chessboard_width', 9)
+        self.declare_parameter('chessboard_height', 6)
+        self.declare_parameter('square_size', 0.024)  # meters
+        self.declare_parameter('image_topic', '/camera/image_raw')
+        
+        # Initialize variables
+        self.chessboard_size = (
+            self.get_parameter('chessboard_width').value,
+            self.get_parameter('chessboard_height').value)
+        self.square_size = self.get_parameter('square_size').value
+        
+        self.bridge = CvBridge()
+        self.image_sub = self.create_subscription(
+            Image,
+            self.get_parameter('image_topic').value,
+            self.image_callback,
+            10)
+        
+        # Calibration variables
+        self.criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+        self.objp = np.zeros((self.chessboard_size[0]*self.chessboard_size[1],3), np.float32)
+        self.objp[:,:2] = np.mgrid[0:self.chessboard_size[0],0:self.chessboard_size[1]].T.reshape(-1,2) * self.square_size
+        
+        self.objpoints = []  # 3D points in real world space
+        self.imgpoints = []  # 2D points in image plane
+        self.calibration_done = False
+    
+    def image_callback(self, msg):
+        if self.calibration_done:
+            return
+            
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
+            gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+            
+            # Find chessboard corners
+            ret, corners = cv2.findChessboardCorners(
+                gray, self.chessboard_size, 
+                cv2.CALIB_CB_ADAPTIVE_THRESH + cv2.CALIB_CB_NORMALIZE_IMAGE)
+            
+            if ret:
+                self.get_logger().info('Chessboard detected!')
+                
+                # Refine corner locations
+                corners2 = cv2.cornerSubPix(
+                    gray, corners, (11,11), (-1,-1), self.criteria)
+                
+                # Draw and display the corners
+                cv2.drawChessboardCorners(cv_image, self.chessboard_size, corners2, ret)
+                cv2.imshow('Calibration', cv_image)
+                cv2.waitKey(500)  # Display for 500ms
+                
+                # Add to calibration data
+                self.objpoints.append(self.objp)
+                self.imgpoints.append(corners2)
+                
+                if len(self.objpoints) >= 15:  # Use at least 15 images
+                    self.calibrate_camera(gray.shape[::-1])
+                    
+        except Exception as e:
+            self.get_logger().error(f'Error processing image: {str(e)}')
+    
+    def calibrate_camera(self, image_size):
+        self.get_logger().info('Starting calibration...')
+        
+        try:
+            ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
+                self.objpoints, self.imgpoints, image_size, None, None)
+            
+            if ret:
+                self.get_logger().info('Calibration successful!')
+                self.save_calibration(mtx, dist)
+                self.calibration_done = True
+                
+        except Exception as e:
+            self.get_logger().error(f'Calibration failed: {str(e)}')
+    
+    def save_calibration(self, camera_matrix, distortion_coeffs):
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = f'camera_calibration_{timestamp}.npz'
+        
+        np.savez(filename, 
+                camera_matrix=camera_matrix,
+                distortion_coeffs=distortion_coeffs)
+        
+        self.get_logger().info(f'Saved calibration to {filename}')
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = CameraCalibrationNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()</pre>
+                </div>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">4. Create launch file</h4>
+                <p class="mb-2 text-sm text-gray-400">Create <code>launch/calibration.launch.py</code>:</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>from launch import LaunchDescription
+from launch_ros.actions import Node
+
+def generate_launch_description():
+    return LaunchDescription([
+        Node(
+            package='camera_calibration',
+            executable='calibration_node',
+            name='camera_calibration',
+            parameters=[{
+                'chessboard_width': 9,
+                'chessboard_height': 6,
+                'square_size': 0.024,
+                'image_topic': '/camera/image_raw'
+            }]
+        )
+    ])</pre>
+                </div>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">5. Install and run</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre># Add this to setup.py if not present
+entry_points={
+    'console_scripts': [
+        'calibration_node = camera_calibration.calibration_node:main',
+    ],
+},
+
+# Build and run
+cd ~/ros2_ws
+colcon build --packages-select camera_calibration
+source install/setup.bash
+ros2 launch camera_calibration calibration.launch.py</pre>
+                </div>
+            </div>
+            
+            <!-- Gazebo Fortress Simulation -->
+            <div class="bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-sim-card mr-2"></i> Gazebo Fortress Simulation with ROS2
+                </h3>
+                <p class="mb-4">Setup Gazebo Fortress with ROS2 for PX4 simulation with cameras and LiDAR.</p>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">1. Install Gazebo Fortress</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+wget https://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install gazebo-fortress gazebo-fortress-common</pre>
+                </div>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">2. ROS2 Bridge for Gazebo</h4>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>sudo apt install ros-${ROS_DISTRO}-ros-gz-sim ros-${ROS_DISTRO}-ros-gz-bridge
+
+# Launch Gazebo with ROS2 bridge
+ros2 launch ros_gz_sim gz_sim.launch.py gz_args:="-v fortress -r empty.sdf"
+
+# In another terminal, spawn a model
+ros2 service call /world/empty/create ros_gz_interfaces/srv/SpawnEntity \
+  '{
+    entity_factory: {
+      name: "drone",
+      allow_renaming: false,
+      pose: {
+        position: {x: 0.0, y: 0.0, z: 1.0},
+        orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+      },
+      sdf: """
+        &lt;sdf version="1.7"&gt;
+          &lt;model name="drone"&gt;
+            &lt;include&gt;
+              &lt;uri&gt;model://iris&lt;/uri&gt;
+            &lt;/include&gt;
+            &lt;plugin filename="libignition-gazebo-multicopter-motor-model-system.so" name="ignition::gazebo::systems::MulticopterMotorModel"&gt;
+              &lt;robotNamespace&gt;iris&lt;/robotNamespace&gt;
+              &lt;jointName&gt;iris::rotor_0_joint&lt;/jointName&gt;
+              &lt;linkName&gt;iris::rotor_0&lt;/linkName&gt;
+              &lt;turningDirection&gt;ccw&lt;/turningDirection&gt;
+              &lt;timeConstantUp&gt;0.0125&lt;/timeConstantUp&gt;
+              &lt;timeConstantDown&gt;0.025&lt;/timeConstantDown&gt;
+              &lt;maxRotVelocity&gt;1000&lt;/maxRotVelocity&gt;
+              &lt;motorConstant&gt;8.54858e-06&lt;/motorConstant&gt;
+              &lt;momentConstant&gt;0.06&lt;/momentConstant&gt;
+              &lt;commandSubTopic&gt;command/motor_speed&lt;/commandSubTopic&gt;
+              &lt;motorNumber&gt;0&lt;/motorNumber&gt;
+              &lt;rotorDragCoefficient&gt;8.06428e-05&lt;/rotorDragCoefficient&gt;
+              &lt;rollingMomentCoefficient&gt;1e-06&lt;/rollingMomentCoefficient&gt;
+              &lt;motorSpeedPubTopic&gt;motor_speed/0&lt;/motorSpeedPubTopic&gt;
+              &lt;rotorVelocitySlowdownSim&gt;10&lt;/rotorVelocitySlowdownSim&gt;
+            &lt;/plugin&gt;
+          &lt;/model&gt;
+        &lt;/sdf&gt;
+      """
+    }
+  }'</pre>
+                </div>
+                
+                <h4 class="text-lg font-medium mt-4 text-blue-200">3. Add cameras and sensors</h4>
+                <p class="mb-2 text-sm text-gray-400">Modify the SDF to include sensors:</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre># In the model SDF, add this before closing the model tag
+&lt;link name="camera_link"&gt;
+  &lt;pose&gt;0.1 0 0.1 0 1.57 0&lt;/pose&gt;
+  &lt;visual name="camera_visual"&gt;
+    &lt;geometry&gt;
+      &lt;box&gt;
+        &lt;size&gt;0.05 0.05 0.05&lt;/size&gt;
+      &lt;/box&gt;
+    &lt;/geometry&gt;
+  &lt;/visual&gt;
+  &lt;sensor name="camera" type="camera"&gt;
+    &lt;camera&gt;
+      &lt;horizontal_fov&gt;1.047&lt;/horizontal_fov&gt;
+      &lt;image&gt;
+        &lt;width&gt;640&lt;/width&gt;
+        &lt;height&gt;480&lt;/height&gt;
+      &lt;/image&gt;
+      &lt;clip&gt;
+        &lt;near&gt;0.1&lt;/near&gt;
+        &lt;far&gt;100&lt;/far&gt;
+      &lt;/clip&gt;
+    &lt;/camera&gt;
+    &lt;always_on&gt;1&lt;/always_on&gt;
+    &lt;update_rate&gt;30&lt;/update_rate&gt;
+    &lt;visualize&gt;true&lt;/visualize&gt;
+    &lt;topic&gt;camera&lt;/topic&gt;
+    &lt;plugin filename="libignition-gazebo-ros-camera-system.so" name="ignition::gazebo::systems::Camera"&gt;
+      &lt;ros&gt;
+        &lt;namespace&gt;/model/iris&lt;/namespace&gt;
+      &lt;/ros&gt;
+      &lt;camera_name&gt;front_camera&lt;/camera_name&gt;
+      &lt;frame_name&gt;camera_link&lt;/frame_name&gt;
+    &lt;/plugin&gt;
+  &lt;/sensor&gt;
+&lt;/link&gt;</pre>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Scripts Section -->
+        <section id="scripts" class="mb-16 section-card rounded-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-blue-700 pb-2 glow-text">Useful Scripts</h2>
+            
+            <!-- Automated Colcon Build -->
+            <div class="mb-8 bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-cogs mr-2"></i> Automated Colcon Build Script
+                </h3>
+                <p class="mb-4">This script automatically builds your ROS2 workspace with different build types for development and release.</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>#!/bin/bash
+
+# Exit on error
+set -e
+
+# Define build type (dev or release)
+if [ "$1" == "--release" ]; then
+    BUILD_TYPE="Release"
+    BUILD_FLAGS="--cmake-args -DCMAKE_BUILD_TYPE=Release -DNDEBUG=ON"
+    echo "Building in Release mode"
+else
+    BUILD_TYPE="Debug"
+    BUILD_FLAGS="--cmake-args -DCMAKE_BUILD_TYPE=Debug"
+    echo "Building in Debug mode"
+fi
+
+# Clear previous build
+if [ "$2" == "--clean" ]; then
+    echo "Cleaning previous build..."
+    rm -rf build install log
+fi
+
+# Source ROS setup
+if [ -z "$ROS_DISTRO" ]; then
+    echo "ROS environment not set, sourcing..."
+    if [ -f "/opt/ros/humble/setup.bash" ]; then
+        source /opt/ros/humble/setup.bash
+    else
+        echo "ERROR: ROS setup file not found. Update the path or install ROS."
+        exit 1
+    fi
+fi
+
+# Find the package directory
+PKG_DIR=$(pwd)
+while [ "$PKG_DIR" != "/" ] && [ ! -f "$PKG_DIR/COLCON_IGNORE" ] && [ ! -f "$PKG_DIR/package.xml" ]; do
+    PKG_DIR=$(dirname "$PKG_DIR")
+done
+
+if [ -f "$PKG_DIR/package.xml" ]; then
+    echo "Building ${PKG_DIR##*/} package in $BUILD_TYPE mode"
+    cd "$PKG_DIR/../.." || exit  # Move to workspace root
+else
+    echo "No package.xml found in any parent directory."
+    echo "Please run this script from within your ROS2 package directory."
+    exit 1
+fi
+
+# Build commands
+colcon build \
+    $BUILD_FLAGS \
+    --symlink-install \
+    --event-handlers console_direct+ \
+    --packages-select "${PKG_DIR##*/}" \
+    --parallel-workers $(nproc)
+
+echo "Build complete. Source the workspace with:"
+echo "source ./install/setup.bash"</pre>
+                </div>
+                <p class="mt-2 text-sm text-gray-400">Usage: <code>./build_ros2.sh [--release] [--clean]</code></p>
+            </div>
+            
+            <!-- ROS2 Bag to Video -->
+            <div class="mb-8 bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-video mr-2"></i> ROS2 Bag to Video Converter
+                </h3>
+                <p class="mb-4">Convert ROS2 bag files containing image topics to mp4 videos with timestamps.</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>#!/bin/bash
+
+if [ "$#" -ne 4 ]; then
+    echo "Usage: $0 &lt;input_bag&gt; &lt;image_topic&gt; &lt;output_video&gt; &lt;fps&gt;"
+    exit 1
+fi
+
+INPUT_BAG=$1
+IMAGE_TOPIC=$2
+OUTPUT_VIDEO=$3
+FPS=$4
+
+# Create temp directory
+TEMP_DIR=$(mktemp -d)
+echo "Created temp directory: $TEMP_DIR"
+
+# Extract images from bag file
+echo "Extracting images from bag file..."
+ros2 run image_view extract_images _sec_per_frame:=0 _filename_format:="$TEMP_DIR/frame_%04d.jpg" __name:=extract_images &
+EXTRACT_PID=$!
+
+ros2 bag play "$INPUT_BAG" --rate 1.0 --topics "$IMAGE_TOPIC" --remap "$IMAGE_TOPIC:=/extract_images/image"
+kill $EXTRACT_PID
+
+# Convert images to video
+echo "Converting images to video..."
+ffmpeg -y -r "$FPS" -i "$TEMP_DIR/frame_%04d.jpg" -c:v libx264 -vf "fps=$FPS,format=yuv420p" "$OUTPUT_VIDEO"
+
+# Clean up
+rm -r "$TEMP_DIR"
+echo "Done. Output video saved to $OUTPUT_VIDEO"</pre>
+                </div>
+                <p class="mt-2 text-sm text-gray-400">Usage: <code>./bag_to_video.sh input.bag /camera/image_raw output.mp4 30</code></p>
+            </div>
+            
+            <!-- ROS2 Node Status Monitor -->
+            <div class="bg-gray-800 rounded-lg p-6 hover:shadow-xl transition-shadow">
+                <h3 class="text-xl font-semibold mb-3 text-blue-300 flex items-center">
+                    <i class="fas fa-heartbeat mr-2"></i> ROS2 Node Status Monitor
+                </h3>
+                <p class="mb-4">A simple Bash script to monitor the status of ROS2 nodes with color coding.</p>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <pre>#!/bin/bash
+
+# ROS2 Node Status Monitor
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Check ROS environment
+if [ -z "$ROS_DISTRO" ]; then
+    echo -e "${RED}ERROR: ROS2 environment not sourced!${NC}"
+    exit 1
+fi
+
+# Main loop
+while true; do
+    clear
+    echo -e "${BLUE}ROS2 Node Status Monitor - $(date)${NC}\n"
+    
+    # Get node list
+    NODE_LIST=$(ros2 node list 2>/dev/null)
+    
+    if [ -z "$NODE_LIST" ]; then
+        echo -e "${YELLOW}No active ROS2 nodes detected.${NC}"
+    else
+        echo -e "${GREEN}Active ROS2 Nodes:${NC}"
+        while read -r node; do
+            # Check node info
+            NODE_INFO=$(ros2 node info "$node" 2>/dev/null)
+            
+            if [ $? -eq 0 ]; then
+                # Count publishers and subscribers
+                PUB_COUNT=$(echo "$NODE_INFO" | grep -c "Publishers:")
+                SUB_COUNT=$(echo "$NODE_INFO" | grep -c "Subscribers:")
+                SRV_COUNT=$(echo "$NODE_INFO" | grep -c "Service Servers:")
+                CLI_COUNT=$(echo "$NODE_INFO" | grep -c "Service Clients:")
+                
+                # Get node namespace
+                NS=$(echo "$node" | awk -F '/' '{OFS="/"; $NF=""; print $0}')
+                NODE_NAME=$(echo "$node" | awk -F '/' '{print $NF}')
+                
+                # Print node info
+                echo -e "\n${BLUE}Node: ${NC}${NODE_NAME} ${YELLOW}(ns: ${NS:-/})${NC}"
+                echo -e "  ${GREEN}Publishers:${NC} $PUB_COUNT  ${GREEN}Subscribers:${NC} $SUB_COUNT"
+                echo -e "  ${GREEN}Services:${NC} $SRV_COUNT   ${GREEN}Clients:${NC} $CLI_COUNT"
+            else
+                echo -e "\n${RED}Error getting info for node: $node${NC}"
+            fi
+        done <<< "$NODE_LIST"
+    fi
+    
+    # Check for parameter server
+    PARAM_LIST=$(ros2 param list 2>/dev/null)
+    if [ ! -z "$PARAM_LIST" ]; then
+        echo -e "\n${BLUE}Global Parameters:${NC}"
+        echo "$PARAM_LIST" | while read -r param; do
+            echo -e "  - $param"
+        done
+    fi
+    
+    echo -e "\n${YELLOW}Press Ctrl+C to exit...${NC}"
+    sleep 2
+done</pre>
+                </div>
+                <p class="mt-2 text-sm text-gray-400">Run this script to continuously monitor your ROS2 system status.</p>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="mb-8 section-card rounded-xl p-8">
+            <h2 class="text-3xl font-bold mb-6 text-blue-400 border-b border-blue-700 pb-2 glow-text">Get In Touch</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <p class="mb-4">I'm always open to discussing robotics projects, collaborations, or just chatting about the latest in ROS2 and autonomous systems.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope text-blue-400 mt-1 mr-3"></i>
+                            <div>
+                                <h3 class="text-lg font-medium text-white">Email</h3>
+                                <a href="mailto:saijagadeesh.muralikrishnan@gmail.com" class="text-blue-300 hover:text-blue-200">saijagadeesh.muralikrishnan@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <i class="fas fa-globe text-blue-400 mt-1 mr-3"></i>
+                            <div>
+                                <h3 class="text-lg font-medium text-white">Website</h3>
+                                <a href="https://saijagadeesh.com" target="_blank" class="text-blue-300 hover:text-blue-200">saijagadeesh.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <i class="fab fa-linkedin text-blue-400 mt-1 mr-3"></i>
+                            <div>
+                                <h3 class="text-lg font-medium text-white">LinkedIn</h3>
+                                <a href="https://www.linkedin.com/in/sai-jagadeesh-m/" target="_blank" class="text-blue-300 hover:text-blue-200">linkedin.com/in/sai-jagadeesh-m</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <i class="fab fa-github text-blue-400 mt-1 mr-3"></i>
+                            <div>
+                                <h3 class="text-lg font-medium text-white">GitHub</h3>
+                                <a href="https://github.com/saijagadeesh" target="_blank" class="text-blue-300 hover:text-blue-200">github.com/saijagadeesh</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <form id="form" class="contact__form">
+                        <div class="form-group">
+                            <label for="from_name">Full Name</label>
+                            <input type="text" id="from_name" name="from_name" placeholder="Your Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reply_to">Email Address</label>
+                            <input type="email" id="reply_to" name="reply_to" placeholder="Your Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subject of your message" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <button type="submit" id="button" class="contact__button">
+                                Send Message 🚀
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 bg-opacity-50 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>&copy; 2024 Sai Jagadeesh Muralikrishnan. All rights reserved.</p>
+            <p class="mt-2 text-sm">Built with ROS2, passion, and coffee.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Copy code button functionality
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.querySelector('pre').innerText;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Initialize 3D background
+        const initThreeJSBackground = () => {
+            const container = document.getElementById('canvas-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Scene
+            const scene = new THREE.Scene();
+            
+            // Camera
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            camera.position.z = 30;
+            
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            // Controls
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableZoom = false;
+            controls.enablePan = false;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+            
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 100;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            // Points material
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.3,
+                color: 0x4299e1,  // Blue-400 from Tailwind
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            // Points mesh
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            // Lines
+            const lineGeometry = new THREE.BufferGeometry();
+            lineGeometry.setAttribute('position', particlesGeometry.attributes.position);
+            
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: 0x4299e1,
+                transparent: true,
+                opacity: 0.1
+            });
+            
+            const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(linesMesh);
+            
+            // Animation
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                controls.update();
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                const newWidth = container.clientWidth;
+                const newHeight = container.clientHeight;
+                
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+                
+                renderer.setSize(newWidth, newHeight);
+            });
+        };
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initThreeJSBackground);
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize EmailJS
+        emailjs.init("BNIGQSJiCAS8wDwFi"); // Replace with your actual public key
+
+        // Contact form submission
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("form");
+            const button = document.getElementById("button");
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevents default form submission
+
+                button.innerText = "Sending..."; // Change button text while sending
+                button.disabled = true; // Disable button during submission
+
+                const serviceID = "service_4him7fb"; // Your EmailJS Service ID
+                const templateID = "template_blal98i"; // Your EmailJS Template ID
+
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        button.innerText = "Send Message 🚀";
+                        button.disabled = false;
+                        alert("Message sent successfully! ✅");
+                        form.reset(); // Reset form after submission
+                    })
+                    .catch((err) => {
+                        button.innerText = "Send Message 🚀";
+                        button.disabled = false;
+                        alert("Oops! Something went wrong. Please try again.");
+                        console.error("EmailJS Error:", err);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

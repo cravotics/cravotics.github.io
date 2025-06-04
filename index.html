@@ -372,6 +372,7 @@
                     <a href="#skills" class="nav-link text-light hover:text-accent transition-colors">Skills</a>
                     <a href="#publications" class="nav-link text-light hover:text-accent transition-colors">Publications</a>
                     <a href="#contact" class="nav-link text-light hover:text-accent transition-colors">Contact</a>
+                    <a href="blog.html" class="nav-link text-light hover:text-accent transition-colors">Blog</a>
                 </div>
                 <div class="md:hidden">
                     <button id="menu-toggle" class="text-light hover:text-accent focus:outline-none">
@@ -391,6 +392,7 @@
                 <a href="#skills" class="nav-link text-light hover:text-accent transition-colors">Skills</a>
                 <a href="#publications" class="nav-link text-light hover:text-accent transition-colors">Publications</a>
                 <a href="#contact" class="nav-link text-light hover:text-accent transition-colors">Contact</a>
+                <a href="blog.html" class="nav-link text-light hover:text-accent transition-colors">Blog</a>
             </div>
         </div>
     </nav>
@@ -476,7 +478,7 @@ class SaiJagadeeshMuralikrishnan:
 
     def future_goals(self):
         return [
-            "Train drones that don’t crash (often).",
+            "Train drones that don't crash (often).",
             "Design robots that work *and* pass code review.",
             "Survive ROS 2 Foxy... gracefully."
         ]
@@ -540,7 +542,7 @@ sai.report_status()
                     <div class="mb-4">
                         <p class="text-light font-medium">Master of Engineering in Robotics</p>
                         <p class="text-light opacity-80">Expected Graduation: May 2025</p>
-                        <p class="text-light opacity-80">GPA: 3.78/4.0</p>
+                        <p class="text-light opacity-80">GPA: 3.8/4.0</p>
                     </div>
                     <div>
                         <h4 class="text-light font-medium mb-2">Relevant Coursework:</h4>
@@ -729,6 +731,20 @@ sai.report_status()
             </h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- FireDroneX Project -->
+                <a href="https://github.com/cravotics/FireDroneX" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
+                    <div class="work__img mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/img/firedronex.gif" alt="FireDroneX Project" class="w-full h-auto">
+                    </div>
+                    <h3 class="work__title text-xl font-bold text-light mb-2">FireDroneX: Real-Time Fire & Person Localization</h3>
+                    <p class="work__description text-light text-sm">
+                        Developed an autonomous UAV system using YOLOv8 and Depth Anything V2 for real-time 3D localization of fire and people, achieving ~1.2m accuracy on VOXL 2 Sentinel drone.
+                    </p>
+                    <div class="mt-4 flex justify-end">
+                        <span class="text-xs text-light opacity-70">ENAE788M, UMD | 2024</span>
+                    </div>
+                </a>
+                
                 <!-- Multi-Agent Robotic Exploration -->
                 <a href="https://github.com/varunlakshmanan11/Multi-Robot-Naviagtion-Using-Centralized-and-Decentralized-Monte-Carlo-Tree-Search" target="_blank" class="project-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg transition-all duration-300 h-full">
                     <div class="work__img mb-4 rounded-lg overflow-hidden">
@@ -840,6 +856,132 @@ sai.report_status()
                         <span class="text-xs text-light opacity-70">Academic Competition | 2023</span>
                     </div>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hackathon Achievements Section -->
+    <section id="hackathons" class="py-20 bg-dark bg-opacity-70 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                <span class="gradient-text">Hackathon Achievements</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- CareBotix Project -->
+                <div class="hackathon-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm transform transition-all duration-500 hover:scale-105">
+                    <div class="absolute -top-4 -right-4 bg-accent text-dark px-4 py-2 rounded-full text-sm font-bold">
+                        3rd Place Overall 🏆
+                    </div>
+                    <div class="absolute -top-4 -left-4 bg-primary text-dark px-4 py-2 rounded-full text-sm font-bold">
+                        Best Health Track 🏥
+                    </div>
+                    
+                    <div class="mb-6 rounded-lg overflow-hidden border-2 border-accent border-opacity-30">
+                        <img src="assets/img/care.jpg" alt="CareBotix Project" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-300">
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-light mb-4">CareBotix</h3>
+                    <p class="text-accent mb-2">MorganHacks 2025</p>
+                    
+                    <div class="mb-6">
+                        <p class="text-light mb-4">
+                            An AI-powered patient monitoring system that detects falls, posture anomalies, and environmental risks in real-time to protect vulnerable patients.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">YOLOv8</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">PyQt6</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Gemini AI</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">MongoDB</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Arduino</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="feature-item flex items-start">
+                            <i class="fas fa-chart-line text-accent mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="text-light font-bold">Impact</h4>
+                                <p class="text-light text-sm">90%+ cost reduction vs traditional 24/7 nursing (~$200K/year per patient)</p>
+                            </div>
+                        </div>
+                        <div class="feature-item flex items-start">
+                            <i class="fas fa-cogs text-accent mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="text-light font-bold">Key Features</h4>
+                                <ul class="text-light text-sm list-disc list-inside">
+                                    <li>Real-time fall & posture detection</li>
+                                    <li>Multi-sensor environment monitoring</li>
+                                    <li>3D PyQt6 dashboard with live status</li>
+                                    <li>Gemini AI assistant integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex space-x-4">
+                        <a href="https://lnkd.in/eYxTnnzF" target="_blank" class="px-4 py-2 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all">
+                            Live Demo
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- PosePilot Project -->
+                <div class="hackathon-card relative bg-dark bg-opacity-70 border border-primary border-opacity-30 rounded-lg p-6 shadow-lg backdrop-blur-sm transform transition-all duration-500 hover:scale-105">
+                    <div class="absolute -top-4 -right-4 bg-accent text-dark px-4 py-2 rounded-full text-sm font-bold">
+                        For Health Hack 🏆
+                    </div>
+                    
+                    <div class="mb-6 rounded-lg overflow-hidden border-2 border-accent border-opacity-30">
+                        <img src="assets/img/pose.jpg" alt="PosePilot Project" class="w-full h-48 object-cover object-top hover:scale-105 transition-transform duration-300">
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-light mb-4">PosePilot</h3>
+                    <p class="text-accent mb-2">Bitcamp 2025</p>
+                    
+                    <div class="mb-6">
+                        <p class="text-light mb-4">
+                            A real-time posture monitoring assistant that watches via webcam, checks posture, and provides gentle feedback to maintain proper alignment.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">YOLOv8-Pose</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Vector Math</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Gemini AI</span>
+                            <span class="px-3 py-1 bg-primary bg-opacity-10 text-primary text-sm rounded-full">Python</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="feature-item flex items-start">
+                            <i class="fas fa-star text-accent mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="text-light font-bold">Features</h4>
+                                <ul class="text-light text-sm list-disc list-inside">
+                                    <li>Real-time posture tracking</li>
+                                    <li>Neck tilt & spine curve analysis</li>
+                                    <li>Posture scores & motivational badges</li>
+                                    <li>Weekly AI-powered posture reports</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="feature-item flex items-start">
+                            <i class="fas fa-trophy text-accent mt-1 mr-3"></i>
+                            <div>
+                                <h4 class="text-light font-bold">Recognition</h4>
+                                <p class="text-light text-sm">Featured for Bloomberg's Best Hack Promoting Public Health category</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex space-x-4">
+                        <a href="https://lnkd.in/e5VDm__q" target="_blank" class="px-4 py-2 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all">
+                            Live Demo
+                        </a>
+                        <a href="https://lnkd.in/er25ds5B" target="_blank" class="px-4 py-2 bg-transparent border-2 border-accent text-accent rounded hover:bg-accent hover:bg-opacity-10 transition-all">
+                            View Code
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
