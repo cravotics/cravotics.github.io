@@ -545,6 +545,272 @@
             box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.2);
             border-color: rgba(0, 240, 255, 0.4);
         }
+
+        /* Creative Resume Download Button Styles */
+        .resume-download-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .resume-download-btn {
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(135deg, #00f0ff, #0072ff);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .resume-download-btn:hover {
+            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.5);
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .floating-files {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .file-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            font-size: 1.4rem;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .resume-download-container:hover .file-icon {
+            opacity: 1;
+            animation: fileFloat 3s infinite ease-in-out;
+        }
+
+        .file-1 {
+            animation-delay: 0s;
+        }
+
+        .file-2 {
+            animation-delay: 0.2s;
+        }
+
+        .file-3 {
+            animation-delay: 0.4s;
+        }
+
+        .file-4 {
+            animation-delay: 0.6s;
+        }
+
+        .file-5 {
+            animation-delay: 0.8s;
+        }
+
+        .file-6 {
+            animation-delay: 1s;
+        }
+
+        @keyframes fileFloat {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg) translateX(0) translateY(0);
+                opacity: 0;
+            }
+            25% {
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) rotate(180deg) translateX(60px) translateY(-30px);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translate(-50%, -50%) rotate(270deg) translateX(40px) translateY(40px);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg) translateX(-40px) translateY(-60px);
+                opacity: 0;
+            }
+        }
+
+        /* Different animation paths for variety */
+        .file-1 {
+            animation-name: fileFloat1;
+        }
+
+        .file-2 {
+            animation-name: fileFloat2;
+        }
+
+        .file-3 {
+            animation-name: fileFloat3;
+        }
+
+        .file-4 {
+            animation-name: fileFloat4;
+        }
+
+        .file-5 {
+            animation-name: fileFloat5;
+        }
+
+        .file-6 {
+            animation-name: fileFloat6;
+        }
+
+        @keyframes fileFloat1 {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+                opacity: 0; 
+                color: #ffd700; 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.2) rotate(90deg);
+                color: #ffed4e; 
+            }
+            70% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) translate(120px, -100px) scale(0.8) rotate(270deg);
+                color: #ffa500; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(160px, -140px) scale(0) rotate(450deg); 
+                opacity: 0; 
+                color: #ff8c00; 
+            }
+        }
+
+        @keyframes fileFloat2 {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+                opacity: 0; 
+                color: #ffd700; 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.1) rotate(-60deg);
+                color: #ffed4e; 
+            }
+            70% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) translate(-110px, -90px) scale(0.7) rotate(-240deg);
+                color: #ffa500; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(-150px, -130px) scale(0) rotate(-360deg); 
+                opacity: 0; 
+                color: #ff8c00; 
+            }
+        }
+
+        @keyframes fileFloat3 {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+                opacity: 0; 
+                color: #ffd700; 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.3) rotate(180deg);
+                color: #ffed4e; 
+            }
+            70% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) translate(100px, 120px) scale(0.6) rotate(540deg);
+                color: #ffa500; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(140px, 160px) scale(0) rotate(720deg); 
+                opacity: 0; 
+                color: #ff8c00; 
+            }
+        }
+
+        @keyframes fileFloat4 {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+                opacity: 0; 
+                color: #ffd700; 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.15) rotate(-120deg);
+                color: #ffed4e; 
+            }
+            70% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) translate(-120px, 110px) scale(0.75) rotate(-480deg);
+                color: #ffa500; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(-160px, 150px) scale(0) rotate(-600deg); 
+                opacity: 0; 
+                color: #ff8c00; 
+            }
+        }
+
+        @keyframes fileFloat5 {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+                opacity: 0; 
+                color: #ffd700; 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.25) rotate(45deg);
+                color: #ffed4e; 
+            }
+            70% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) translate(130px, 30px) scale(0.65) rotate(315deg);
+                color: #ffa500; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(170px, 50px) scale(0) rotate(450deg); 
+                opacity: 0; 
+                color: #ff8c00; 
+            }
+        }
+
+        @keyframes fileFloat6 {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+                opacity: 0; 
+                color: #ffd700; 
+            }
+            30% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.1) rotate(-45deg);
+                color: #ffed4e; 
+            }
+            70% { 
+                opacity: 0.8; 
+                transform: translate(-50%, -50%) translate(-140px, 20px) scale(0.7) rotate(-405deg);
+                color: #ffa500; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) translate(-180px, 40px) scale(0) rotate(-540deg); 
+                opacity: 0; 
+                color: #ff8c00; 
+            }
+        }
+
+        /* Pulse effect for the download icon */
+        .resume-download-btn:hover .fa-download {
+            animation: downloadPulse 1s infinite;
+        }
+
+        @keyframes downloadPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -629,13 +895,31 @@
                     <p class="text-lg text-light mb-8 max-w-lg">
                         Developing autonomous systems, DARPA X Machine Learning, multi-robot coordination, and embedded platforms with expertise in ROS 2, C++, and Python.
                     </p>
-                    <div class="flex space-x-4">
+                    <div class="flex flex-wrap gap-4">
                         <a href="#contact" class="px-6 py-3 bg-transparent border-2 border-accent text-accent rounded hover:bg-accent hover:bg-opacity-10 transition-all">
                             Contact Me
                         </a>
                         <a href="#projects" class="px-6 py-3 bg-accent text-dark font-bold rounded hover:bg-opacity-90 transition-all">
                             View Projects
                         </a>
+                        
+                        <!-- Creative Resume Download Button -->
+                        <div class="resume-download-container relative">
+                            <a href="Sai_Jagadeesh_Muralikrishnan_Resume.pdf" download="Sai_Jagadeesh_Muralikrishnan_Resume.pdf" class="resume-download-btn px-6 py-3 bg-gradient-to-r from-primary to-secondary text-dark font-bold rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center space-x-2">
+                                <i class="fas fa-download"></i>
+                                <span>Download Resume</span>
+                            </a>
+                            
+                            <!-- Floating Files Animation -->
+                            <div class="floating-files">
+                                <div class="file-icon file-1"><i class="fas fa-file-pdf"></i></div>
+                                <div class="file-icon file-2"><i class="fas fa-file-alt"></i></div>
+                                <div class="file-icon file-3"><i class="fas fa-file-code"></i></div>
+                                <div class="file-icon file-4"><i class="fas fa-file-archive"></i></div>
+                                <div class="file-icon file-5"><i class="fas fa-file-image"></i></div>
+                                <div class="file-icon file-6"><i class="fas fa-file-word"></i></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
