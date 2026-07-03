@@ -188,7 +188,7 @@ function PortraitFrame() {
         />
       ))}
 
-      <div className="relative z-10 w-80 h-96 rounded-[24px] overflow-hidden border border-border bg-surface-2">
+      <div className="relative z-10 w-64 h-80 sm:w-80 sm:h-96 rounded-[24px] overflow-hidden border border-border bg-surface-2">
         <img
           src="/images/hero.jpg"
           alt="Sai Jagadeesh Muralikrishnan — Robotics Software Engineer"
@@ -346,8 +346,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right — portrait (desktop only) */}
-          <div className="hidden lg:flex justify-end items-center">
+          {/* Right — portrait */}
+          <div className="flex justify-center lg:justify-end items-center order-first lg:order-none mb-4 lg:mb-0">
             <PortraitFrame />
           </div>
         </div>
