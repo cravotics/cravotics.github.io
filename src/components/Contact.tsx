@@ -5,6 +5,7 @@ export function Contact() {
   const headlineRef = useScrollReveal();
   const subRef = useScrollReveal();
   const ctasRef = useScrollReveal();
+  const spriteRef = useScrollReveal<HTMLDivElement>();
 
   return (
     <section id="contact" className="py-32 relative overflow-hidden" aria-labelledby="contact-heading">
@@ -81,6 +82,41 @@ export function Contact() {
             <Download size={15} />
             <span>Résumé</span>
           </a>
+        </div>
+
+        {/* Graduation pixel-art */}
+        <div ref={spriteRef} className="reveal reveal-delay-3 relative mt-10 flex flex-col items-center">
+          {/* Soft glow aura behind the figure */}
+          <div
+            className="absolute -inset-6 flex items-center justify-center pointer-events-none"
+            aria-hidden="true"
+          >
+            <div
+              className="w-44 h-44 rounded-full pixel-aura"
+              style={{ background: 'radial-gradient(circle, rgba(61,220,255,0.30) 0%, transparent 70%)' }}
+            />
+          </div>
+
+          <img
+            src="/images/Variant__UMD_graduation_pixel_sprite-removebg-preview.png"
+            alt="Pixel-art of Sai Jagadeesh in University of Maryland graduation gown"
+            className="relative w-24 sm:w-28 pixel-float select-none"
+            style={{
+              imageRendering: 'pixelated',
+              filter: 'drop-shadow(0 0 10px rgba(61,220,255,0.55)) drop-shadow(0 0 22px rgba(61,220,255,0.3))',
+            }}
+            draggable={false}
+            loading="lazy"
+          />
+
+          {/* Ground glow under the feet */}
+          <div
+            className="w-20 h-2.5 rounded-[50%] -mt-1"
+            style={{ background: 'radial-gradient(ellipse, rgba(61,220,255,0.45) 0%, transparent 70%)', filter: 'blur(3px)' }}
+            aria-hidden="true"
+          />
+
+          <p className="font-mono text-xs text-dim mt-4">// that&apos;s me — UMD Robotics grad 🎓</p>
         </div>
       </div>
     </section>

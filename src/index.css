@@ -328,6 +328,23 @@ body {
   animation-delay: 1s;
 }
 
+/* Graduation pixel-art float + aura */
+@keyframes pixelFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-9px); }
+}
+.pixel-float { animation: pixelFloat 4s ease-in-out infinite; }
+
+@keyframes pixelAura {
+  0%, 100% { opacity: 0.6; transform: scale(0.95); }
+  50%      { opacity: 1;   transform: scale(1.05); }
+}
+.pixel-aura { animation: pixelAura 4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-float, .pixel-aura { animation: none; }
+}
+
 /* Scroll-drop indicator */
 @keyframes scrollDrop {
   0%   { transform: translateY(-100%); opacity: 0; }
