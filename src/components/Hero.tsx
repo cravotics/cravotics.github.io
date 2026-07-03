@@ -1,5 +1,14 @@
 import { useEffect, useRef } from 'react';
-import { ArrowRight, Github, Linkedin, Youtube, Mail, Download } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
+
+/* X (Twitter) brand icon — lucide dropped brand icons, so inline the mark */
+function XIcon({ size = 13 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 const WORDS = ['Robotics', 'Software', 'Engineer'];
@@ -315,7 +324,7 @@ export function Hero() {
               {[
                 { href: 'https://github.com/cravotics', icon: <Github size={13} />, label: 'GitHub' },
                 { href: 'https://www.linkedin.com/in/sai-jagadeesh-m/', icon: <Linkedin size={13} />, label: 'LinkedIn' },
-                { href: 'https://www.youtube.com/watch?v=BF6-CqCtXic', icon: <Youtube size={13} />, label: 'YouTube' },
+                { href: 'https://x.com/jagadeeshgame', icon: <XIcon size={13} />, label: 'X' },
                 {
                   href: 'mailto:saijagadeesh.muralikrishnan@gmail.com',
                   icon: <Mail size={13} />,

@@ -1,7 +1,20 @@
 import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
-const HACKATHONS = [
+type Hackathon = {
+  name: string;
+  event: string;
+  image: string;
+  imgPos: string;
+  badges: string[];
+  description: string;
+  stack: string[];
+  highlight?: { label: string; text: string };
+  features: string[];
+  links: { label: string; href: string }[];
+};
+
+const HACKATHONS: Hackathon[] = [
   {
     name: 'CareBotix',
     event: 'MorganHacks 2025',
@@ -28,14 +41,10 @@ const HACKATHONS = [
     event: 'Bitcamp 2025',
     image: '/images/posepilot.jpg',
     imgPos: 'object-top',
-    badges: ["Bloomberg Best Public-Health Hack"],
+    badges: ['For Health Hack'],
     description:
       'Real-time posture monitoring assistant that watches via webcam, checks posture, and provides gentle feedback to maintain proper alignment.',
     stack: ['YOLOv8-Pose', 'Vector Math', 'Gemini AI', 'Python'],
-    highlight: {
-      label: 'Recognition',
-      text: "Featured for Bloomberg's Best Hack Promoting Public Health",
-    },
     features: [
       'Real-time posture tracking',
       'Neck tilt & spine curve analysis',
@@ -49,7 +58,7 @@ const HACKATHONS = [
   },
 ];
 
-function HackathonCard({ item, delayClass }: { item: typeof HACKATHONS[0]; delayClass: string }) {
+function HackathonCard({ item, delayClass }: { item: Hackathon; delayClass: string }) {
   const ref = useScrollReveal<HTMLDivElement>();
   return (
     <div
@@ -95,10 +104,12 @@ function HackathonCard({ item, delayClass }: { item: typeof HACKATHONS[0]; delay
         </div>
 
         {/* Highlight */}
-        <div className="rounded-xl border border-accent/15 bg-accent/[0.04] p-3">
-          <p className="font-mono text-[10px] uppercase tracking-wider text-accent/70 mb-1">{item.highlight.label}</p>
-          <p className="text-text text-xs leading-relaxed">{item.highlight.text}</p>
-        </div>
+        {item.highlight && (
+          <div className="rounded-xl border border-accent/15 bg-accent/[0.04] p-3">
+            <p className="font-mono text-[10px] uppercase tracking-wider text-accent/70 mb-1">{item.highlight.label}</p>
+            <p className="text-text text-xs leading-relaxed">{item.highlight.text}</p>
+          </div>
+        )}
 
         {/* Features */}
         <ul className="flex flex-col gap-2">
