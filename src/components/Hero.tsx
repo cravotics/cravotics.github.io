@@ -289,12 +289,14 @@ export function Hero() {
             </div>
 
             <p className="reveal visible reveal-delay-2 text-muted text-[1.0625rem] leading-relaxed max-w-[500px]">
-              I teach robots the difference between <em className="text-text not-italic">moving</em> and{' '}
-              <em className="text-text not-italic">moving well</em> — wiring up{' '}
-              <span className="text-text">ROS 2 motion planning</span>,{' '}
-              <span className="text-text">control systems</span>, and the{' '}
-              <span className="text-text">hardware-in-the-loop</span> testing that keeps real robots
-              from face-planting in production.
+              I turn raw sensor data into motion that ships — building the{' '}
+              <span className="text-text">perception</span>,{' '}
+              <span className="text-text">planning</span>, and{' '}
+              <span className="text-text">control</span> that carry robots from a lab demo to
+              production-grade hardware. Think <span className="text-text">computer vision</span>,{' '}
+              <span className="text-text">ROS 2 motion planning</span>, and{' '}
+              <span className="text-text">control systems</span>, all hardened with
+              hardware-in-the-loop testing until they hold up in the real world.
             </p>
 
             {/* CTAs */}
