@@ -43,7 +43,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-/* Scroll reveal — initial hidden state */
+/* Scroll reveal - initial hidden state */
 .reveal {
   opacity: 0;
   transform: translateY(16px);

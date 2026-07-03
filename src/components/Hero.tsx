@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
 
-/* X (Twitter) brand icon — lucide dropped brand icons, so inline the mark */
+/* X (Twitter) brand icon - lucide dropped brand icons, so inline the mark */
 function XIcon({ size = 13 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -99,7 +99,7 @@ function ShaderCanvas() {
     if (reducedMotion) return;
 
     const gl = canvas.getContext('webgl2', { alpha: false, antialias: false, powerPreference: 'high-performance' });
-    if (!gl) return; // No WebGL2 — CSS fallback handles it
+    if (!gl) return; // No WebGL2 - CSS fallback handles it
 
     let prog: WebGLProgram;
     try {
@@ -191,7 +191,7 @@ function PortraitFrame() {
       <div className="relative z-10 w-64 h-80 sm:w-80 sm:h-96 rounded-[24px] overflow-hidden border border-border bg-surface-2">
         <img
           src="/images/hero.jpg"
-          alt="Sai Jagadeesh Muralikrishnan — Robotics Software Engineer"
+          alt="Sai Jagadeesh Muralikrishnan, Robotics Software Engineer"
           className="w-full h-full object-cover grayscale-hover"
           loading="eager"
         />
@@ -225,7 +225,7 @@ export function Hero() {
       {/* WebGL vortex background */}
       <ShaderCanvas />
 
-      {/* Dark overlay — keeps text readable over the shader */}
+      {/* Dark overlay - keeps text readable over the shader */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -289,7 +289,7 @@ export function Hero() {
             </div>
 
             <p className="reveal visible reveal-delay-2 text-muted text-[1.0625rem] leading-relaxed max-w-[500px]">
-              I turn raw sensor data into motion that ships — building the{' '}
+              I turn raw sensor data into motion that ships, building the{' '}
               <span className="text-text">perception</span>,{' '}
               <span className="text-text">planning</span>, and{' '}
               <span className="text-text">control</span> that carry robots from a lab demo to
@@ -350,7 +350,7 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right — portrait */}
+          {/* Right - portrait */}
           <div className="flex justify-center lg:justify-end items-center order-first lg:order-none mb-4 lg:mb-0">
             <PortraitFrame />
           </div>

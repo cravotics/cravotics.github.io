@@ -55,7 +55,7 @@ export function Nav() {
           href="#"
           onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           className="flex flex-col leading-none group font-mono"
-          aria-label="Sai Jagadeesh Muralikrishnan — home"
+          aria-label="Sai Jagadeesh Muralikrishnan, home"
         >
           <span className="text-sm font-bold">
             <span className="text-accent">&lt;</span>

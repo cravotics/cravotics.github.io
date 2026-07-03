@@ -20,7 +20,7 @@ export function About() {
         <p className="section-label mb-12 reveal" ref={r1}>... /about me ...</p>
 
         <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Left — narrative */}
+          {/* Left - narrative */}
           <div ref={r2} className="reveal reveal-delay-1 flex flex-col gap-6">
             <h2 id="about-heading" className="font-mono font-bold text-display-sm text-text leading-tight">
               Building machines that
@@ -30,12 +30,12 @@ export function About() {
 
             <div className="flex flex-col gap-4 text-muted leading-relaxed text-[1.0625rem]">
               <p>
-                Hi, I'm <span className="text-text font-medium">Sai Jagadeesh</span> — I teach machines to move
+                Hi, I'm <span className="text-text font-medium">Sai Jagadeesh</span>, and I teach machines to move
                 like they mean it. Armed with a Master of Engineering in Robotics from the{' '}
                 <span className="text-text">University of Maryland</span> and a Mechatronics foundation
                 from Rajalakshmi Engineering College, I've spent years turning{' '}
                 <span className="text-text italic">"that's impossible"</span> into{' '}
-                <span className="text-text italic">"ship it"</span> — powered by late-night debugging
+                <span className="text-text italic">"ship it"</span>, powered by late-night debugging
                 and an <span className="text-text">alarming number of Diet Cokes</span>.
               </p>
               <p>
@@ -61,7 +61,7 @@ export function About() {
             </div>
           </div>
 
-          {/* Right — portrait */}
+          {/* Right - portrait */}
           <div ref={r3} className="reveal reveal-delay-2 lg:flex justify-center hidden">
             <div className="relative group">
               {/* Animated border ring */}

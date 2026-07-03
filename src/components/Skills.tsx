@@ -75,7 +75,7 @@ export function Skills() {
             </h2>
           </div>
           <p ref={captionRef} className="reveal reveal-delay-1 text-muted text-sm max-w-xs text-right">
-            Sized by how much they live in my terminal — <em className="text-text not-italic">the big ones basically pay my rent</em>.
+            Sized by how much they live in my terminal: <em className="text-text not-italic">the big ones basically pay my rent</em>.
           </p>
         </div>
 

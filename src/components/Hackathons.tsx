@@ -69,7 +69,7 @@ function HackathonCard({ item, delayClass }: { item: Hackathon; delayClass: stri
       <div className="relative h-52 overflow-hidden flex-shrink-0 bg-surface-2">
         <img
           src={item.image}
-          alt={`${item.name} — ${item.event}`}
+          alt={`${item.name}: ${item.event}`}
           className={`w-full h-full object-cover ${item.imgPos} group-hover:scale-105 transition-transform duration-500`}
           loading="lazy"
         />
@@ -130,7 +130,7 @@ function HackathonCard({ item, delayClass }: { item: Hackathon; delayClass: stri
               target="_blank"
               rel="noopener noreferrer"
               className="pill-btn text-xs"
-              aria-label={`${item.name} — ${link.label}`}
+              aria-label={`${item.name}: ${link.label}`}
             >
               <span>{link.label}</span>
               <ArrowUpRight size={12} />

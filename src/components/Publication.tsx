@@ -40,7 +40,7 @@ export function Publication() {
             <div className="flex flex-col gap-3 pl-13">
               <p className="text-muted text-sm leading-relaxed">
                 Published in{' '}
-                <span className="text-text">ICDSMLA 2021</span> — Springer Nature Singapore.
+                <span className="text-text">ICDSMLA 2021</span>, Springer Nature Singapore.
                 Presents a wireless animatronic hand system controlled via infrared sensor data,
                 bridging gesture recognition and real-time mechanical actuation.
               </p>
@@ -82,7 +82,7 @@ export function Publication() {
             >
               <img
                 src="/images/award.png"
-                alt="ICDSMLA 2021 Certificate of Award — Sai Jagadeesh M, Third Best Paper"
+                alt="ICDSMLA 2021 Certificate of Award, Sai Jagadeesh M, Third Best Paper"
                 className="w-full h-auto"
                 loading="lazy"
               />
@@ -101,7 +101,7 @@ export function Publication() {
                   <Play size={20} className="text-accent ml-0.5" />
                 </div>
                 <p className="font-mono text-xs text-dim text-center px-6">
-                  {isPlaceholder ? 'Video coming soon — add [[CONFERENCE_VIDEO_URL]]' : 'Conference talk video'}
+                  {isPlaceholder ? 'Video coming soon' : 'Conference talk video'}
                 </p>
               </div>
             ) : videoLoaded ? (

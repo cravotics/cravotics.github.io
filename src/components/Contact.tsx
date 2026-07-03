@@ -116,7 +116,7 @@ export function Contact() {
             aria-hidden="true"
           />
 
-          <p className="font-mono text-xs text-dim mt-4">// that&apos;s me — UMD Robotics grad 🎓</p>
+          <p className="font-mono text-xs text-dim mt-4">// that&apos;s me, UMD Robotics grad 🎓</p>
         </div>
       </div>
     </section>

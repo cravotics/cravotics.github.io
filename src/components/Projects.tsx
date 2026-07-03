@@ -27,7 +27,7 @@ const PROJECTS = [
     featured: false,
   },
   {
-    title: 'Autonomous Nav — Double DQN',
+    title: 'Autonomous Nav: Double DQN',
     subtitle: 'Deep RL Navigation',
     context: 'Maryland Applied Graduate Engineering, UMD · Mar–May 2024',
     stack: ['Python', 'PyTorch', 'Double DQN', 'Dueling DQN', 'ROS 2'],
@@ -60,7 +60,7 @@ const PROJECTS = [
     featured: false,
   },
   {
-    title: 'MoveIt — Panda Arm',
+    title: 'MoveIt: Panda Arm',
     subtitle: 'Motion Planning on 6-DOF Manipulator',
     context: 'Personal Project · 2023',
     stack: ['ROS 2 Humble', 'MoveIt 2', 'RViz2', 'Python', 'C++'],
@@ -83,11 +83,11 @@ const PROJECTS = [
   },
   {
     title: 'Wireless Animatronic Hand',
-    subtitle: 'ICDSMLA 2021 — Best Paper Award',
+    subtitle: 'ICDSMLA 2021: Best Paper Award',
     context: 'Undergraduate Project · 2021',
     stack: ['Embedded C', 'IR Sensors', 'Servo Motors', 'Arduino'],
     description:
-      'Wireless animatronic hand controlled via infrared sensors. Published at ICDSMLA 2021, Springer Nature Singapore — Best Paper, 3rd Place.',
+      'Wireless animatronic hand controlled via infrared sensors. Published at ICDSMLA 2021, Springer Nature Singapore. Best Paper, 3rd Place.',
     gif: '/images/projects/animatronic-hand.gif',
     repo: 'https://github.com/cravotics',
     featured: false,
