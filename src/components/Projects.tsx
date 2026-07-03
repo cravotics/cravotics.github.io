@@ -213,7 +213,6 @@ export function Projects() {
             >
               Projects
             </h2>
-            <p className="text-dim text-sm font-mono">{PROJECTS.length} projects · place GIFs in <span className="text-accent/70">public/images/projects/</span></p>
           </div>
 
           {/* Nav arrows */}

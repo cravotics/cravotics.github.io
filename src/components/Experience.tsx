@@ -121,7 +121,7 @@ export function Experience() {
 
         {/* Footer caption */}
         <div ref={captionRef} className="reveal mt-8 flex justify-end">
-          <span className="font-mono text-xs text-dim">Total experience ~5 years across robotics software, perception & embedded systems</span>
+          <span className="font-mono text-xs text-dim">Total experience ~3 years in perception & robotics software</span>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Youtube, Mail, Download } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 const WORDS = ['Robotics', 'Software', 'Engineer'];
@@ -181,22 +181,11 @@ function PortraitFrame() {
 
       <div className="relative z-10 w-80 h-96 rounded-[24px] overflow-hidden border border-border bg-surface-2">
         <img
-          src="/images/about.jpg"
+          src="/images/hero.jpg"
           alt="Sai Jagadeesh Muralikrishnan — Robotics Software Engineer"
           className="w-full h-full object-cover grayscale-hover"
           loading="eager"
         />
-        <div className="portrait-scanline absolute inset-0 pointer-events-none" aria-hidden="true" />
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-bg/95 to-transparent z-10">
-          <span className="font-mono text-xs text-accent">Miso Robotics · Pasadena, CA</span>
-          <div className="flex items-center gap-1.5 mt-1">
-            <span className="relative flex h-2 w-2 flex-shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-            </span>
-            <span className="font-mono text-[10px] text-dim">Working</span>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -251,7 +240,7 @@ export function Hero() {
         <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-center">
           {/* Left content */}
           <div className="flex flex-col gap-6 max-w-2xl">
-            <p className="section-label reveal visible">/ Now, I am ...</p>
+            <p className="section-label reveal visible">$ whoami →</p>
 
             <div ref={headlineRef} className="flex flex-col">
               {WORDS.map((word, i) => (
@@ -274,30 +263,23 @@ export function Hero() {
             </div>
 
             {/* At Miso Robotics */}
-            <div className="reveal reveal-delay-1 flex items-center gap-3 flex-wrap">
+            <div className="reveal visible reveal-delay-1 flex items-center gap-3 flex-wrap">
               <span className="font-mono text-sm text-dim">At</span>
-              <div className="flex items-center gap-2">
-                <img
-                  src="/images/miso_logo.avif"
-                  alt="Miso Robotics logo"
-                  className="object-contain flex-shrink-0"
-                  style={{
-                    height: '1.5rem',
-                    width: 'auto',
-                    filter:
-                      'brightness(0) invert(1) drop-shadow(0 0 8px rgba(61,220,255,0.75)) drop-shadow(0 0 16px rgba(61,220,255,0.35))',
-                  }}
-                />
-                <span
-                  className="font-mono font-bold text-text"
-                  style={{ fontSize: '1.1rem', letterSpacing: '-0.01em' }}
-                >
-                  Miso Robotics
-                </span>
-              </div>
+              <img
+                src="/images/miso_logo.webp"
+                alt="Miso Robotics"
+                className="object-contain flex-shrink-0"
+                style={{
+                  height: '1.85rem',
+                  width: 'auto',
+                  filter:
+                    'drop-shadow(0 0 3px rgba(255,255,255,0.55)) drop-shadow(0 0 8px rgba(61,220,255,0.55)) drop-shadow(0 0 18px rgba(61,220,255,0.35))',
+                }}
+              />
+              <span className="font-mono text-sm text-dim">· Pasadena, CA</span>
             </div>
 
-            <p className="reveal reveal-delay-2 text-muted text-[1.0625rem] leading-relaxed max-w-[500px]">
+            <p className="reveal visible reveal-delay-2 text-muted text-[1.0625rem] leading-relaxed max-w-[500px]">
               I build the software that makes machines move with intent — from{' '}
               <span className="text-text">ROS 2 motion planning</span> and{' '}
               <span className="text-text">control systems</span> to hardware-in-the-loop
@@ -305,7 +287,7 @@ export function Hero() {
             </p>
 
             {/* CTAs */}
-            <div className="reveal reveal-delay-3 flex flex-wrap gap-3 items-center">
+            <div className="reveal visible reveal-delay-3 flex flex-wrap gap-3 items-center">
               <a
                 href="#projects"
                 className="pill-btn primary"
@@ -329,10 +311,11 @@ export function Hero() {
             </div>
 
             {/* Social chips */}
-            <div className="reveal reveal-delay-4 flex flex-wrap gap-2 pt-1">
+            <div className="reveal visible reveal-delay-4 flex flex-wrap gap-2 pt-1">
               {[
                 { href: 'https://github.com/cravotics', icon: <Github size={13} />, label: 'GitHub' },
                 { href: 'https://www.linkedin.com/in/sai-jagadeesh-m/', icon: <Linkedin size={13} />, label: 'LinkedIn' },
+                { href: 'https://www.youtube.com/watch?v=BF6-CqCtXic', icon: <Youtube size={13} />, label: 'YouTube' },
                 {
                   href: 'mailto:saijagadeesh.muralikrishnan@gmail.com',
                   icon: <Mail size={13} />,

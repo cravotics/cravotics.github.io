@@ -1,7 +1,7 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const STATS = [
-  { label: '5+ yrs across robotics & embedded' },
+  { label: '3+ yrs in perception & robotics' },
   { label: 'M.Eng Robotics, UMD · 3.8 GPA' },
   { label: 'Published @ ICDSMLA 2021 (Springer)' },
 ];
@@ -30,10 +30,13 @@ export function About() {
 
             <div className="flex flex-col gap-4 text-muted leading-relaxed text-[1.0625rem]">
               <p>
-                Hi, I'm <span className="text-text font-medium">Sai Jagadeesh</span> — a Robotics Software Engineer
-                with a Master of Engineering in Robotics from the{' '}
-                <span className="text-text">University of Maryland</span> (CGPA 3.8/4.0) and a
-                Mechatronics background from Rajalakshmi Engineering College.
+                Hi, I'm <span className="text-text font-medium">Sai Jagadeesh</span> — I teach machines to move
+                like they mean it. Armed with a Master of Engineering in Robotics from the{' '}
+                <span className="text-text">University of Maryland</span> and a Mechatronics foundation
+                from Rajalakshmi Engineering College, I've spent years turning{' '}
+                <span className="text-text italic">"that's impossible"</span> into{' '}
+                <span className="text-text italic">"ship it"</span> — powered by late-night debugging
+                and an <span className="text-text">alarming number of Diet Cokes</span>.
               </p>
               <p>
                 I currently build robotic-arm behaviors for{' '}
@@ -80,19 +83,13 @@ export function About() {
 
               <div className="relative z-10 w-72 h-[420px] rounded-[20px] overflow-hidden border border-border bg-surface-2">
                 <img
-                  src="/images/about.jpg"
+                  src="/images/about_me.jpeg"
                   alt="Sai Jagadeesh Muralikrishnan"
                   className="w-full h-full object-cover grayscale-hover"
                   loading="lazy"
                 />
-                <div className="portrait-scanline absolute inset-0 pointer-events-none" aria-hidden="true" />
               </div>
 
-              {/* Decorative accent */}
-              <div className="absolute -bottom-5 -right-4 font-mono text-xs text-accent/60 text-right leading-relaxed z-20">
-                <div>Robotics Software Engineer</div>
-                <div className="text-dim">Pasadena, CA</div>
-              </div>
             </div>
           </div>
         </div>

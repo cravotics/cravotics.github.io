@@ -34,7 +34,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
 }
 
 /* Custom scrollbar */
@@ -92,7 +92,7 @@ body {
   font-weight: 700;
   color: var(--text);
   background: transparent;
-  cursor: none;
+  cursor: auto;
   transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease, background 0.25s ease;
   text-decoration: none;
   white-space: nowrap;
@@ -124,7 +124,7 @@ body {
   color: var(--text-muted);
   background: transparent;
   transition: border-color 0.2s, color 0.2s, transform 0.2s;
-  cursor: none;
+  cursor: auto;
   text-decoration: none;
 }
 .social-chip:hover {
@@ -162,7 +162,7 @@ body {
   border-radius: 20px;
   overflow: hidden;
   transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-  cursor: none;
+  cursor: auto;
 }
 .project-card:hover {
   border-color: rgba(61,220,255,0.25);

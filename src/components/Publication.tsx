@@ -7,7 +7,7 @@ export function Publication() {
   const labelRef = useScrollReveal();
   const cardRef = useScrollReveal();
 
-  const VIDEO_URL = '[[CONFERENCE_VIDEO_URL]]';
+  const VIDEO_URL = 'https://www.youtube.com/watch?v=BF6-CqCtXic';
   const isPlaceholder = VIDEO_URL.startsWith('[[');
 
   // Extract YouTube video ID from URL (handles youtu.be and youtube.com formats)
@@ -71,6 +71,26 @@ export function Publication() {
                 <span>Watch Talk</span>
               </a>
             )}
+
+            {/* Certificate of Award */}
+            <a
+              href="/images/award.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-3 self-start max-w-sm rounded-xl overflow-hidden border border-border hover:border-accent/40 transition-colors duration-300"
+              aria-label="View ICDSMLA 2021 Certificate of Award (full size)"
+            >
+              <img
+                src="/images/award.png"
+                alt="ICDSMLA 2021 Certificate of Award — Sai Jagadeesh M, Third Best Paper"
+                className="w-full h-auto"
+                loading="lazy"
+              />
+              <span className="flex items-center gap-1.5 font-mono text-[10px] text-dim group-hover:text-accent transition-colors px-3 py-2 border-t border-border">
+                <Award size={11} />
+                Certificate of Award · ICDSMLA 2021
+              </span>
+            </a>
           </div>
 
           {/* Video embed (lazy facade) */}

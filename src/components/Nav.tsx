@@ -6,6 +6,7 @@ const NAV_LINKS = [
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Hackathons', href: '#hackathons' },
   { label: 'Research', href: '#research' },
   { label: 'Contact', href: '#contact' },
 ];
@@ -53,11 +54,16 @@ export function Nav() {
         <a
           href="#"
           onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-          className="flex flex-col leading-none group"
+          className="flex flex-col leading-none group font-mono"
           aria-label="Sai Jagadeesh Muralikrishnan — home"
         >
-          <span className="font-mono text-sm font-bold text-text group-hover:text-accent transition-colors">Sai Jagadeesh</span>
-          <span className="font-mono text-xs text-dim">Muralikrishnan</span>
+          <span className="text-sm font-bold">
+            <span className="text-accent">&lt;</span>
+            <span className="text-text group-hover:text-accent transition-colors">SaiJagadeesh</span>
+            <span className="text-accent"> /&gt;</span>
+            <span className="text-accent animate-pulse ml-0.5" aria-hidden="true">_</span>
+          </span>
+          <span className="text-[10px] text-dim mt-0.5">// Muralikrishnan</span>
         </a>
 
         {/* Desktop nav links */}
