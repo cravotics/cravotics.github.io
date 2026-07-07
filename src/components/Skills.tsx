@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { DecodeText } from './DecodeText';
 
 /**
  * Weighted skill cluster.
@@ -71,7 +72,7 @@ export function Skills() {
           <div ref={labelRef} className="reveal flex flex-col gap-3">
             <p className="section-label">... /skills ...</p>
             <h2 id="skills-heading" className="font-mono font-bold text-display-sm text-text leading-none">
-              Stack
+              <DecodeText text="Stack" />
             </h2>
           </div>
           <p ref={captionRef} className="reveal reveal-delay-1 text-muted text-sm max-w-xs text-right">
@@ -84,11 +85,14 @@ export function Skills() {
           ref={cloudRef}
           className="reveal reveal-delay-1 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-7 sm:gap-y-4 py-6"
         >
-          {SKILLS.map(skill => (
+          {SKILLS.map((skill, i) => (
             <span
               key={skill.name}
-              className={`${WEIGHT_STYLES[skill.w]} font-mono leading-none inline-block cursor-default transition-all duration-200 ease-out hover:text-accent hover:scale-125 hover:-translate-y-0.5`}
-              style={{ textShadow: '0 1px 12px rgba(0,0,0,0.4)' }}
+              className={`${WEIGHT_STYLES[skill.w]} skill-word glitch-hover font-mono leading-none inline-block cursor-default hover:text-accent`}
+              style={{
+                textShadow: '0 1px 12px rgba(0,0,0,0.4)',
+                transitionDelay: `${(i % 14) * 0.045}s`,
+              }}
             >
               {skill.name}
             </span>

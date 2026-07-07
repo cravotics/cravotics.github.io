@@ -1,6 +1,8 @@
-import { useRef, useState, useCallback } from 'react';
-import { ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { DecodeText } from './DecodeText';
+import { CardStack, CardStackItem } from './ui/card-stack';
 
 // Place your GIFs in public/images/projects/<slug>.gif
 const PROJECTS = [
@@ -105,170 +107,109 @@ const PROJECTS = [
   },
 ];
 
-function ProjectCard({ project }: { project: typeof PROJECTS[0] }) {
-  const [gifError, setGifError] = useState(false);
+type ProjectItem = CardStackItem & {
+  context: string;
+  stack: string[];
+  blurb: string;
+  repo: string;
+};
 
-  return (
-    <div className="project-card flex-shrink-0 w-[min(340px,85vw)] sm:w-[300px] lg:w-[340px] flex flex-col snap-start">
-      {/* GIF / placeholder */}
-      <div className="relative overflow-hidden flex-shrink-0 bg-surface-2" style={{ height: '200px' }}>
-        {!gifError ? (
-          <img
-            src={project.gif}
-            alt={`${project.title} demo`}
-            className="w-full h-full object-cover"
-            loading="lazy"
-            onError={() => setGifError(true)}
-          />
-        ) : (
-          <div
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ background: 'linear-gradient(135deg, #141416 0%, #1C1C1F 100%)' }}
-          >
-            <div className="text-center flex flex-col items-center gap-3">
-              <span
-                className="font-mono font-bold text-white/[0.07] leading-none"
-                style={{ fontSize: '3.5rem' }}
-              >
-                {project.title.split(' ').map(w => w[0]).join('').slice(0, 3)}
-              </span>
-              <span className="font-mono text-xs text-dim">Add GIF to public/images/projects/</span>
-            </div>
-            {/* Circuit decoration */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background: 'radial-gradient(ellipse at 30% 70%, rgba(61,220,255,0.05) 0%, transparent 60%)',
-              }}
-            />
-          </div>
-        )}
+const ITEMS: ProjectItem[] = PROJECTS.map(p => ({
+  id: p.title,
+  title: p.title,
+  description: p.subtitle,
+  imageSrc: p.gif,
+  href: p.repo,
+  tag: p.featured ? 'Featured' : undefined,
+  context: p.context,
+  stack: p.stack,
+  blurb: p.description,
+  repo: p.repo,
+}));
 
-        {project.featured && (
-          <div className="absolute top-3 left-3 z-10">
-            <span className="mono-tag text-[10px]">Featured</span>
-          </div>
-        )}
-
-        {/* Bottom gradient */}
-        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-surface to-transparent pointer-events-none" />
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col gap-3 p-5 flex-1">
-        <div>
-          <p className="font-mono text-[10px] text-accent/70 mb-0.5 tracking-wide">{project.context}</p>
-          <p className="font-mono text-xs text-dim mb-1">{project.subtitle}</p>
-          <h3 className="font-mono font-bold text-base text-text leading-tight">{project.title}</h3>
-        </div>
-
-        <p className="text-muted text-xs leading-relaxed flex-1">{project.description}</p>
-
-        <div className="flex flex-wrap gap-1 mt-1">
-          {project.stack.map(tag => (
-            <span key={tag} className="stack-tag">{tag}</span>
-          ))}
-        </div>
-
-        <a
-          href={project.repo}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="pill-btn self-start mt-2 text-xs"
-          aria-label={`View ${project.title} on GitHub`}
-        >
-          <span>View</span>
-          <ArrowUpRight size={12} />
-        </a>
-      </div>
-    </div>
-  );
+/** Card size tracks the viewport so the fan works from phone to desktop. */
+function useCardSize() {
+  const calc = () => {
+    const w = Math.min(540, Math.max(260, window.innerWidth - 64));
+    return { w, h: Math.round(w * 0.62) };
+  };
+  const [size, setSize] = useState(calc);
+  useEffect(() => {
+    const onResize = () => setSize(calc());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  return size;
 }
 
 export function Projects() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const labelRef = useScrollReveal();
-  const titleRef = useScrollReveal();
   const headerRef = useScrollReveal();
+  const stackRef = useScrollReveal();
+  const [active, setActive] = useState(0);
+  const size = useCardSize();
 
-  const CARD_W = 352; // card width + gap
-
-  const scroll = useCallback((dir: 'prev' | 'next') => {
-    const track = trackRef.current;
-    if (!track) return;
-    track.scrollBy({ left: dir === 'next' ? CARD_W * 3 : -CARD_W * 3, behavior: 'smooth' });
-  }, []);
+  const current = ITEMS[active];
 
   return (
-    <section id="projects" className="py-28" aria-labelledby="projects-heading">
+    <section id="projects" className="py-28 overflow-x-clip" aria-labelledby="projects-heading">
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Header */}
-        <div ref={headerRef} className="reveal flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
-          <div className="flex flex-col gap-3">
-            <p ref={labelRef} className="section-label">... /projects ...</p>
-            <h2
-              ref={titleRef}
-              id="projects-heading"
-              className="font-mono font-bold text-display-sm text-text leading-none"
-            >
-              Projects
-            </h2>
-          </div>
-
-          {/* Nav arrows */}
-          <div className="flex gap-2 flex-shrink-0">
-            <button
-              onClick={() => scroll('prev')}
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-accent hover:border-accent/40 transition-all duration-200 hover:bg-accent/5"
-              aria-label="Scroll to previous projects"
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <button
-              onClick={() => scroll('next')}
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted hover:text-accent hover:border-accent/40 transition-all duration-200 hover:bg-accent/5"
-              aria-label="Scroll to next projects"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
+        <div ref={headerRef} className="reveal flex flex-col gap-3 mb-6">
+          <p className="section-label">... /projects ...</p>
+          <h2
+            id="projects-heading"
+            className="font-mono font-bold text-display-sm text-text leading-none"
+          >
+            <DecodeText text="Projects" />
+          </h2>
+          <p className="text-muted text-sm font-mono">
+            drag, click, or use ← → · autoplays until you touch it
+          </p>
         </div>
 
-        {/* Carousel track */}
+        {/* Fan stack */}
+        <div ref={stackRef} className="reveal reveal-delay-1">
+          <CardStack
+            items={ITEMS}
+            maxVisible={5}
+            cardWidth={size.w}
+            cardHeight={size.h}
+            overlap={0.74}
+            spreadDeg={26}
+            depthPx={110}
+            tiltXDeg={9}
+            autoAdvance
+            intervalMs={3600}
+            pauseOnHover
+            showDots
+            onChangeIndex={i => setActive(i)}
+          />
+        </div>
+
+        {/* Active project detail */}
         <div
-          ref={trackRef}
-          className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-          role="list"
-          aria-label="Projects carousel"
+          key={current.id}
+          className="animate-fade-in max-w-2xl mx-auto mt-8 text-center flex flex-col items-center gap-3"
         >
-          <style>{`.projects-track::-webkit-scrollbar { display: none; }`}</style>
-          {PROJECTS.map(project => (
-            <div key={project.title} role="listitem">
-              <ProjectCard project={project} />
-            </div>
-          ))}
-          {/* Trailing spacer */}
-          <div className="flex-shrink-0 w-6" aria-hidden="true" />
-        </div>
-
-        {/* Dot indicators */}
-        <div className="flex justify-center gap-2 mt-6" role="tablist" aria-label="Project pages">
-          {Array.from({ length: Math.ceil(PROJECTS.length / 3) }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                trackRef.current?.scrollTo({ left: i * CARD_W * 3, behavior: 'smooth' });
-              }}
-              className="h-1.5 rounded-full transition-all duration-300 bg-dim hover:bg-accent/60"
-              style={{ width: i === 0 ? '24px' : '8px' }}
-              role="tab"
-              aria-label={`Jump to project group ${i + 1}`}
-            />
-          ))}
+          <p className="font-mono text-[11px] text-accent/70 tracking-wide">{current.context}</p>
+          <p className="text-muted text-sm leading-relaxed">{current.blurb}</p>
+          <div className="flex flex-wrap justify-center gap-1.5">
+            {current.stack.map(tag => (
+              <span key={tag} className="stack-tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <a
+            href={current.repo}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pill-btn mt-1 text-xs"
+            aria-label={`View ${current.title} on GitHub`}
+          >
+            <span>View {current.title}</span>
+            <ArrowUpRight size={12} />
+          </a>
         </div>
       </div>
     </section>

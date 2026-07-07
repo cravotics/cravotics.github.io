@@ -365,3 +365,321 @@ body {
 .project-card.snap-start {
   scroll-snap-align: start;
 }
+
+/* ═══════════════ FUTURISTIC LAYER ═══════════════ */
+
+/* ─── Boot screen ─── */
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.boot-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(61,220,255,0.015) 3px,
+    rgba(61,220,255,0.015) 4px
+  );
+  pointer-events: none;
+}
+.boot-screen.boot-exit {
+  animation: bootExit 0.5s steps(8) forwards;
+}
+@keyframes bootExit {
+  to { opacity: 0; transform: scale(1.02); filter: brightness(2); }
+}
+.boot-line {
+  opacity: 0;
+  animation: bootLineIn 0.12s steps(2) forwards;
+}
+@keyframes bootLineIn {
+  to { opacity: 1; }
+}
+.boot-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--accent);
+  vertical-align: -2px;
+  animation: bootBlink 0.7s steps(1) infinite;
+}
+@keyframes bootBlink {
+  50% { opacity: 0; }
+}
+
+/* ─── Decode / scramble text ─── */
+.decode-char {
+  display: inline-block;
+  min-width: 0.4em;
+}
+.decode-scrambling {
+  color: var(--accent);
+  opacity: 0.75;
+}
+
+/* ─── Glitch hover (RGB split) ─── */
+.glitch-hover {
+  transition: text-shadow 0.15s ease;
+}
+.glitch-hover:hover {
+  text-shadow:
+    2px 0 rgba(255, 60, 90, 0.7),
+    -2px 0 rgba(61, 220, 255, 0.7);
+  animation: glitchJitter 0.3s steps(2) infinite;
+}
+@keyframes glitchJitter {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(0.5px, -0.5px); }
+  50%  { transform: translate(-0.5px, 0.5px); }
+  75%  { transform: translate(0.5px, 0.5px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ─── Button sheen sweep ─── */
+.pill-btn {
+  position: relative;
+  overflow: hidden;
+}
+.pill-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.pill-btn:hover::after {
+  left: 130%;
+}
+.pill-btn.primary::after {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255,255,255,0.45) 50%,
+    transparent 100%
+  );
+}
+
+/* ─── Pixel section divider ─── */
+.pixel-divider {
+  position: relative;
+  height: 1px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(61,220,255,0.18) 20%,
+    rgba(61,220,255,0.18) 80%,
+    transparent 100%
+  );
+  overflow: visible;
+}
+.pixel-divider .pixel-runner {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(61,220,255,0.9), 0 0 20px rgba(61,220,255,0.5);
+  animation: pixelRun 7s steps(60) infinite;
+}
+@keyframes pixelRun {
+  0%   { left: 8%;  opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { left: 92%; opacity: 0; }
+}
+.pixel-divider .pixel-node {
+  position: absolute;
+  top: -2px;
+  width: 5px;
+  height: 5px;
+  background: rgba(61,220,255,0.35);
+}
+
+/* ─── Scroll rover (rides the progress bar) ─── */
+.scroll-rover {
+  position: fixed;
+  top: 0;
+  z-index: 101;
+  width: 14px;
+  height: 10px;
+  margin-left: -7px;
+  pointer-events: none;
+  image-rendering: pixelated;
+  transition: left 0.1s linear;
+}
+.scroll-rover .rover-px {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--accent);
+  box-shadow:
+    /* body row 1 */
+    2px 2px 0 var(--accent), 4px 2px 0 var(--accent), 6px 2px 0 var(--accent), 8px 2px 0 var(--accent), 10px 2px 0 var(--accent),
+    /* body row 2 */
+    0px 4px 0 var(--accent), 2px 4px 0 #0A0A0B, 4px 4px 0 var(--accent), 6px 4px 0 var(--accent), 8px 4px 0 #0A0A0B, 10px 4px 0 var(--accent), 12px 4px 0 var(--accent),
+    /* wheels */
+    2px 6px 0 var(--accent), 10px 6px 0 var(--accent);
+  filter: drop-shadow(0 0 4px rgba(61,220,255,0.8));
+  animation: roverBounce 0.5s steps(2) infinite;
+}
+@keyframes roverBounce {
+  50% { transform: translateY(-1px); }
+}
+
+/* ─── Tilt card ─── */
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* ─── Skill cloud stagger ─── */
+.skill-word {
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  transition: opacity 0.5s var(--ease-spring), transform 0.5s var(--ease-spring);
+}
+.reveal.visible .skill-word {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ─── Contact particle canvas ─── */
+.particle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ─── Status dot pulse ─── */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74,222,128,0.8);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ─── Pac-Man title reveal ─── */
+.pacman-line {
+  position: relative;
+  display: inline-block;
+}
+.pacman-char {
+  display: inline-block;
+  transition: opacity 0.1s steps(2), transform 0.15s ease;
+}
+.pacman-sprite {
+  position: absolute;
+  top: 50%;
+  width: 0.72em;
+  height: 0.72em;
+  transform: translate(-30%, -50%);
+  pointer-events: none;
+  z-index: 3;
+  filter: drop-shadow(0 0 10px rgba(255,221,68,0.65));
+}
+.pacman-sprite::before,
+.pacman-sprite::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #FFDD44;
+  border-radius: 50%;
+}
+.pacman-sprite::before {
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+  animation: chompTop 0.18s linear infinite alternate;
+}
+.pacman-sprite::after {
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+  animation: chompBot 0.18s linear infinite alternate;
+}
+@keyframes chompTop {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-34deg); }
+}
+@keyframes chompBot {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(34deg); }
+}
+
+/* ─── Award featured ring (amber) ─── */
+.award-ring {
+  background: conic-gradient(
+    from var(--portrait-angle),
+    transparent 0%,
+    rgba(255,179,71,0.85) 15%,
+    rgba(255,179,71,0.2) 30%,
+    transparent 45%,
+    rgba(255,179,71,0.12) 70%,
+    rgba(255,179,71,0.85) 85%,
+    transparent 100%
+  );
+  animation: rotateBorder 5s linear infinite;
+}
+@supports not (background: conic-gradient(from 1deg, red, blue)) {
+  .award-ring {
+    background: linear-gradient(135deg, rgba(255,179,71,0.6), transparent, rgba(255,179,71,0.6));
+    animation: none;
+  }
+}
+
+/* twinkling pixel in featured award */
+.award-pixel {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #FFB347;
+  animation: awardTwinkle 2.4s steps(2) infinite;
+  pointer-events: none;
+}
+@keyframes awardTwinkle {
+  0%, 100% { opacity: 0.15; }
+  50%      { opacity: 0.9; }
+}
+
+/* ─── Reduced motion: kill the fancy layer ─── */
+@media (prefers-reduced-motion: reduce) {
+  .boot-screen { display: none; }
+  .boot-line { opacity: 1; animation: none; }
+  .pixel-divider .pixel-runner,
+  .scroll-rover .rover-px,
+  .status-dot,
+  .glitch-hover:hover { animation: none; }
+  .pill-btn::after { display: none; }
+  .tilt-card { transition: none; }
+  .skill-word { opacity: 1; transform: none; transition: none; }
+  .pacman-sprite { display: none; }
+  .award-ring, .award-pixel { animation: none; }
+}

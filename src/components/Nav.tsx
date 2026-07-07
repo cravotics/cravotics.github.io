@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Download } from 'lucide-react';
+import { ShinyButton } from './ui/shiny-button';
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
@@ -57,7 +58,7 @@ export function Nav() {
           className="flex flex-col leading-none group font-mono"
           aria-label="Sai Jagadeesh Muralikrishnan, home"
         >
-          <span className="text-sm font-bold">
+          <span className="text-sm font-bold glitch-hover">
             <span className="text-accent">&lt;</span>
             <span className="text-text group-hover:text-accent transition-colors">SaiJagadeesh</span>
             <span className="text-accent"> /&gt;</span>
@@ -88,16 +89,16 @@ export function Nav() {
 
         {/* Desktop right CTAs */}
         <div className="hidden md:flex items-center gap-3">
-          <a
+          <ShinyButton
             href="/Sai_Jagadeesh_Muralikrishnan_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="pill-btn"
             aria-label="Download Resume PDF"
+            className="px-5 py-2"
           >
-            <Download size={14} />
+            <Download size={13} />
             <span>Resume</span>
-          </a>
+          </ShinyButton>
         </div>
 
         {/* Mobile menu toggle */}
@@ -124,15 +125,16 @@ export function Nav() {
               {link.label}
             </a>
           ))}
-          <a
+          <ShinyButton
             href="/Sai_Jagadeesh_Muralikrishnan_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="pill-btn mt-2 self-start"
+            aria-label="Download Resume PDF"
+            className="mt-2 self-start px-5 py-2"
           >
-            <Download size={14} />
+            <Download size={13} />
             <span>Resume</span>
-          </a>
+          </ShinyButton>
         </div>
       )}
     </header>

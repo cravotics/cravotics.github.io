@@ -1,5 +1,7 @@
 import { Mail, Linkedin, Github, Download, MapPin } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { ParticleField } from './ParticleField';
+import { ShinyButton } from './ui/shiny-button';
 
 export function Contact() {
   const headlineRef = useScrollReveal();
@@ -18,8 +20,11 @@ export function Contact() {
         aria-hidden="true"
       />
 
+      {/* Pixel dust particles */}
+      <ParticleField />
+
       <div className="max-w-[1200px] mx-auto px-6 relative z-10 text-center flex flex-col items-center gap-8">
-        <p className="section-label">... /contacts ...</p>
+        <p className="section-label">... /contact ...</p>
 
         <h2
           ref={headlineRef}
@@ -37,9 +42,15 @@ export function Contact() {
           motion planning, perception, and control.
         </p>
 
-        <div className="flex items-center gap-1.5 font-mono text-sm text-dim">
-          <MapPin size={13} />
-          <span>Pasadena, CA</span>
+        <div className="flex items-center gap-4 font-mono text-sm text-dim flex-wrap justify-center">
+          <span className="flex items-center gap-1.5">
+            <MapPin size={13} />
+            <span>Pasadena, CA</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="status-dot" aria-hidden="true" />
+            <span className="text-muted">status: open to opportunities</span>
+          </span>
         </div>
 
         {/* CTA buttons */}
@@ -72,16 +83,15 @@ export function Contact() {
             <Github size={15} />
             <span>GitHub</span>
           </a>
-          <a
+          <ShinyButton
             href="/Sai_Jagadeesh_Muralikrishnan_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="pill-btn"
             aria-label="Download Resume PDF"
           >
             <Download size={15} />
             <span>Résumé</span>
-          </a>
+          </ShinyButton>
         </div>
 
         {/* Graduation pixel-art */}

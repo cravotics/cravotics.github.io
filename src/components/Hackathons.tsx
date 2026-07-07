@@ -1,5 +1,16 @@
-import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
+import { useRef } from 'react';
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useMotionTemplate,
+  useReducedMotion,
+  type Variants,
+} from 'framer-motion';
+import { ArrowUpRight, Check, Sparkles, Trophy } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { DecodeText } from './DecodeText';
 
 type Hackathon = {
   name: string;
@@ -58,87 +69,188 @@ const HACKATHONS: Hackathon[] = [
   },
 ];
 
-function HackathonCard({ item, delayClass }: { item: Hackathon; delayClass: string }) {
-  const ref = useScrollReveal<HTMLDivElement>();
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 120, damping: 18 } },
+};
+
+const badgePop: Variants = {
+  hidden: { opacity: 0, scale: 0.4, rotate: -8 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 14 },
+  },
+};
+
+function ShowcaseImage({ item: hack, flip }: { item: Hackathon; flip: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+
+  // scroll parallax
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [40, -40]);
+
+  // cursor spotlight
+  const mx = useMotionValue(50);
+  const my = useMotionValue(50);
+  const spotlight = useMotionTemplate`radial-gradient(420px circle at ${mx}% ${my}%, rgba(61,220,255,0.14), transparent 65%)`;
+
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`reveal ${delayClass} group flex flex-col rounded-[20px] overflow-hidden border border-border bg-surface hover:border-accent/40 transition-colors duration-300`}
+      variants={item}
+      className={`relative group ${flip ? 'lg:order-2' : ''}`}
+      onPointerMove={e => {
+        const r = e.currentTarget.getBoundingClientRect();
+        mx.set(((e.clientX - r.left) / r.width) * 100);
+        my.set(((e.clientY - r.top) / r.height) * 100);
+      }}
     >
-      {/* Image + badges */}
-      <div className="relative h-52 overflow-hidden flex-shrink-0 bg-surface-2">
-        <img
-          src={item.image}
-          alt={`${item.name}: ${item.event}`}
-          className={`w-full h-full object-cover ${item.imgPos} group-hover:scale-105 transition-transform duration-500`}
+      {/* offset accent frame */}
+      <div
+        className={`absolute -inset-0 translate-x-3 translate-y-3 rounded-[24px] border border-accent/15 pointer-events-none transition-transform duration-500 group-hover:translate-x-4 group-hover:translate-y-4 ${
+          flip ? '-translate-x-3 group-hover:-translate-x-4' : ''
+        }`}
+        aria-hidden="true"
+      />
+
+      <div className="relative rounded-[24px] overflow-hidden border border-border bg-surface-2 h-[300px] sm:h-[380px]">
+        <motion.img
+          src={hack.image}
+          alt={`${hack.name}: ${hack.event}`}
+          className={`w-full h-[calc(100%+80px)] object-cover ${hack.imgPos} scale-105 group-hover:scale-110 transition-transform duration-700`}
+          style={{ y }}
           loading="lazy"
+          draggable={false}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/20 to-transparent pointer-events-none" />
-        <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-2">
-          {item.badges.map(badge => (
-            <span
+        {/* spotlight follows cursor */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{ background: spotlight }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent pointer-events-none" />
+
+        {/* badges */}
+        <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2">
+          {hack.badges.map(badge => (
+            <motion.span
               key={badge}
-              className="flex items-center gap-1.5 font-mono text-[10px] font-bold px-2.5 py-1 rounded-pill border backdrop-blur-sm"
-              style={{ color: '#FFB347', borderColor: 'rgba(255,179,71,0.3)', background: 'rgba(20,20,22,0.6)' }}
+              variants={badgePop}
+              className="flex items-center gap-1.5 font-mono text-[10px] font-bold px-2.5 py-1.5 rounded-pill border backdrop-blur-md"
+              style={{
+                color: '#FFB347',
+                borderColor: 'rgba(255,179,71,0.35)',
+                background: 'rgba(20,20,22,0.65)',
+                boxShadow: '0 0 20px rgba(255,179,71,0.15)',
+              }}
             >
-              <Sparkles size={10} />
+              <Trophy size={10} />
               {badge}
-            </span>
+            </motion.span>
           ))}
+        </div>
+
+        {/* event chip bottom */}
+        <div className="absolute bottom-4 left-4">
+          <span className="mono-tag backdrop-blur-md">{hack.event}</span>
         </div>
       </div>
+    </motion.div>
+  );
+}
+
+function ShowcaseRow({ hack, index }: { hack: Hackathon; index: number }) {
+  const flip = index % 2 === 1;
+  return (
+    <motion.div
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.25 }}
+      className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+    >
+      <ShowcaseImage item={hack} flip={flip} />
 
       {/* Content */}
-      <div className="flex flex-col gap-4 p-6 flex-1">
-        <div>
-          <p className="font-mono text-xs text-accent/80 mb-1">{item.event}</p>
-          <h3 className="font-mono font-bold text-xl text-text leading-tight">{item.name}</h3>
-        </div>
+      <div className={`flex flex-col gap-5 ${flip ? 'lg:order-1' : ''}`}>
+        <motion.div variants={item} className="flex items-center gap-3">
+          <span className="font-mono text-xs text-dim">{String(index + 1).padStart(2, '0')}</span>
+          <span className="h-px flex-1 max-w-[60px] bg-accent/40" aria-hidden="true" />
+          <span className="font-mono text-xs text-accent/80">{hack.event}</span>
+        </motion.div>
 
-        <p className="text-muted text-sm leading-relaxed">{item.description}</p>
+        <motion.h3
+          variants={item}
+          className="font-mono font-bold text-3xl sm:text-4xl text-text leading-tight"
+        >
+          {hack.name}
+        </motion.h3>
 
-        <div className="flex flex-wrap gap-1.5">
-          {item.stack.map(tag => (
-            <span key={tag} className="stack-tag">{tag}</span>
-          ))}
-        </div>
+        <motion.p variants={item} className="text-muted leading-relaxed">
+          {hack.description}
+        </motion.p>
 
-        {/* Highlight */}
-        {item.highlight && (
-          <div className="rounded-xl border border-accent/15 bg-accent/[0.04] p-3">
-            <p className="font-mono text-[10px] uppercase tracking-wider text-accent/70 mb-1">{item.highlight.label}</p>
-            <p className="text-text text-xs leading-relaxed">{item.highlight.text}</p>
-          </div>
+        {hack.highlight && (
+          <motion.div
+            variants={item}
+            className="rounded-xl border border-amber/20 bg-amber/[0.05] p-4 flex items-start gap-3"
+          >
+            <Sparkles size={15} className="text-amber flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-wider text-amber/80 mb-1">
+                {hack.highlight.label}
+              </p>
+              <p className="text-text text-sm leading-relaxed">{hack.highlight.text}</p>
+            </div>
+          </motion.div>
         )}
 
-        {/* Features */}
-        <ul className="flex flex-col gap-2">
-          {item.features.map(f => (
-            <li key={f} className="flex items-start gap-2 text-muted text-xs leading-relaxed">
-              <Check size={13} className="text-accent flex-shrink-0 mt-0.5" />
+        <motion.ul variants={container} className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+          {hack.features.map(f => (
+            <motion.li
+              key={f}
+              variants={item}
+              className="flex items-start gap-2 text-muted text-sm leading-snug"
+            >
+              <Check size={14} className="text-accent flex-shrink-0 mt-0.5" />
               <span>{f}</span>
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
 
-        {/* Links */}
-        <div className="flex flex-wrap gap-2 mt-auto pt-1">
-          {item.links.map(link => (
+        <motion.div variants={item} className="flex flex-wrap gap-1.5">
+          {hack.stack.map(tag => (
+            <span key={tag} className="stack-tag">
+              {tag}
+            </span>
+          ))}
+        </motion.div>
+
+        <motion.div variants={item} className="flex flex-wrap gap-2 pt-1">
+          {hack.links.map(link => (
             <a
               key={link.href}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
               className="pill-btn text-xs"
-              aria-label={`${item.name}: ${link.label}`}
+              aria-label={`${hack.name}: ${link.label}`}
             >
               <span>{link.label}</span>
               <ArrowUpRight size={12} />
             </a>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -147,20 +259,20 @@ export function Hackathons() {
   const titleRef = useScrollReveal();
 
   return (
-    <section id="hackathons" className="py-28 bg-surface/30" aria-labelledby="hackathons-heading">
+    <section id="hackathons" className="py-28 bg-surface/30 overflow-x-clip" aria-labelledby="hackathons-heading">
       <div className="max-w-[1200px] mx-auto px-6">
         <p ref={labelRef} className="section-label mb-4 reveal">... /hackathons ...</p>
         <h2
           ref={titleRef}
           id="hackathons-heading"
-          className="font-mono font-bold text-display-sm text-text leading-none mb-12 reveal reveal-delay-1"
+          className="font-mono font-bold text-display-sm text-text leading-none mb-16 reveal reveal-delay-1"
         >
-          Hackathons
+          <DecodeText text="Hackathons" />
         </h2>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {HACKATHONS.map((item, i) => (
-            <HackathonCard key={item.name} item={item} delayClass={i === 0 ? 'reveal-delay-1' : 'reveal-delay-2'} />
+        <div className="flex flex-col gap-24">
+          {HACKATHONS.map((hack, i) => (
+            <ShowcaseRow key={hack.name} hack={hack} index={i} />
           ))}
         </div>
       </div>

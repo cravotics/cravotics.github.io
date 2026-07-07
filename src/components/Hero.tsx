@@ -10,6 +10,8 @@ function XIcon({ size = 13 }: { size?: number }) {
   );
 }
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { PacmanHeadline } from './PacmanHeadline';
+import { ShinyButton } from './ui/shiny-button';
 
 const WORDS = ['Robotics', 'Software', 'Engineer'];
 
@@ -202,20 +204,6 @@ function PortraitFrame() {
 
 /* ─── Hero section ─── */
 export function Hero() {
-  const reducedMotion = useReducedMotion();
-  const headlineRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (reducedMotion || !headlineRef.current) return;
-    const spans = headlineRef.current.querySelectorAll('.word');
-    spans.forEach((el, i) => {
-      (el as HTMLElement).style.transitionDelay = `${i * 0.18 + 0.15}s`;
-      requestAnimationFrame(() =>
-        requestAnimationFrame(() => (el as HTMLElement).classList.add('visible'))
-      );
-    });
-  }, [reducedMotion]);
-
   return (
     <section
       id="hero"
@@ -251,12 +239,15 @@ export function Hero() {
           <div className="flex flex-col gap-6 max-w-2xl">
             <p className="section-label reveal visible">$ whoami →</p>
 
-            <div ref={headlineRef} className="flex flex-col">
-              {WORDS.map((word, i) => (
-                <span
-                  key={word}
-                  className="word reveal font-mono font-bold leading-[0.92] tracking-tight"
-                  style={{
+            <h1 className="flex flex-col">
+              <PacmanHeadline
+                delay={300}
+                msPerChar={85}
+                hopMs={480}
+                lines={WORDS.map((word, i) => ({
+                  text: word,
+                  className: 'font-mono font-bold leading-[0.92] tracking-tight',
+                  style: {
                     fontSize: 'clamp(2.8rem, 8vw, 7rem)',
                     letterSpacing: '-0.025em',
                     color: i === 2 ? 'var(--accent)' : 'var(--text)',
@@ -264,12 +255,10 @@ export function Hero() {
                       i === 2
                         ? '0 0 80px rgba(61,220,255,0.4), 0 0 30px rgba(61,220,255,0.2)'
                         : '0 2px 20px rgba(0,0,0,0.5)',
-                  }}
-                >
-                  {word}
-                </span>
-              ))}
-            </div>
+                  },
+                }))}
+              />
+            </h1>
 
             {/* At Miso Robotics */}
             <div className="reveal visible reveal-delay-1 flex items-center gap-3 flex-wrap">
@@ -312,15 +301,15 @@ export function Hero() {
                 <span>Projects</span>
                 <ArrowRight size={15} />
               </a>
-              <a
+              <ShinyButton
                 href="/Sai_Jagadeesh_Muralikrishnan_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pill-btn"
+                aria-label="Download Resume PDF"
               >
                 <Download size={14} />
                 <span>Download Résumé</span>
-              </a>
+              </ShinyButton>
             </div>
 
             {/* Social chips */}

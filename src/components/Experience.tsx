@@ -1,5 +1,6 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ArrowUpRight } from 'lucide-react';
+import { DecodeText } from './DecodeText';
 
 const EXPERIENCES = [
   {
@@ -103,7 +104,7 @@ export function Experience() {
         </div>
         <div ref={titleRef} className="reveal reveal-delay-1 mb-12">
           <h2 id="experience-heading" className="font-mono font-bold leading-none" style={{ fontSize: 'clamp(3rem, 8vw, 6rem)' }}>
-            Work
+            <DecodeText text="Work" speed={90} />
           </h2>
         </div>
 
