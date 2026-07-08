@@ -35,7 +35,9 @@ export function Contact() {
           </span>
           <span className="flex items-center gap-2">
             <span className="status-dot" aria-hidden="true" />
-            <span className="text-muted">status: open to opportunities</span>
+            <span className="text-muted">
+              happily building robots at Miso, but I&apos;ll always make time to dream about what&apos;s next
+            </span>
           </span>
         </div>
 
