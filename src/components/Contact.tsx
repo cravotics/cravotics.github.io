@@ -5,8 +5,6 @@ import { ShinyButton } from './ui/shiny-button';
 import { RobotScene } from './RobotScene';
 
 export function Contact() {
-  const headlineRef = useScrollReveal();
-  const subRef = useScrollReveal();
   const ctasRef = useScrollReveal();
   const spriteRef = useScrollReveal<HTMLDivElement>();
 
@@ -27,23 +25,7 @@ export function Contact() {
       <div className="max-w-[1200px] mx-auto px-6 relative z-10 text-center flex flex-col items-center gap-8">
         <p className="section-label">... /contact ...</p>
 
-        <h2
-          ref={headlineRef}
-          id="contact-heading"
-          className="font-mono font-bold text-text leading-none reveal"
-          style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)', letterSpacing: '-0.02em', maxWidth: '800px' }}
-        >
-          Let's build something
-          <br />
-          <span className="gradient-text">that moves.</span>
-        </h2>
-
-        <p ref={subRef} className="reveal reveal-delay-1 text-muted text-lg max-w-lg leading-relaxed">
-          Open to robotics software roles, research collaborations, and interesting problems in
-          motion planning, perception, and control.
-        </p>
-
-        {/* Interactive 3D robot scene */}
+        {/* Interactive 3D robot scene with the headline */}
         <RobotScene />
 
         <div className="flex items-center gap-4 font-mono text-sm text-dim flex-wrap justify-center">
