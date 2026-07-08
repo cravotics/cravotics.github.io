@@ -31,6 +31,7 @@ export default {
         'fade-in': 'fadeIn 0.5s ease forwards',
         'cursor-pulse': 'cursorPulse 2s ease-in-out infinite',
         'progress': 'progress linear',
+        'spotlight': 'spotlight 2s ease 0.75s 1 forwards',
       },
       keyframes: {
         fadeUp: {
@@ -44,6 +45,10 @@ export default {
         cursorPulse: {
           '0%, 100%': { transform: 'scale(1)', opacity: '1' },
           '50%': { transform: 'scale(1.3)', opacity: '0.6' },
+        },
+        spotlight: {
+          '0%': { opacity: '0', transform: 'translate(-72%, -62%) scale(0.5)' },
+          '100%': { opacity: '1', transform: 'translate(-50%, -40%) scale(1)' },
         },
       },
       backgroundImage: {

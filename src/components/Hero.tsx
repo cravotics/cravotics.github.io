@@ -192,7 +192,7 @@ function PortraitFrame() {
 
       <div className="relative z-10 w-64 h-80 sm:w-80 sm:h-96 rounded-[24px] overflow-hidden border border-border bg-surface-2">
         <img
-          src="/images/hero.jpg"
+          src="/images/hero.jpeg"
           alt="Sai Jagadeesh Muralikrishnan, Robotics Software Engineer"
           className="w-full h-full object-cover grayscale-hover"
           loading="eager"

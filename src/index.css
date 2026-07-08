@@ -368,6 +368,22 @@ body {
 
 /* ═══════════════ FUTURISTIC LAYER ═══════════════ */
 
+/* ─── Spline scene loader ─── */
+.loader {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(61,220,255,0.15);
+  border-top-color: var(--accent);
+  animation: loaderSpin 0.8s linear infinite;
+}
+@keyframes loaderSpin {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader { animation: none; }
+}
+
 /* ─── Boot screen ─── */
 .boot-screen {
   position: fixed;

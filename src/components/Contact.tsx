@@ -2,6 +2,7 @@ import { Mail, Linkedin, Github, Download, MapPin } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ParticleField } from './ParticleField';
 import { ShinyButton } from './ui/shiny-button';
+import { RobotScene } from './RobotScene';
 
 export function Contact() {
   const headlineRef = useScrollReveal();
@@ -41,6 +42,9 @@ export function Contact() {
           Open to robotics software roles, research collaborations, and interesting problems in
           motion planning, perception, and control.
         </p>
+
+        {/* Interactive 3D robot scene */}
+        <RobotScene />
 
         <div className="flex items-center gap-4 font-mono text-sm text-dim flex-wrap justify-center">
           <span className="flex items-center gap-1.5">
