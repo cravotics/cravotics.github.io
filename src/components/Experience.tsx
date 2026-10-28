@@ -72,7 +72,7 @@ function ExpRow({ exp, idx }: { exp: typeof EXPERIENCES[0]; idx: number }) {
       {/* Role & focus */}
       <div className="flex flex-col gap-2 col-span-2 md:col-span-1">
         <span className="text-sm font-medium text-text">{exp.role}</span>
-        <p className="text-xs text-muted leading-relaxed">{exp.focus}</p>
+        <p className="text-sm text-muted leading-relaxed max-w-[72ch]">{exp.focus}</p>
         <div className="flex flex-wrap gap-1 mt-1">
           {exp.tags.map(tag => (
             <span key={tag} className="stack-tag">{tag}</span>
@@ -119,7 +119,7 @@ export function Experience() {
         </div>
 
         {/* Table header */}
-        <div className="grid grid-cols-[140px_1fr] md:grid-cols-[160px_220px_1fr_auto] gap-4 pb-3 border-b border-border">
+        <div className="hidden md:grid md:grid-cols-[160px_220px_1fr_auto] gap-4 pb-3 border-b border-border">
           {['Period', 'Company', 'Role & Focus', ''].map(h => (
             <span key={h} className="font-mono text-xs text-dim uppercase tracking-widest">{h}</span>
           ))}

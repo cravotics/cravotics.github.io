@@ -55,7 +55,7 @@ const WEIGHT_STYLES: Record<number, string> = {
   4: 'text-[1.9rem] sm:text-[2.6rem] font-bold text-text',
   3: 'text-[1.3rem] sm:text-[1.65rem] font-semibold text-text/85',
   2: 'text-[1.05rem] sm:text-[1.2rem] font-medium text-muted',
-  1: 'text-sm sm:text-base text-dim',
+  1: 'text-sm sm:text-base text-muted/80',
 };
 
 export function Skills() {

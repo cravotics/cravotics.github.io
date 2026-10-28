@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { ArrowRight, Github, Linkedin, Mail, Download } from 'lucide-react';
 
 /* X (Twitter) brand icon - lucide dropped brand icons, so inline the mark */
@@ -173,8 +174,27 @@ function ShaderCanvas() {
 
 /* ─── Animated portrait frame ─── */
 function PortraitFrame() {
+  // Tilt toward the pointer; springs keep it smooth. Off for reduced motion.
+  const reduced = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateY = useSpring(useTransform(mx, [-0.5, 0.5], [-10, 10]), { stiffness: 160, damping: 18 });
+  const rotateX = useSpring(useTransform(my, [-0.5, 0.5], [8, -8]), { stiffness: 160, damping: 18 });
+  const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (reduced || e.pointerType !== 'mouse') return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => { mx.set(0); my.set(0); };
+
   return (
-    <div className="relative group">
+    <motion.div
+      className="relative group"
+      style={{ rotateX, rotateY, transformPerspective: 900 }}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+    >
       <div className="portrait-border-ring absolute -inset-[3px] rounded-[26px] z-0" aria-hidden="true" />
 
       {[
@@ -198,7 +218,7 @@ function PortraitFrame() {
           loading="eager"
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -340,7 +360,7 @@ export function Hero() {
           </div>
 
           {/* Right - portrait */}
-          <div className="flex justify-center lg:justify-end items-center order-first lg:order-none mb-4 lg:mb-0">
+          <div className="flex justify-center lg:justify-end items-center mt-2 lg:mt-0">
             <PortraitFrame />
           </div>
         </div>

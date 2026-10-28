@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Download } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ShinyButton } from './ui/shiny-button';
 
 const NAV_LINKS = [
@@ -75,14 +76,20 @@ export function Nav() {
               <a
                 href={link.href}
                 onClick={e => { e.preventDefault(); handleClick(link.href); }}
-                className={`px-3 py-1 rounded-pill text-sm font-medium transition-all duration-200 ${
-                  active === link.href.slice(1)
-                    ? 'text-accent bg-accent/10'
-                    : 'text-muted hover:text-text'
+                className={`relative px-3 py-1 rounded-pill text-sm font-medium transition-colors duration-200 ${
+                  active === link.href.slice(1) ? 'text-accent' : 'text-muted hover:text-text'
                 }`}
                 aria-current={active === link.href.slice(1) ? 'page' : undefined}
               >
-                {link.label}
+                {active === link.href.slice(1) && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-0 rounded-pill bg-accent/10"
+                    transition={{ type: 'spring', stiffness: 420, damping: 34 }}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="relative">{link.label}</span>
               </a>
             </li>
           ))}
@@ -114,8 +121,15 @@ export function Nav() {
       </nav>
 
       {/* Mobile drawer */}
+      <AnimatePresence>
       {open && (
-        <div className="md:hidden nav-blur border-t border-border px-6 py-4 flex flex-col gap-2">
+        <motion.div
+          className="md:hidden nav-blur border-t border-border px-6 py-4 flex flex-col gap-2 overflow-hidden"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        >
           {NAV_LINKS.map(link => (
             <a
               key={link.href}
@@ -136,8 +150,9 @@ export function Nav() {
             <Download size={13} />
             <span>Resume</span>
           </ShinyButton>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </header>
   );
 }

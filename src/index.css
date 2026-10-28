@@ -8,7 +8,7 @@
   --surface-2: #1C1C1F;
   --text: #F4F4F5;
   --text-muted: #A1A1AA;
-  --text-dim: #6B6B70;
+  --text-dim: #8B8B94;
   --border: rgba(255,255,255,0.08);
   --accent: #3DDCFF;
   --amber: #FFB347;
@@ -267,7 +267,7 @@ body {
 /* Stack tag */
 .stack-tag {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--text-dim);
   background: var(--surface-2);
   border: 1px solid var(--border);
