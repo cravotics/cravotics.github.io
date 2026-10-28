@@ -9,6 +9,7 @@ import { Experience } from './components/Experience';
 import { Projects } from './components/Projects';
 import { Hackathons } from './components/Hackathons';
 import { Publication } from './components/Publication';
+import { Podcast } from './components/Podcast';
 import { Achievements } from './components/Achievements';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
@@ -30,6 +31,7 @@ function App() {
         <Projects />
         <Hackathons />
         <Publication />
+        <Podcast />
         <PixelDivider />
         <Achievements />
         <Contact />

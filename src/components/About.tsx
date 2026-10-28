@@ -39,10 +39,11 @@ export function About() {
                 and an <span className="text-text">alarming number of Diet Cokes</span>.
               </p>
               <p>
-                I currently build robotic-arm behaviors for{' '}
-                <span className="text-text font-medium">Miso Robotics' Flippy</span> product lines, working across
-                motion planning for constrained environments, control systems, and hardware-in-the-loop
-                validation of 6-DOF manipulators.
+                I currently build perception and arm behaviors for{' '}
+                <span className="text-text font-medium">Miso Robotics' Flippy</span>, running in 15+ customer
+                kitchens: camera calibration, vision-guided pickup, learned 6-DoF pose tracking, and
+                hardware-in-the-loop validation. When a robot fails in the field, I reproduce it in
+                simulation and ship the fix.
               </p>
               <p>
                 My work sits at the seam between software and hardware: ROS 2 architectures, real-time
